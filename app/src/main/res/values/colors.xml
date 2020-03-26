@@ -19,4 +19,7 @@
     <color name="gray_cthree_">#c3c3c3</color>
     <color name="gray_eight">#898989</color>
     <color name="sky_blue_boarder">#32b2df</color>
+
+    <color name="time_color_a">#9CA0DD</color>
+    <color name="time_color_b">#E49ACC</color>
 </resources>

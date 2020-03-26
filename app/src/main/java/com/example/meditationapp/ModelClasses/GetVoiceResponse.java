@@ -3,8 +3,9 @@ package com.example.meditationapp.ModelClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetEditProfileResponse {
+import java.util.List;
 
+public class GetVoiceResponse {
     @SerializedName("code")
     @Expose
     private String code;
@@ -16,7 +17,7 @@ public class GetEditProfileResponse {
     private String messages;
     @SerializedName("data")
     @Expose
-    private GetProfileData data;
+    private List<GetVoiceData> data = null;
 
     public String getCode() {
         return code;
@@ -24,6 +25,11 @@ public class GetEditProfileResponse {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public GetVoiceResponse withCode(String code) {
+        this.code = code;
+        return this;
     }
 
     public Boolean getSuccess() {
@@ -34,6 +40,11 @@ public class GetEditProfileResponse {
         this.success = success;
     }
 
+    public GetVoiceResponse withSuccess(Boolean success) {
+        this.success = success;
+        return this;
+    }
+
     public String getMessages() {
         return messages;
     }
@@ -42,11 +53,21 @@ public class GetEditProfileResponse {
         this.messages = messages;
     }
 
-    public GetProfileData getData() {
+    public GetVoiceResponse withMessages(String messages) {
+        this.messages = messages;
+        return this;
+    }
+
+    public List<GetVoiceData> getData() {
         return data;
     }
 
-    public void setData(GetProfileData data) {
+    public void setData(List<GetVoiceData> data) {
         this.data = data;
+    }
+
+    public GetVoiceResponse withData(List<GetVoiceData> data) {
+        this.data = data;
+        return this;
     }
 }
