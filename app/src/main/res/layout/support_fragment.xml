@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:weightSum="1">
+        <ImageView
+            android:id="@+id/img_back_support"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@mipmap/back_button"
+            android:padding="@dimen/_15sdp"
+            android:tint="@color/gray_eight"/>
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:layout_gravity="center"
+            android:text="@string/support"
+            android:gravity="center"
+            android:textSize="@dimen/_18sdp"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:visibility="gone"
+            android:padding="@dimen/_13sdp"
+            android:src="@mipmap/gray_heart_empty"/>
+
+    </LinearLayout>
+
+
+
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:src="@mipmap/bar"
+    android:layout_marginTop="-20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/curve_right_left"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/ed_addtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:background="@android:color/transparent"
+                android:hint="What do you need help with?"
+                android:textColor="@color/gray_eight"
+                android:textColorHint="@color/gray_eight" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/gray_border_edit"
+            android:orientation="horizontal">
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldEditText
+                android:id="@+id/ed_add_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@android:color/transparent"
+                android:hint="@string/add_description"
+                android:textColor="@color/gray_eight"
+                android:textColorHint="@color/gray_eight" />
+
+
+        </LinearLayout>
+
+        <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+            android:id="@+id/txt_sumbit"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+
+            android:background="@mipmap/invite_friend"
+            android:gravity="center"
+            android:text="@string/submit"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+</LinearLayout>

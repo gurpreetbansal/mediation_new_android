@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:weightSum="1">
+        <ImageView
+            android:id="@+id/img_back_help"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@mipmap/back_button"
+            android:padding="@dimen/_15sdp"
+            android:tint="@color/gray_eight"/>
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:textSize="@dimen/_20sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/gray_eight"
+            android:text="@string/help_center">
+
+        </com.example.meditationapp.Custom_Widgets.CustomBoldtextView>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:padding="@dimen/_15sdp"/>
+    </LinearLayout>
+    <ScrollView
+
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+                android:id="@+id/txt_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center|left"
+                android:text="@string/lorm"
+                android:textColor="#333333"
+                android:textSize="@dimen/_10sdp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

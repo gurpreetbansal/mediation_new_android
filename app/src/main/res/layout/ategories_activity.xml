@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.VoiceSelect_Activity">
+
+    <include layout="@layout/tool_bar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_marginTop="-5dp"
+        android:src="@mipmap/bar" />
+
+    <ScrollView
+
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:orientation="vertical">
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/categories"
+                android:textColor="@color/gray_nine"
+                android:textSize="@dimen/_27sdp" />
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:gravity="center"
+                android:text="@string/choose_topics"
+                android:textColor="@color/gray_nine"
+                android:textSize="@dimen/_20sdp" />
+            <!--one-->
+            <LinearLayout
+                android:id="@+id/ll_weight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/weight_loss_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/weight_loss"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--two-->
+            <LinearLayout
+                android:id="@+id/ll_professional"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/profession_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/professional"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--three-->
+            <LinearLayout
+                android:id="@+id/ll_stress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/stress_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/stress"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--four-->
+            <LinearLayout
+                android:id="@+id/ll_relationa"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/relationship_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/relationships"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--five-->
+            <LinearLayout
+                android:id="@+id/ll_athletic"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/atlethic_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/athletic"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--six-->
+            <LinearLayout
+                android:id="@+id/ll_health"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/health_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/health"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--sse=ven-->
+            <LinearLayout
+                android:id="@+id/ll_fine"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/financial_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/financial"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--eight-->
+            <LinearLayout
+                android:id="@+id/ll_abun"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@mipmap/abun_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left|bottom"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_weight="0.3"
+                    android:gravity="center|left|bottom"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/abun"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/img_next_cat"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@mipmap/next_btn" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

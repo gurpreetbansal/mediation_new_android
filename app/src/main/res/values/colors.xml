@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#333333</color>
+
+    <color name="gray_color">#A1A1A1</color>
+    <color name="gray_two">#898989</color>
+    <color name="dark_gray">#333333</color>
+
+    <color name="white">#ffffff</color>
+    <color name="screen_gray">#b1b1b1</color>
+    <color name="black">#000000</color>
+    <color name="sky_blue">#8bd7f8</color>
+    <color name="dark_sky_blue">#8bd7f7</color>
+    <color name="gray_three">#808080</color>
+    <color name="gray_nine">#999999</color>
+    <color name="gray_athree_">#a3a3a3</color>
+    <color name="gray_cthree_">#c3c3c3</color>
+    <color name="gray_eight">#898989</color>
+    <color name="sky_blue_boarder">#32b2df</color>
+
+    <color name="time_color_a">#9CA0DD</color>
+    <color name="time_color_b">#E49ACC</color>
+</resources>

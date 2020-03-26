@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@mipmap/logo" />
+
+    <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:gravity="center"
+        android:text="@string/create"
+        android:textSize="@dimen/_20sdp"
+        android:visibility="gone" />
+
+    <ScrollView
+
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_60sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:orientation="vertical">
+            <!--#e3e3e3-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:background="@drawable/shodow"-->
+            <!--                android:layout_marginTop="@dimen/_60sdp">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_margin="@dimen/_1sdp"
+                android:background="@mipmap/login_sign_up_bg"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:padding="@dimen/_15sdp"
+                    android:src="@mipmap/email" />
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldEditText
+                    android:id="@+id/login__email"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7"
+                    android:background="@android:color/transparent"
+                    android:gravity="center|left"
+                    android:hint="@string/email"
+                    android:inputType="textWebEmailAddress"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+            <!--            </LinearLayout>-->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:background="@mipmap/login_sign_up_bg"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@mipmap/lock_login" />
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldEditText
+                    android:id="@+id/login__password"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7"
+                    android:background="@android:color/transparent"
+                    android:gravity="center|left"
+                    android:hint="@string/password"
+                    android:inputType="textWebPassword"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+            </LinearLayout>
+
+            <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+                android:id="@+id/login__txt_log_in"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@mipmap/sign_up_email_bg"
+                android:gravity="center"
+                android:text="@string/log_in"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_15sdp" />
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/txt_forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:gravity="right"
+                android:text="@string/forget_password"
+                android:textColor="@color/gray_cthree_"
+                android:textSize="@dimen/_12sdp" />
+
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/txt_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:gravity="center"
+                android:text="@string/dont"
+                android:textColor="@color/gray_cthree_"
+                android:textSize="@dimen/_12sdp" />
+
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/txt_or"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:gravity="center"
+                android:text="@string/or"
+                android:textColor="@color/gray_three"
+                android:textSize="@dimen/_15sdp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loginActivity_ll_google"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/txt_get_full"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@mipmap/signup_fb_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+                    android:id="@+id/txt_fb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/login_google"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+
+                <com.google.android.gms.common.internal.SignInButtonImpl
+                    android:id="@+id/login_button_google"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll_login_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/txt_get_full"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:background="@mipmap/sign_up_google_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+                    android:id="@+id/txt_google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/login_facebook"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/login_button_facebook_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="30dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
