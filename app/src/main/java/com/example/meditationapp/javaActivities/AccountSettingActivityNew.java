@@ -2,14 +2,22 @@ package com.example.meditationapp.javaActivities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -26,9 +34,16 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.GetEditProfileResponse;
 import com.example.meditationapp.ModelClasses.GetProfileResponse;
 import com.example.meditationapp.R;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,11 +58,16 @@ public class AccountSettingActivityNew extends BaseActivity {
     GetProfileResponse resource;
     RelativeLayout progress_rl;
     CustomBoldEditText tv_firstname, tv_password, tv_new_password;
+    File file;
+    String path;
+    Uri uri;
 //    Dialog dialog;
 //    SimpleDraweeView profile_image;
 
     private static final int CAMERA_REQUEST = 1888;
-    ImageView imageView;
+    //    ImageView imageView;
+    CircleImageView imageView;
+    ImageView camera_icn;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     @Override
@@ -74,22 +94,49 @@ public class AccountSettingActivityNew extends BaseActivity {
         new_password_container = findViewById(R.id.account_two_frag__new_password_container);
 //        profile_image = findViewById(R.id.account_two_frag__profile_image);
         imageView = findViewById(R.id.account_two_frag__profile_image_temp);
+        camera_icn = findViewById(R.id.account_two_frag__icn_camera);
 
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.M)
-//            @Override
-//            public void onClick(View view) {
-//                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-//                {
-//                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-//                }
-//                else
-//                {
-//                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-//                }
-//            }
-//        });
+        camera_icn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                    } else {
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+//                        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+//                            // Create the File where the photo should go
+//                            try {
+//
+//                                file = createImageFile();
+//                                Toast.makeText(AccountSettingActivityNew.this, file.toString(), Toast.LENGTH_SHORT).show();
+//                                // Continue only if the File was successfully created
+//                                if (file != null) {
+//                                    Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
+//                                            AccountSettingActivityNew.this.getApplicationContext().getPackageName()+".provider",
+//                                            file);
+//                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                                }
+//                            } catch (Exception ex) {
+//                                // Error occurred while creating the File
+//                                Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+                    }
+                } else {
+                    if (ContextCompat.checkSelfPermission
+                            (AccountSettingActivityNew.this, Manifest.permission.CAMERA)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(
+                                AccountSettingActivityNew.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                MY_CAMERA_PERMISSION_CODE);
+                    }
+                }
+            }
+        });
 
         firstname_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +177,7 @@ public class AccountSettingActivityNew extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                if (tv_password.getText().toString().equals("") && tv_new_password.getText().toString().equals("")){
+                if (tv_password.getText().toString().equals("") && tv_new_password.getText().toString().equals("")) {
                     password_title.setText(R.string.password);
                     new_password_container.setVisibility(View.GONE);
                 }
@@ -145,11 +192,15 @@ public class AccountSettingActivityNew extends BaseActivity {
         save_changes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validatePassword(tv_new_password.getText().toString(), tv_new_password, "password must be atleast 6 characters")) {
-                    return;
+                if (!tv_password.getText().toString().equals("") || !tv_new_password.getText().toString().equals("")) {
+                    if (validatePassword(tv_new_password.getText().toString(), tv_new_password, "password must be atleast 6 characters")) {
+                        return;
+                    }
                 }
+//                RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
+//                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                 progress_rl.setVisibility(View.VISIBLE);
-                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(),tv_new_password.getText().toString());
+                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString());
             }
         });
 
@@ -184,6 +235,12 @@ public class AccountSettingActivityNew extends BaseActivity {
                     if (resource.getSuccess()) {
                         tv_firstname.setText(resource.getData().getFirstName());
                         tv_email.setText(resource.getData().getEmail());
+                        if (resource.getData().getProfile() != null) {
+                            Picasso.get()
+                                    .load(resource.getData().getProfile())
+                                    .into(imageView);
+                            Log.e("assss",resource.getData().getEmail());
+                        }
                         progress_rl.setVisibility(View.GONE);
                     } else {
                         Toast.makeText(AccountSettingActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
@@ -203,7 +260,7 @@ public class AccountSettingActivityNew extends BaseActivity {
     public void retrofitEditProfileData(final String userID, final String firstName, String old_password, String new_password) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
-        Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password,new_password);
+        Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password);
         call.enqueue(new Callback<GetEditProfileResponse>() {
             @Override
             public void onResponse(@NotNull Call<GetEditProfileResponse> call, @NotNull Response<GetEditProfileResponse> response) {
@@ -263,8 +320,45 @@ public class AccountSettingActivityNew extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photo);
+//            Bitmap photo = (Bitmap) data.getExtras().get("data");
+//            imageView.setImageBitmap(photo);
+//            file = new File("path");
+//            OutputStream os = null;
+//            try {
+//                os = new BufferedOutputStream(new FileOutputStream(file));
+//                photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+//                os.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//        }
+            if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+//                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+//                imageView.setImageBitmap(myBitmap);
+//            } else {
+//                Toast.makeText(this, "Request cancelled or something went wrong.", Toast.LENGTH_SHORT).show();
+//
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                imageView.setImageBitmap(photo);
+
+            }
         }
+
     }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        path = image.getAbsolutePath();
+        return image;
+    }
+
 }
