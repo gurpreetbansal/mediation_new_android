@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.rajesh.customcalendar:app:1.0.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/35a60514295347def198d4ffb3932944/jetified-app-1.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/35a60514295347def198d4ffb3932944/jetified-app-1.0.1/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rajesh.customcalendar/app/1.0.1/ca1af64ac3bf2cfd8af763759ae98db412ad1c95/app-1.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rajesh.customcalendar/app/1.0.1/c5c6ff3f087f5423e8a3961e2829720c1f08ab50/app-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
