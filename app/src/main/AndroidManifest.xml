@@ -147,7 +147,15 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.example.meditationapp.javaActivities.CategoriesActivities"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name="com.example.meditationapp.activities.SignUp_Activity"
             android:screenOrientation="portrait" /> <!-- <activity android:name=".activities.SplashActivity" /> -->
@@ -166,11 +174,11 @@
         <activity
             android:name="com.example.meditationapp.activities.Splash_Activity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"

@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:id="@+id/backView_RL"
     android:layout_height="wrap_content">
 
+    <RelativeLayout
+        android:id="@+id/backView_RL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        >
+
     <ImageView
-            android:id="@+id/recyclerListCat_back_img"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:gravity="center"/>
+        android:id="@+id/recyclerListCat_back_img"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_gravity="center"
+        android:clickable="true" />
 
     <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
         android:id="@+id/recyclerListCat_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/recyclerListCat_back_img"
+        android:layout_alignParentStart="@+id/recyclerListCat_back_img"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_weight="0.3"
         android:gravity="center|left|bottom"
         android:padding="@dimen/_5sdp"
         android:text="@string/weight_loss"
         android:textColor="@color/white"
-        android:textSize="@dimen/_15sdp"
-        android:layout_alignParentStart="@+id/recyclerListCat_back_img"
-        android:layout_alignBottom="@+id/recyclerListCat_back_img"/>
+        android:textSize="@dimen/_15sdp" />
 
+    </RelativeLayout>
 
 </RelativeLayout>
