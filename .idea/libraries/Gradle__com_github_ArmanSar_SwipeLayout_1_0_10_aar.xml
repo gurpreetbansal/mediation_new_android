@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.ArmanSar:SwipeLayout:1.0.10@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bd1adb1f12034573eb3f35603347fd24/jetified-SwipeLayout-1.0.10/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bd1adb1f12034573eb3f35603347fd24/jetified-SwipeLayout-1.0.10/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.ArmanSar/SwipeLayout/1.0.10/d4c46c4d2b223879d0d863161b858dfbc9d7ecd4/SwipeLayout-1.0.10-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
