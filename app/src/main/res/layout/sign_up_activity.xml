@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SignUp_Activity"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_150sdp"
+        android:src="@mipmap/logo"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_30sdp"/>
+    <LinearLayout
+        android:id="@+id/ll_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/txt_get_full"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginRight="@dimen/_40sdp"
+        android:background="@mipmap/signup_fb_bg"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:id="@+id/txt_fb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:text="@string/signup_facebook"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_google"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/txt_get_full"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_40sdp"
+        android:background="@mipmap/sign_up_google_bg"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:id="@+id/txt_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:text="@string/signup_google"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+    </LinearLayout>
+
+    <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+        android:id="@+id/txt_or"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:text="@string/or"
+        android:textColor="@color/gray_three"
+        android:textSize="@dimen/_15sdp" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_email"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_below="@+id/txt_get_full"
+        android:layout_marginLeft="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginRight="@dimen/_40sdp"
+        android:background="@mipmap/sign_up_email_bg"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:id="@+id/txt_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:text="@string/signup_email"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp" />
+
+    </LinearLayout>
+<!--    <com.t.myapplication.Custom_Widgets.CustomRegularTextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        android:layout_marginLeft="@dimen/_30sdp"-->
+<!--        android:layout_marginRight="@dimen/_30sdp"-->
+<!--        android:layout_marginTop="@dimen/_80sdp"-->
+<!--        android:layout_gravity="center|left"-->
+<!--        android:gravity="center|left"-->
+<!--        android:text="@string/signup_facebook"-->
+<!--        android:background="@mipmap/signup_fb_bg"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="@dimen/_15sdp"/>-->
+
+</LinearLayout>

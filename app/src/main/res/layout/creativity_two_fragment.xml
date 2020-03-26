@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.1">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar_four" />
+</LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.04"
+        android:src="@mipmap/bar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.17"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.35">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/profile_pic"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:weightSum="0.2">
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="@string/creativity_affirmations"
+                android:textColor="@color/gray_eight"
+                android:textSize="@dimen/_15sdp"
+                android:layout_gravity="bottom"
+                android:gravity="bottom"
+                android:layout_marginLeft="@dimen/_5sdp"/>
+            <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:text="@string/inspiration"
+                android:textColor="@color/gray_eight"
+                android:textSize="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_5sdp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+<Spinner
+    android:visibility="gone"
+    android:id="@+id/spinner_voice"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="0.07"
+    android:layout_marginLeft="@dimen/_18sdp"
+    android:backgroundTint="@color/gray_eight" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_weight="0.06"
+        android:orientation="horizontal"
+        android:weightSum="0.5"
+        android:layout_gravity="center|left"
+        android:gravity="center|left"
+        >
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:text="Marvin"
+            android:textColor="@color/gray_eight"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.03"
+            android:padding="@dimen/_5sdp"
+            android:src="@mipmap/drop_down_arrow"
+            android:layout_gravity="center|left"
+            android:tint="@color/gray_eight"
+            android:layout_marginTop="@dimen/_2sdp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@mipmap/play_progress_bar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_weight="0.3"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/ll_options"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_weight="0.30"
+            android:background="@mipmap/ll_bg"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/img_one"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:src="@mipmap/drop" />
+
+            <ImageView
+                android:id="@+id/img_two"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:src="@mipmap/black_stone" />
+
+            <ImageView
+                android:id="@+id/img_three"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:src="@mipmap/green_tree" />
+
+            <ImageView
+                android:id="@+id/img_four"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:src="@mipmap/water_splash" />
+
+            <ImageView
+                android:id="@+id/img_five"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:src="@mipmap/flower" />
+
+            <ImageView
+                android:id="@+id/img_six"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:src="@mipmap/beat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.3" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.2"
+                android:src="@mipmap/five_two" />
+
+            <ImageView
+                android:id="@+id/img_music"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.2"
+                android:src="@mipmap/music" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.2"
+                android:src="@mipmap/five_one"
+                android:layout_marginLeft="@dimen/_5sdp"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_weight="0.3" />
+        </LinearLayout>
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/img_vol_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/volum" />
+    </LinearLayout>
+
+
+</LinearLayout>

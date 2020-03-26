@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_lib"
+        android:icon="@mipmap/lid2"
+        android:title="" />
+
+    <item
+        android:id="@+id/navigation_soundn"
+        android:icon="@drawable/sound"
+        android:title=""/>
+
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/record"
+        android:title=""/>
+    <item
+        android:id="@+id/navigation_accountt"
+        android:icon="@drawable/account"
+        android:title=""/>
+
+
+
+</menu>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_lib"
+        android:icon="@drawable/navi_lib"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/navigation_soundn"
+        android:icon="@drawable/navi_sound"
+        android:title=""
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/navi_record"
+        android:title=""
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/navigation_accountt"
+        android:icon="@drawable/navi_account"
+        android:title=""
+        app:showAsAction="always"/>
+
+
+
+</menu>
+  android:icon="@drawable/record"
+    android:icon="@mipmap/lid2"
+    android:icon="@drawable/account"-->

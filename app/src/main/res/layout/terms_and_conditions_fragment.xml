@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:weightSum="1">
+        <ImageView
+            android:id="@+id/img_back_terms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@mipmap/back_button"
+            android:tint="@color/gray_eight"
+            android:padding="@dimen/_15sdp"/>
+
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:id="@+id/title_txt_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:textSize="@dimen/_18sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/gray_eight">
+
+        </com.example.meditationapp.Custom_Widgets.CustomBoldtextView>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:padding="@dimen/_15sdp"/>
+    </LinearLayout>
+
+<!--    <ScrollView-->
+<!--        android:id="@+id/root_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/_5sdp">
+
+<!--            <com.t.meditationapp.Custom_Widgets.CustomRegularTextView-->
+<!--                android:id="@+id/txt_terms_conditions"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity="center|left"-->
+<!--                android:text="@string/lorm"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="@dimen/_12sdp"-->
+<!--                android:autoLink="web" />-->
+
+            <WebView
+                android:id="@+id/webView_Terms_Txt_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+<!--    </ScrollView>-->
+</LinearLayout>
