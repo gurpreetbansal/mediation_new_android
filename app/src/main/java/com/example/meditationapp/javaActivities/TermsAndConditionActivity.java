@@ -47,6 +47,7 @@ public class TermsAndConditionActivity extends BaseActivity {
         showWebPage();
         progressDialog = new ProgressDialog(TermsAndConditionActivity.this);
         progressDialog.setMessage("Please wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         showDialog();
 
 //        webView.loadUrl("https://selfpause.com/terms-conditions/");
@@ -87,6 +88,7 @@ public class TermsAndConditionActivity extends BaseActivity {
 
         progressDialog = new ProgressDialog(TermsAndConditionActivity.this);
         progressDialog.setMessage("Loading website........");
+        progressDialog.setCanceledOnTouchOutside(false);
         webView.setWebViewClient(new ProgressDialogClass(progressDialog,getApplicationContext()));
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);

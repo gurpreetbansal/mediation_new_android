@@ -123,6 +123,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait......");
+        progressDialog.setCanceledOnTouchOutside(false);
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,13 +199,20 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
                         try {
                             String email= object.getString("email");
+
                             Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
                             finish();
-                            Toast.makeText(LoginActivityNew.this, "Login Successfully" + email, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivityNew.this, "Login Successfully " + email, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
+
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("email",email);
+                            editor.apply();
 
                             Log.e("RESULT EMAIL",email);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+//                            e.printStackTrace();
                         }
 
                     }

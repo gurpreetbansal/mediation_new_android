@@ -62,6 +62,7 @@ public class CategoriesActivities extends BaseActivity {
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please wait......");
+        progressDialog.setCanceledOnTouchOutside(false);
         showDialog();
 
          next_cat= findViewById(R.id.img_next_cat);

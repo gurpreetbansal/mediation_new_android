@@ -6,7 +6,10 @@
     <RelativeLayout
         android:id="@+id/backView_RL"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_65sdp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:background="@drawable/categories_back_selected"
         android:layout_marginTop="@dimen/_15sdp"
         >
 
@@ -14,6 +17,10 @@
         android:id="@+id/recyclerListCat_back_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_60sdp"
+        android:layout_margin="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:src="@mipmap/weight_loss_bg_three"
         android:layout_gravity="center"
         android:clickable="true" />
 

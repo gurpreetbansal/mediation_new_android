@@ -48,6 +48,7 @@ public class PrivacyPolicyActivity extends BaseActivity {
 
         progressDialog = new ProgressDialog(PrivacyPolicyActivity.this);
         progressDialog.setMessage("Please wait...");
+        progressDialog.setCanceledOnTouchOutside(false);
         showDialog();
 
 
@@ -92,6 +93,7 @@ public class PrivacyPolicyActivity extends BaseActivity {
 
         progressDialog = new ProgressDialog(PrivacyPolicyActivity.this);
         progressDialog.setMessage("Loading website.......");
+        progressDialog.setCanceledOnTouchOutside(false);
         webView.setWebViewClient(new ProgressDialogClass(progressDialog,getApplicationContext()));
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);

@@ -48,12 +48,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         Picasso.get().load(categoriesModelClasses.get(position).getFileImage()).into(holder.backImageView);
 
 
-        holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? R.drawable.categories_back_selected : Color.WHITE);
+        holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? Color.parseColor("#32b2df")  : Color.WHITE);
          holder.backImageView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  categoriesModelClass.setSelected(!categoriesModelClass.isSelected());
-                 holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? R.drawable.categories_back_selected : Color.WHITE);
+                 holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? Color.parseColor("#32b2df")  : Color.WHITE);
              }
          });
 
