@@ -24,6 +24,7 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
 
     val mypreference = "mypref"
     val user_id = "user_id"
+    val email= "email"
 
 //    private val onNavigationItemSelectedListener =
 //        BottomNavigationView.OnNavigationItemSelectedListener { item ->
