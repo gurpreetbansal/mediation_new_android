@@ -63,7 +63,8 @@
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/accountFragment_userProfileIV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
@@ -78,6 +79,7 @@
                     android:orientation="vertical">
 
                     <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                        android:id="@+id/accountFragment_userNameTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

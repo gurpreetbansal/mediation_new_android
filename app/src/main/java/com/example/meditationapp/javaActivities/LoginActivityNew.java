@@ -81,6 +81,9 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     LoginButton loginButton;
     CallbackManager callbackManager;
     private static final String EMAIL="email";
+    private static final String PROFILE="public_profile";
+    private static final String FIRST_NAME="first_name";
+    private static final String LAST_NAME="last_name";
     LoginManager loginManager;
     ConstraintLayout ll_login_facebook;
 
@@ -178,67 +181,135 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             loginButton=findViewById(R.id.login_button_facebook_login);
             ll_login_facebook=findViewById(R.id.ll_login_facebook);
 //            loginButton.setReadPermissions(Arrays.asList(EMAIL));
-            loginButton.setReadPermissions(Arrays.asList(EMAIL));
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
 
-//                Intent intent=new Intent(LoginActivityNew.this,HomeActivity.class);
-//                startActivity(intent);
-//                finish();
-//                Toast.makeText(LoginActivityNew.this, ""+loginResult.toString(), Toast.LENGTH_SHORT).show();
+//        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//
+//                loginButton.setReadPermissions(Arrays.asList("email","user_birthday","user_hometown","public_profile"));
+////                Intent intent=new Intent(LoginActivityNew.this,HomeActivity.class);
+////                startActivity(intent);
+////                finish();
+////                Toast.makeText(LoginActivityNew.this, ""+loginResult.toString(), Toast.LENGTH_SHORT).show();
+//
+//        GraphRequest request = GraphRequest.newMeRequest(
+//                loginResult.getAccessToken()
+//                , new GraphRequest.GraphJSONObjectCallback() {
+//                    @Override
+//                    public void onCompleted(JSONObject object, GraphResponse response) {
+//
+//                        Log.e("Signup Activity",response.toString());
+//
+//                        try {
+//                            String email= object.getString("email");
+////                            String birthday= object.getString("user_birthday");
+////                            String hometown= object.getString("user_hometown");
+////                            String profile= object.getString("public_profile");
+////                            String first_name = object.getString("")
+////                            String first_name= object.getString("first_name");
+////                            String last_name= object.getString("last_name");
+////                            String profile = object.getString("public_profile");
+////                            String user_name = object.getString("name");
+//
+//                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
+//                            finish();
+////                            Toast.makeText(LoginActivityNew.this, "Login Successfully " + email, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
+//
+//                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+//                            SharedPreferences.Editor editor = pref.edit();
+//                            editor.putString("email",email);
+////                            editor.putString("public_profile",first_name);
+////                            editor.putString("user_name",last_name);
+//                            editor.apply();
+//
+//                            Log.e("RESULT EMAIL",email);
+////                            Log.e("RESULT PROFILE",profile);
+////                            Log.e("RESULT USER HOME",hometown);
+////                            Log.e("RESULT USER BIRTHDAY",birthday);
+//
+//                        } catch (JSONException e) {
+////                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//                );
+//
+//                Bundle parameter = new Bundle();
+//                parameter.putString("fields","email");
+//                request.setParameters(parameter);
+//                request.executeAsync();
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Toast.makeText(LoginActivityNew.this, "Cancel", Toast.LENGTH_SHORT).show();
+//
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Toast.makeText(LoginActivityNew.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+//                Log.e("FACEBOOK ERROR",error.toString());
+//
+//            }
+//        });
 
-        GraphRequest request = GraphRequest.newMeRequest(
-                loginResult.getAccessToken()
-                , new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                        Log.e("Signup Activity",response.toString());
-
-                        try {
-                            String email= object.getString("email");
-
-                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
-                            finish();
-//                            Toast.makeText(LoginActivityNew.this, "Login Successfully " + email, Toast.LENGTH_SHORT).show();
-                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
-
-                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("email",email);
-                            editor.apply();
-
-                            Log.e("RESULT EMAIL",email);
-                        } catch (JSONException e) {
-//                            e.printStackTrace();
-                        }
-
-                    }
-                }
-                );
-
-                Bundle parameter = new Bundle();
-                parameter.putString("fields","email");
-                request.setParameters(parameter);
-                request.executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivityNew.this, "Cancel", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(LoginActivityNew.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("FACEBOOK ERROR",error.toString());
-
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("public_profile", "user_friends"));
             }
         });
 
+        //Register a callback
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object,GraphResponse response) {
+                                        try {
+                                           String nome = object.getString("name");
+                                           String email = object.getString("email");
+                                            String idfb  = loginResult.getAccessToken().getUserId();
+                                            logarFb(idfb, nome, email);
+
+                                Log.e("RESULT EMAIL",nome);
+//                            Log.e("RESULT PROFILE",profile);
+//                            Log.e("RESULT USER HOME",hometown);
+//                            Log.e("RESULT USER BIRTHDAY",birthday);
+
+                                        } catch(JSONException ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    }
+
+                                    private void logarFb(String idfb, String nome, String email) {
+
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender, birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        //cancelled
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        //error
+                    }
+                });
 
         ll_login_facebook.setOnClickListener(new View.OnClickListener() {
                  @Override

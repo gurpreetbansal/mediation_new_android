@@ -12,6 +12,7 @@ import com.app.myapplication.fragment.LibraryFragment
 import com.app.myapplication.fragment.RecordFragment
 import com.app.myapplication.fragment.SoundFragment
 import com.example.meditationapp.R
+import com.example.meditationapp.javaActivities.AccountFragment
 import com.example.meditationapp.javaActivities.LogoutActivity
 import kotlinx.android.synthetic.main.bottom_navi_layout.*
 
@@ -154,9 +155,14 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             img_bottom_record.visibility = View.INVISIBLE
             img_bottom_account.visibility = View.VISIBLE
 
+            val fragment = AccountFragment()
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, fragment)
+            transaction.commit()
 
-            val homeFragment = AccountThreeFragment.newInstance()
-            openFragment(homeFragment)
+
+//            val homeFragment = AccountThreeFragment.newInstance()
+//            openFragment(homeFragment)
 
         }
         // val navView: BottomNavigationView = findViewById(R.id.nav_view)

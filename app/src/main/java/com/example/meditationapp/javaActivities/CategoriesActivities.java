@@ -166,8 +166,8 @@ public class CategoriesActivities extends BaseActivity {
                                 text += categoriesModelClass.getName();
                                 image += categoriesModelClass.getFileImage();
 
-                                Log.e("TAG","OUTPUT : " +text);
-                                Log.e("TAG","OUTPUT : " +image);
+//                                Log.e("TAG","OUTPUT : " +text);
+//                                Log.e("TAG","OUTPUT : " +image);
                             }
 
                         }
