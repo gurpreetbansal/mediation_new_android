@@ -65,6 +65,8 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     ApiInterface apiInterface;
     private LoginSendData loginSendData = new LoginSendData();
 
+    GoogleSignInClient googleSignInClient;
+    GoogleSignInOptions gso;
 
     String email_txt, password_txt, device_type = "Android";
     ProgressDialog progressDialog;
@@ -94,6 +96,12 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 //        AppEventsLogger.activateApp(this);
 //        mAuth = FirebaseAuth.getInstance();
 //          printHashKey();
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         try {
             PackageInfo info = getPackageManager().getPackageInfo(

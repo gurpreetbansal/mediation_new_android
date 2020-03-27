@@ -34,6 +34,10 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.GetEditProfileResponse;
 import com.example.meditationapp.ModelClasses.GetProfileResponse;
 import com.example.meditationapp.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
@@ -360,5 +364,4 @@ public class AccountSettingActivityNew extends BaseActivity {
         path = image.getAbsolutePath();
         return image;
     }
-
 }

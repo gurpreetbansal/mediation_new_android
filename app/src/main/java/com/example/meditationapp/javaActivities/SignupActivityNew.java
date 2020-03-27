@@ -26,6 +26,7 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -58,19 +59,21 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
     TextView txt_login, txt_sign_up;
     String email_txt, password_txt, name_txt, social_id, social_type, device_type = "Android", device_token, response;
     ApiInterface apiInterface;
-    private SignupSendData sendData = new SignupSendData();
+    private SignupSendData sendData;
     CustomBoldEditText ed_email, ed_name, ed_password;
 
     private static final String TAG = null;
-    private LinearLayout loginActivity_ll_google;
+    private LinearLayout signupActivity_ll_google;
     GoogleApiClient googleApiClient;
-    private static final int REQ_CODE = 1;
-    GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInOptions gso;
+    public static final int SIGN_IN = 1;
+//    private static final int REQ_CODE = 1;
+//    GoogleSignInClient mGoogleSignInClient;
 //    SignInButton signInButton;
 
     LoginButton loginButton;
     CallbackManager callbackManager;
-    private static final String EMAIL="email";
+    private static final String EMAIL = "email", GOOGLE= "google", FACEBOOK = "facebook";
     LinearLayout ll_login_facebook;
 
     ProgressDialog progressDialog;
@@ -83,16 +86,20 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
         Window window = this.getWindow();
 // clear FLAG_TRANSLUCENT_STATUS flag:
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
 // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait......");
 
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         ed_email = findViewById(R.id.signup__email);
         ed_name = findViewById(R.id.signup__name);
@@ -141,12 +148,13 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
                     return;
                 }
 
+                sendData = new SignupSendData();
                 sendData.setFirstName(name_txt);
                 sendData.setEmail(email_txt);
                 sendData.setPassword(password_txt);
                 sendData.setDeviceType(device_type);
                 sendData.setDeviceToken(UUID.randomUUID().toString());
-                Log.e("email+", sendData.getEmail());
+//                Log.e("email+", sendData.getEmail());
                 retrofitData();
 
                 showDialog();
@@ -154,31 +162,20 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
         });
 
 //        signInButton=findViewById(R.id.signinwithGogle);
-        loginActivity_ll_google=findViewById(R.id.ll_google);
+        signupActivity_ll_google = findViewById(R.id.signup_ll_google);
 
-
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
-        loginActivity_ll_google.setOnClickListener(new View.OnClickListener() {
+        signupActivity_ll_google.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, REQ_CODE);
+            public void onClick(View v) {
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, SIGN_IN);
             }
         });
 
-
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton=findViewById(R.id.login_button_facebook_signup);
-        ll_login_facebook=findViewById(R.id.ll_facebook_signup);
+        loginButton = findViewById(R.id.login_button_facebook_signup);
+        ll_login_facebook = findViewById(R.id.ll_facebook_signup);
 //            loginButton.setReadPermissions(Arrays.asList(EMAIL));
         loginButton.setReadPermissions(Arrays.asList(EMAIL));
 
@@ -197,25 +194,26 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                Log.e("Signup Activity",response.toString());
+                                Log.e("Signup Activity", response.toString());
 
-                            try {
-                                String email= object.getString("email");
-                                Intent intent=new Intent(SignupActivityNew.this, HomeActivity.class);startActivity(intent);
-                                 finish();
-                               Toast.makeText(SignupActivityNew.this, "Login Successfully" + email, Toast.LENGTH_SHORT).show();
+                                try {
+                                    String email = object.getString("email");
+                                    Intent intent = new Intent(SignupActivityNew.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                    Toast.makeText(SignupActivityNew.this, "Login Successfully" + email, Toast.LENGTH_SHORT).show();
 
-                                Log.e("RESULT EMAIL",email);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                                    Log.e("RESULT EMAIL", email);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         }
                 );
 
                 Bundle parameter = new Bundle();
-                parameter.putString("fields","email");
+                parameter.putString("fields", "email");
                 request.setParameters(parameter);
                 request.executeAsync();
 
@@ -229,8 +227,8 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(SignupActivityNew.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("FACEBOOK ERROR",error.toString());
+                Toast.makeText(SignupActivityNew.this, "" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("FACEBOOK ERROR", error.toString());
 
             }
         });
@@ -242,7 +240,6 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
                 loginButton.performClick();
             }
         });
-
 
 
     }
@@ -277,7 +274,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
                         hideDialog();
 
-                        Log.e("Success Response++++", code + " " + msg);
+                        Log.e("Success Response++++", code + " " + msg+" "+resource.getData().getUserId());
                     } else {
                         Toast.makeText(SignupActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
 
@@ -306,13 +303,13 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
     public void showDialog() {
 
-        if(progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && !progressDialog.isShowing())
             progressDialog.show();
     }
 
     public void hideDialog() {
 
-        if(progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 
@@ -328,15 +325,13 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQ_CODE) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
+        if (requestCode == SIGN_IN) {
+            showDialog();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-        }
-        else {
+        } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
@@ -346,16 +341,25 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI.
-//            updateUI(account);
+            sendData = new SignupSendData();
+            sendData.setFirstName(account.getDisplayName());
+            sendData.setEmail(account.getEmail());
+            sendData.setDeviceType(device_type);
+            sendData.setDeviceToken(UUID.randomUUID().toString());
+            sendData.setSocialType(FACEBOOK);
+            sendData.setSocialId(account.getId());
 
-            Toast.makeText(this, "Successfully registered"+account, Toast.LENGTH_SHORT).show();
+            Log.e("socialid",account.getId());
+            retrofitData();
+
+//            startActivity(new Intent(SignupActivityNew.this, SettingActivity.class));
+
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
