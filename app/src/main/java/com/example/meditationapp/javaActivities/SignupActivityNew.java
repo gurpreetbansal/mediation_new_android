@@ -92,6 +92,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please wait......");
+        progressDialog.setCanceledOnTouchOutside(false);
 
 
         ed_email = findViewById(R.id.signup__email);

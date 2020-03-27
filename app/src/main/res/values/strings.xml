@@ -26,7 +26,7 @@
     <string name="when_is_the">When is the best time \n for you to meditate?</string>
     <string name="togglebutton">toggle</string>
     <string name="categories">Categories</string>
-    <string name="choose_topics">Choose topics that \n interest you</string>
+    <string name="choose_topics">Choose to pics that \n interest you</string>
     <string name="weight_loss">Weight Loss</string>
     <string name="professional">Professional</string>
     <string name="stress">Stress</string>
@@ -126,8 +126,6 @@
 
     <string name="loading">Please wait...</string>
 
-<!--    <string name="facebook_app_id">855243871567219</string>-->
-<!--    <string name="fb_login_protocol_scheme">fb855243871567219</string>-->
 
     <string name="facebook_app_id">606847760046829</string>
     <string name="fb_login_protocol_scheme">fb606847760046829</string>

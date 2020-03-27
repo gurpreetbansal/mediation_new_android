@@ -3,7 +3,8 @@ package com.example.meditationapp.ModelClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CategoriesModelClass {
+public class SetCategoriesModelClass {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -28,8 +29,6 @@ public class CategoriesModelClass {
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-
-    private boolean isSelected = false;
 
     public Integer getId() {
         return id;
@@ -93,15 +92,5 @@ public class CategoriesModelClass {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
-    }
-
-
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-
-    public boolean isSelected() {
-        return isSelected;
     }
 }
