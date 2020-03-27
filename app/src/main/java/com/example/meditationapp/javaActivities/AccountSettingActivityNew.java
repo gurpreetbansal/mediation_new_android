@@ -28,7 +28,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.meditationapp.BuildConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -121,7 +120,7 @@ public class AccountSettingActivityNew extends BaseActivity {
 //                                Toast.makeText(AccountSettingActivityNew.this, file.toString(), Toast.LENGTH_SHORT).show();
                                 // Continue only if the File was successfully created
                                 Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
-                                        BuildConfig.APPLICATION_ID + ".provider",
+                                        getApplicationContext().getPackageName() + ".provider",
                                         file);
                                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
