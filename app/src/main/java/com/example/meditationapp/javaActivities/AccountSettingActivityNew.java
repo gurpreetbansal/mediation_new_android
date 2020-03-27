@@ -235,11 +235,11 @@ public class AccountSettingActivityNew extends BaseActivity {
                     if (resource.getSuccess()) {
                         tv_firstname.setText(resource.getData().getFirstName());
                         tv_email.setText(resource.getData().getEmail());
-                        if (resource.getData().getProfile() != null) {
+                        if (!resource.getData().getProfile().equals("")) {
                             Picasso.get()
                                     .load(resource.getData().getProfile())
                                     .into(imageView);
-                            Log.e("assss",resource.getData().getEmail());
+//                            Log.e("assss",resource.getData().getProfile()+"assa");
                         }
                         progress_rl.setVisibility(View.GONE);
                     } else {
