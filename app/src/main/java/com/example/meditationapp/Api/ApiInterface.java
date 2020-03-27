@@ -12,6 +12,7 @@ import com.example.meditationapp.ModelClasses.GetVoiceResponse;
 import com.example.meditationapp.ModelClasses.LoginModelClass;
 import com.example.meditationapp.ModelClasses.LoginSendData;
 import com.example.meditationapp.ModelClasses.LogoutModelClass;
+import com.example.meditationapp.ModelClasses.SetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.ModelClasses.SignupModelClass;
 import com.example.meditationapp.ModelClasses.SignupSendData;
@@ -66,6 +67,9 @@ public interface ApiInterface {
     @POST("collections/getContentsInfo")
     Call<GetCategoriesModelClass> getCategory(@Query("user_id") String userId,
                                                     @Query("type_id") String typeId);
+
+    @POST("collections/setContentsInfo")
+    Call<SetCategoriesModelClass> setCategory();
 
 
 }

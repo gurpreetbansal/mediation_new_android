@@ -41,6 +41,9 @@ public class CategoriesActivities extends BaseActivity {
     List<CategoriesModelClass> categoriesModelClasses;
      ProgressDialog progressDialog;
 
+     String text= "";
+     String image="";
+
 //    CategoriesModelClass categoriesModelClass=new CategoriesModelClass();
 
     @Override
@@ -59,6 +62,7 @@ public class CategoriesActivities extends BaseActivity {
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please wait......");
+        progressDialog.setCanceledOnTouchOutside(false);
         showDialog();
 
          next_cat= findViewById(R.id.img_next_cat);
@@ -156,6 +160,17 @@ public class CategoriesActivities extends BaseActivity {
                         recyclerView.setLayoutManager(linearLayoutManager);
                         CategoriesAdapter categoriesAdapter=new CategoriesAdapter(categoriesModelClasses);
                         recyclerView.setAdapter(categoriesAdapter);
+
+                        for (CategoriesModelClass categoriesModelClass : categoriesModelClasses){
+                            if (categoriesModelClass.isSelected()){
+                                text += categoriesModelClass.getName();
+                                image += categoriesModelClass.getFileImage();
+
+                                Log.e("TAG","OUTPUT : " +text);
+                                Log.e("TAG","OUTPUT : " +image);
+                            }
+
+                        }
 
                         hideDialog();
 
