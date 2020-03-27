@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -26,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.meditationapp.BuildConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -38,12 +41,18 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,11 +67,11 @@ public class AccountSettingActivityNew extends BaseActivity {
     GetProfileResponse resource;
     RelativeLayout progress_rl;
     CustomBoldEditText tv_firstname, tv_password, tv_new_password;
-    File file;
     String path;
     Uri uri;
-//    Dialog dialog;
+    //    Dialog dialog;
 //    SimpleDraweeView profile_image;
+    String mediaPath, postPath;
 
     private static final int CAMERA_REQUEST = 1888;
     //    ImageView imageView;
@@ -103,27 +112,28 @@ public class AccountSettingActivityNew extends BaseActivity {
                         requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                     } else {
                         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
 
-//                        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-//                            // Create the File where the photo should go
-//                            try {
-//
-//                                file = createImageFile();
+                        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                            // Create the File where the photo should go
+                            try {
+                                File file = null;
+                                file = createImageFile();
 //                                Toast.makeText(AccountSettingActivityNew.this, file.toString(), Toast.LENGTH_SHORT).show();
-//                                // Continue only if the File was successfully created
-//                                if (file != null) {
-//                                    Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
-//                                            AccountSettingActivityNew.this.getApplicationContext().getPackageName()+".provider",
-//                                            file);
-//                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-//                                }
-//                            } catch (Exception ex) {
-//                                // Error occurred while creating the File
-//                                Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
+                                // Continue only if the File was successfully created
+                                Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
+                                        BuildConfig.APPLICATION_ID + ".provider",
+                                        file);
+                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                            } catch (Exception ex) {
+                                // Error occurred while creating the File
+                                Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+//                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+
+
                     }
                 } else {
                     if (ContextCompat.checkSelfPermission
@@ -197,10 +207,15 @@ public class AccountSettingActivityNew extends BaseActivity {
                         return;
                     }
                 }
-//                RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), file);
-//                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+                File file = new File(path);
+                RequestBody fileReqBody = RequestBody.create(MediaType.parse("*/*"), file);
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                 progress_rl.setVisibility(View.VISIBLE);
-                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString());
+
+                SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+                userID = pref.getString(user_id, "");
+
+                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString(),part);
             }
         });
 
@@ -257,7 +272,7 @@ public class AccountSettingActivityNew extends BaseActivity {
 
     }
 
-    public void retrofitEditProfileData(final String userID, final String firstName, String old_password, String new_password) {
+    public void retrofitEditProfileData(final String userID, final String firstName, String old_password, String new_password, MultipartBody.Part part) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
         Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password);
@@ -285,10 +300,12 @@ public class AccountSettingActivityNew extends BaseActivity {
 
                     } else {
                         Toast.makeText(AccountSettingActivityNew.this, getEditProfileresources.getMessages(), Toast.LENGTH_SHORT).show();
+                        Log.e("testa", getEditProfileresources.getSuccess().toString());
                         progress_rl.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(AccountSettingActivityNew.this, response.message(), Toast.LENGTH_SHORT).show();
+                    Log.e("testb", "b");
                     progress_rl.setVisibility(View.GONE);
                 }
             }
@@ -320,26 +337,44 @@ public class AccountSettingActivityNew extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-//            Bitmap photo = (Bitmap) data.getExtras().get("data");
-//            imageView.setImageBitmap(photo);
+            if (data != null) {
+
+//                Uri selected = data.getData();
+//                String[] filePath = {MediaStore.Images.Media.DATA};
+
+//                Cursor cursor = getContentResolver().query(selected, filePath, null, null, null);
+//                assert cursor != null;
+//                cursor.moveToFirst();
+//
+//                int columnIndex = cursor.getColumnIndex(filePath[0]);
+//                mediaPath = cursor.getString(columnIndex);
+
+                imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+//                mediaPath = path;
+
+//                postPath = mediaPath;
+//                Bitmap photo = (Bitmap) data.getExtras().get("data");aa
+//                imageView.setImageBitmap(photo);aa
+
 //            file = new File("path");
-//            OutputStream os = null;
-//            try {
-//                os = new BufferedOutputStream(new FileOutputStream(file));
-//                photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-//                os.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//        }
-            if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+//                OutputStream os = null;aaaa
+//                try {
+//                    os = new BufferedOutputStream(new FileOutputStream(file));
+//                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
+//                    os.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }aaaa
+//            if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 //                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
 //                imageView.setImageBitmap(myBitmap);
 //            } else {
 //                Toast.makeText(this, "Request cancelled or something went wrong.", Toast.LENGTH_SHORT).show();
+////
+//                Bitmap photo = (Bitmap) data.getExtras().get("data");
+//                imageView.setImageBitmap(photo);
 //
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                imageView.setImageBitmap(photo);
-
+//            }
             }
         }
 
@@ -350,11 +385,7 @@ public class AccountSettingActivityNew extends BaseActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = new File(storageDir, imageFileName + ".jpg");
 
         // Save a file: path for use with ACTION_VIEW intents
         path = image.getAbsolutePath();
