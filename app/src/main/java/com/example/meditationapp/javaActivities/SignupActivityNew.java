@@ -170,6 +170,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
             public void onClick(View v) {
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(intent, SIGN_IN);
+
             }
         });
 

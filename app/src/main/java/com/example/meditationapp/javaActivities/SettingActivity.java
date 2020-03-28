@@ -1,6 +1,7 @@
 package com.example.meditationapp.javaActivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +38,7 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
 
     GoogleApiClient googleApiClient;
     GoogleSignInOptions gso;
-    public static final int SIGN_IN=1;
+    public static final int SIGN_IN = 1;
 
 
     @Override
@@ -56,8 +57,8 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
-        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso).build();
+        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         img_account_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,10 +133,14 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
                 Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
-                        if (status.isSuccess()){
+                        if (status.isSuccess()) {
                             goToLoginActivity();
-                        }else {
-                            Toast.makeText(SettingActivity.this, status.getStatusMessage()+"failedddd", Toast.LENGTH_SHORT).show();
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("user_id", null);
+                            editor.apply();
+                        } else {
+                            Toast.makeText(SettingActivity.this, status.getStatusMessage() + "failedddd", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -143,14 +148,14 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
         });
     }
 
-    public  void handleSignInResult(GoogleSignInResult result){
-        if (result.isSuccess()){
+    public void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
-            Log.e("data",account.getEmail().toString());
+            Log.e("data", account.getEmail().toString());
         }
     }
 
-    public void goToLoginActivity(){
+    public void goToLoginActivity() {
         startActivity(new Intent(SettingActivity.this, LoginActivityNew.class));
         finishAffinity();
     }
@@ -164,10 +169,10 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
     protected void onStart() {
         super.onStart();
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if (opr.isDone()){
+        if (opr.isDone()) {
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
-        }else {
+        } else {
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(@NonNull GoogleSignInResult result) {
