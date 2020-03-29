@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.meditationapp.ModelClasses.GetSocialLoginResponse;
 import com.example.meditationapp.activities.LoginActivity;
 import com.example.meditationapp.activities.VoiceSelect_Activity;
 import com.facebook.CallbackManager;
@@ -76,7 +77,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
 //    private FirebaseAuth mAuth;
 
-//    private SignInButtonImpl signInButton;
+    //    private SignInButtonImpl signInButton;
     private ConstraintLayout loginActivity_ll_google;
     //    GoogleApiClient googleApiClient;
     private static final int REQ_CODE = 1;
@@ -85,9 +86,9 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
     LoginButton loginButton;
     CallbackManager callbackManager;
-    private static final String EMAIL = "email";
     LoginManager loginManager;
     ConstraintLayout ll_login_facebook;
+    private static final String EMAIL = "email", GOOGLE = "google", FACEBOOK = "facebook";
 
 
     @Override
@@ -322,6 +323,23 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
     }
 
+    public void socialLoginRetrofit(String socialId, String socialType, String email, String profile, String name, String deviceType, String deviceToken) {
+        apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
+        Call<GetSocialLoginResponse> call = apiInterface.getSocialLogin(socialId, socialType, email, profile, name, deviceType, deviceToken);
+
+        call.enqueue(new Callback<GetSocialLoginResponse>() {
+            @Override
+            public void onResponse(Call<GetSocialLoginResponse> call, Response<GetSocialLoginResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<GetSocialLoginResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     private boolean validateName(String name, CustomBoldEditText nameET, String err_msg) {
         if (name.isEmpty()) {
             nameET.setError(err_msg);
@@ -372,8 +390,8 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             Log.e("TAG++++++++", account.getEmail());
-            startActivity(new Intent(LoginActivityNew.this, VoiceSelect_Activity.class));
-            hideDialog();
+            socialLoginRetrofit(account.getId(), FACEBOOK, account.getEmail(), account.getPhotoUrl().toString(),
+                    account.getDisplayName(), device_type, UUID.randomUUID().toString());
         } catch (ApiException e) {
 
             Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
