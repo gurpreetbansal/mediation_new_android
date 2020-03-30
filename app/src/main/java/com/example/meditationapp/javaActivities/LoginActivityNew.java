@@ -318,9 +318,8 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
             @Override
             public void onFailure(Call<LoginModelClass> call, Throwable t) {
-                Log.e("Failure Response++++", t.getMessage());
+//                Log.e("Failure Response++++", t.getMessage());
                 Toast.makeText(LoginActivityNew.this, t.toString(), Toast.LENGTH_SHORT).show();
-
                 hideDialog();
             }
         });
@@ -391,7 +390,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-        Log.e("Failure Response++++", connectionResult.getErrorMessage());
+//        Log.e("Failure Response++++", connectionResult.getErrorMessage());
         Toast.makeText(this, "" + connectionResult, Toast.LENGTH_SHORT).show();
         hideDialog();
 
@@ -403,12 +402,12 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_CODE) {
-            showDialog();
+//            showDialog();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            Log.e("data", "he-----------");
+//            Log.e("data", "he-----------");
         }
 
 
@@ -418,7 +417,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            Log.e("TAG++++++++", account.getEmail());
+//            Log.e("TAG++++++++", account.getEmail());
             String photoUrl = "";
             if (account.getPhotoUrl() != null) {
                 photoUrl = account.getPhotoUrl().toString();

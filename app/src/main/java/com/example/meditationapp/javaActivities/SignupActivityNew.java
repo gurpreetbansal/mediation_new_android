@@ -348,7 +348,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
             sendData.setEmail(account.getEmail());
             sendData.setDeviceType(device_type);
             sendData.setDeviceToken(UUID.randomUUID().toString());
-            sendData.setSocialType(FACEBOOK);
+            sendData.setSocialType(GOOGLE);
             sendData.setSocialId(account.getId());
 
             Log.e("socialid",account.getId());

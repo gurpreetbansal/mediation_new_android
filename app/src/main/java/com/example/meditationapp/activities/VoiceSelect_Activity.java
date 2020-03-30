@@ -108,6 +108,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                     mediaPlayer = null;
                 }
                 setVoiceModelClass.setUserId(userID);
+                Log.e("userID",userID);
                 setVoiceModelClass.setVoiceId(voiceId);
                 setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
                 setVoiceModelClass.setStatus(status);
