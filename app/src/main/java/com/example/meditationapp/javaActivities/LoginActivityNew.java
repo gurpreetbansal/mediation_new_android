@@ -37,6 +37,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.internal.SignInButtonImpl;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -297,14 +299,16 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("user_id", resource.getData().getUserId());
+                        editor.putString("social_type", EMAIL);
                         editor.apply();
 
                         startActivity(new Intent(LoginActivityNew.this, HomeActivity.class));
                         Toast.makeText(LoginActivityNew.this, msg, Toast.LENGTH_SHORT).show();
 
                         hideDialog();
+                        finish();
 
-                        Log.e("Success Response++++", code + " " + msg);
+//                        Log.e("Success Response++++", code + " " + msg);
                     } else {
                         Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
                         hideDialog();
@@ -323,7 +327,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
     }
 
-    public void socialLoginRetrofit(String socialId, String socialType, String email, String profile, String name, String deviceType, String deviceToken) {
+    public void socialLoginRetrofit(String socialId, final String socialType, String email, String profile, String name, String deviceType, String deviceToken) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<GetSocialLoginResponse> call = apiInterface.getSocialLogin(socialId, socialType, email, profile, name, deviceType, deviceToken);
 
@@ -331,11 +335,34 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             @Override
             public void onResponse(Call<GetSocialLoginResponse> call, Response<GetSocialLoginResponse> response) {
 
+                GetSocialLoginResponse resource = response.body();
+                if (response.isSuccessful()) {
+
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("user_id", resource.getData().getUserId());
+                    editor.putString("social_type", socialType);
+                    editor.apply();
+
+                    if (resource.getData().getUserType().equals("0")) {
+                        startActivity(new Intent(LoginActivityNew.this, VoiceSelect_Activity.class));
+                    } else if (resource.getData().getUserType().equals("1")) {
+                        startActivity(new Intent(LoginActivityNew.this, HomeActivity.class));
+                    }
+                    Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
+                    hideDialog();
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
+                    hideDialog();
+                }
+
             }
 
             @Override
             public void onFailure(Call<GetSocialLoginResponse> call, Throwable t) {
-
+                Toast.makeText(LoginActivityNew.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                hideDialog();
             }
         });
     }
@@ -376,10 +403,12 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_CODE) {
+            showDialog();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            Log.e("data", "he-----------");
         }
 
 
@@ -390,10 +419,13 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             Log.e("TAG++++++++", account.getEmail());
-            socialLoginRetrofit(account.getId(), FACEBOOK, account.getEmail(), account.getPhotoUrl().toString(),
+            String photoUrl = "";
+            if (account.getPhotoUrl() != null) {
+                photoUrl = account.getPhotoUrl().toString();
+            }
+            socialLoginRetrofit(account.getId(), GOOGLE, account.getEmail(), photoUrl,
                     account.getDisplayName(), device_type, UUID.randomUUID().toString());
         } catch (ApiException e) {
-
             Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
             hideDialog();
         }

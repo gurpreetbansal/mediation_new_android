@@ -44,7 +44,6 @@ public class GetSocialLoginResponseData {
     @SerializedName("is_notification")
     @Expose
     private String isNotification;
-
     @SerializedName("UserType")
     @Expose
     private String userType;

@@ -36,8 +36,6 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
     private ApiInterface apiInterface;
     LogoutModelClass logoutModelClass = new LogoutModelClass();
 
-    GoogleApiClient googleApiClient;
-    GoogleSignInOptions gso;
     public static final int SIGN_IN = 1;
 
 
@@ -54,11 +52,6 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
         txt_support = findViewById(R.id.txt_support);
         txt_notification = findViewById(R.id.txt_notification);
         txt_subscription = findViewById(R.id.txt_sub);
-
-        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-
-        googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         img_account_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,29 +123,9 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
         txt_subscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        if (status.isSuccess()) {
-                            goToLoginActivity();
-                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
-                            SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("user_id", null);
-                            editor.apply();
-                        } else {
-                            Toast.makeText(SettingActivity.this, status.getStatusMessage() + "failedddd", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+
             }
         });
-    }
-
-    public void handleSignInResult(GoogleSignInResult result) {
-        if (result.isSuccess()) {
-            GoogleSignInAccount account = result.getSignInAccount();
-            Log.e("data", account.getEmail().toString());
-        }
     }
 
     public void goToLoginActivity() {
@@ -165,20 +138,4 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-        if (opr.isDone()) {
-            GoogleSignInResult result = opr.get();
-            handleSignInResult(result);
-        } else {
-            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
-                @Override
-                public void onResult(@NonNull GoogleSignInResult result) {
-                    handleSignInResult(result);
-                }
-            });
-        }
-    }
 }
