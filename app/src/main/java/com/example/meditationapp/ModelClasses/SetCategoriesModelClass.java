@@ -3,94 +3,51 @@ package com.example.meditationapp.ModelClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class SetCategoriesModelClass {
 
-    @SerializedName("id")
+    @SerializedName("code")
     @Expose
-    private Integer id;
-    @SerializedName("category_id")
+    private String code;
+    @SerializedName("success")
     @Expose
-    private Integer categoryId;
-    @SerializedName("name")
+    private Boolean success;
+    @SerializedName("messages")
     @Expose
-    private String name;
-    @SerializedName("subtitle")
+    private String messages;
+    @SerializedName("data")
     @Expose
-    private String subtitle;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("file_image")
-    @Expose
-    private String fileImage;
-    @SerializedName("is_favourite")
-    @Expose
-    private Integer isFavourite;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
+    private List<Object> data = null;
 
-    public Integer getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
-    public String getName() {
-        return name;
+    public String getMessages() {
+        return messages;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setMessages(String messages) {
+        this.messages = messages;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public List<Object> getData() {
+        return data;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFileImage() {
-        return fileImage;
-    }
-
-    public void setFileImage(String fileImage) {
-        this.fileImage = fileImage;
-    }
-
-    public Integer getIsFavourite() {
-        return isFavourite;
-    }
-
-    public void setIsFavourite(Integer isFavourite) {
-        this.isFavourite = isFavourite;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-}
+    public void setData(List<Object> data) {
+        this.data = data;
+    }}

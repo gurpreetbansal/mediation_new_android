@@ -86,27 +86,14 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                 }
 
                 if (socialType.equals(FACEBOOK)) {
-
+                   getFacebookLogout();
                 }
 
                 if (socialType.equals(EMAIL)) {
                     getLogout(userid);
                 }
 
-                new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null
-                        , HttpMethod.DELETE, new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
 
-//                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
-                        finishAffinity();
-                        LoginManager.getInstance().logOut();
-                    }
-                }).executeAsync();
-
-            }
-        });
 
         txt_no.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +110,24 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                 startActivity(intent);
 
             }
+        });
+    }
+
+    private void getFacebookLogout(){
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null
+                , HttpMethod.DELETE, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+
+//                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
+                finishAffinity();
+                LoginManager.getInstance().logOut();
+            }
+        }).executeAsync();
+
+    }
         });
     }
 

@@ -75,7 +75,7 @@ public interface ApiInterface {
     Call<GetCategoriesModelClass> getCategory(@Query("user_id") String userId,
                                               @Query("type_id") String typeId);
 
-    @POST("collections/setContentsInfo")
+    @POST("collections/collectCategory")
     Call<SetCategoriesModelClass> setCategory();
 
 

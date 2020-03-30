@@ -40,7 +40,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CategoriesAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CategoriesAdapter.MyViewHolder holder, final int position) {
 
         final CategoriesModelClass categoriesModelClass = categoriesModelClasses.get(position);
         holder.cat_textView.setText(categoriesModelClasses.get(position).getName());
@@ -52,6 +52,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
          holder.backImageView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+
                  categoriesModelClass.setSelected(!categoriesModelClass.isSelected());
                  holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? Color.parseColor("#32b2df")  : Color.WHITE);
              }
@@ -79,5 +80,6 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             cat_textView=itemView.findViewById(R.id.recyclerListCat_TextView);
 
         }
+
     }
 }

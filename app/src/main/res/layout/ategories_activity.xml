@@ -15,7 +15,7 @@
         android:layout_marginTop="-5dp"
         android:src="@mipmap/bar" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -58,7 +58,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_cat"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/secondTxt_cat"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"/>
@@ -279,5 +279,5 @@
 
         </RelativeLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
