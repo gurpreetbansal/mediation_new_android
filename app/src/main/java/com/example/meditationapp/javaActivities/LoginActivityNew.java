@@ -192,7 +192,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
         loginButton = findViewById(R.id.login_button_facebook_login);
         ll_login_facebook = findViewById(R.id.ll_login_facebook);
 //            loginButton.setReadPermissions(Arrays.asList(EMAIL));
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+//        loginButton.setReadPermissions(Arrays.asList(EMAIL));
 
 
 //        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -515,10 +515,12 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                                             String idfb  = loginResult.getAccessToken().getUserId();
                                             logarFb(idfb, emails,name,imgURL);
 
-                                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
-                                            finish();
-                                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
-
+                                            socialLoginRetrofit(idfb, FACEBOOK, emails, imgURL,
+                                                    name, device_type, UUID.randomUUID().toString());
+//                                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
+//                                            finish();
+//                                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
+//
 
                                             SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
                                             SharedPreferences.Editor editor = pref.edit();
