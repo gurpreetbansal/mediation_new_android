@@ -3,6 +3,7 @@ package com.example.meditationapp.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -112,6 +113,8 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             mypreference,
             Context.MODE_PRIVATE
         )
+
+        Log.e("userID",pref.getString(user_id,""))
 
         lib.setOnClickListener {
             img_bottom_lib.visibility = View.VISIBLE
