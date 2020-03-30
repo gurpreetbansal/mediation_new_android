@@ -46,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -70,7 +71,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
     LoginButton loginButton;
     CallbackManager callbackManager;
-    private static final String EMAIL="email";
+    private static final String EMAIL = "email";
     LinearLayout ll_login_facebook;
 
     ProgressDialog progressDialog;
@@ -90,7 +91,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
 
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Please wait......");
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -155,96 +156,39 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
         });
 
 //        signInButton=findViewById(R.id.signinwithGogle);
-        loginActivity_ll_google=findViewById(R.id.ll_google);
-
-
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-
-        loginActivity_ll_google.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, REQ_CODE);
-            }
-        });
-
-
-        callbackManager = CallbackManager.Factory.create();
-
-        loginButton=findViewById(R.id.login_button_facebook_signup);
-        ll_login_facebook=findViewById(R.id.ll_facebook_signup);
-//            loginButton.setReadPermissions(Arrays.asList(EMAIL));
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
-
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-//                Intent intent=new Intent(SignupActivityNew.this, HomeActivity.class);
-//                startActivity(intent);
-//                finish();
-//                Toast.makeText(SignupActivityNew.this, ""+loginResult, Toast.LENGTH_SHORT).show();
-
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken()
-                        , new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                                Log.e("Signup Activity",response.toString());
-
-                            try {
-                                String email= object.getString("email");
-                                Intent intent=new Intent(SignupActivityNew.this, HomeActivity.class);startActivity(intent);
-                                 finish();
-                               Toast.makeText(SignupActivityNew.this, "Login Successfully" + email, Toast.LENGTH_SHORT).show();
-
-                                Log.e("RESULT EMAIL",email);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                            }
-                        }
-                );
-
-                Bundle parameter = new Bundle();
-                parameter.putString("fields","email");
-                request.setParameters(parameter);
-                request.executeAsync();
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(SignupActivityNew.this, "Cancel", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(SignupActivityNew.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("FACEBOOK ERROR",error.toString());
-
-            }
-        });
-
-
-        ll_login_facebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginButton.performClick();
-            }
-        });
-
-
+//        loginActivity_ll_google = findViewById(R.id.ll_google);
+//
+//
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//
+//
+//        loginActivity_ll_google.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+////                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+////                startActivityForResult(signInIntent, REQ_CODE);
+//            }
+//        });
+//
+//
+//        callbackManager = CallbackManager.Factory.create();
+//
+//        loginButton = findViewById(R.id.login_button_facebook_signup);
+//        ll_login_facebook = findViewById(R.id.ll_facebook_signup);
+//
+//        ll_login_facebook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                     loginButton.performClick();
+////                FacebookLogin(loginButton.performClick());
+//            }
+//        });
+//
 
     }
 
@@ -307,13 +251,13 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
     public void showDialog() {
 
-        if(progressDialog != null && !progressDialog.isShowing())
+        if (progressDialog != null && !progressDialog.isShowing())
             progressDialog.show();
     }
 
     public void hideDialog() {
 
-        if(progressDialog != null && progressDialog.isShowing())
+        if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
 
@@ -329,15 +273,14 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        callbackManager.onActivityResult(requestCode,resultCode,data);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_CODE) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-        }
-        else {
+        } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
@@ -350,25 +293,100 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
             // Signed in successfully, show authenticated UI.
 //            updateUI(account);
 
-            Toast.makeText(this, "Successfully registered"+account, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Successfully registered" + account, Toast.LENGTH_SHORT).show();
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
     }
 
-//    private void signOut() {
-//        mGoogleSignInClient.signOut()
-//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Toast.makeText(MainActivity.this, "Logout sucess"+task, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+
+//    public void FacebookLogin(final boolean loginButton) {
+//
+//        if (!loginButton) {
+//            LoginManager.getInstance().logInWithReadPermissions(SignupActivityNew.this, Arrays.asList("email", "user_birthday", "user_hometown", "public_profile", "user_friends"));
+//
+//        } else {
+//
+//        }
+//
+//        {
+//            LoginManager.getInstance().registerCallback(callbackManager,
+//                    new FacebookCallback<LoginResult>() {
+//                        @Override
+//                        public void onSuccess(final LoginResult loginResult) {
+//                            GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+//                    new GraphRequest.GraphJSONObjectCallback() {
+//                        @Override
+//                        public void onCompleted(JSONObject object, GraphResponse response) {
+//                            try {
+//                                String name = object.getString("name");
+//                                String email = object.getString("email");
+//                                String imgURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+//                                String idfb = loginResult.getAccessToken().getUserId();
+//                                logarFb(idfb, name, email, imgURL);
+//
+//                                Intent intent = new Intent(SignupActivityNew.this, HomeActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                                Toast.makeText(SignupActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
+//
+//
+//                                SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+//                                SharedPreferences.Editor editor = pref.edit();
+//                                editor.putString("email", email);
+//                                editor.putString("name", name);
+//                                editor.putString("profile_photo", imgURL);
+//                                editor.apply();
+//
+//                                Log.e("RESULT NAME", name);
+//                                Log.e("RESULT EMAIL", email);
+//                                Log.e("RESULT ID", idfb);
+//                                Log.e("RESULT PROFILE", imgURL);
+////                                              Log.e("RESULT PHOTO",image.toString());
+////                            Log.e("RESULT USER BIRTHDAY",birthday);
+//
+//                                } catch (JSONException ex) {
+//                                    ex.printStackTrace();
+//                                }
+//                            }
+//
+//                            private void logarFb(String idfb, String nome, String email, String imageURL) {
+//
+//                                        }
+//                            });
+//                            Bundle parameters = new Bundle();
+//                            parameters.putString("fields", "id,name,email,gender, birthday");
+//                            request.setParameters(parameters);
+//                            request.executeAsync();
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//                            //cancelled
+//                        }
+//
+//                        @Override
+//                        public void onError(FacebookException exception) {
+//                            //error
+//                        }
+//                    });
+//        }
+//
+////    private void signOut() {
+////        mGoogleSignInClient.signOut()
+////                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+////                    @Override
+////                    public void onComplete(@NonNull Task<Void> task) {
+////                        Toast.makeText(MainActivity.this, "Logout sucess"+task, Toast.LENGTH_SHORT).show();
+////                    }
+////                });
+////    }
 //    }
+
 }

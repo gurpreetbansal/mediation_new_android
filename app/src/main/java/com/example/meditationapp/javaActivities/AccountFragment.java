@@ -7,12 +7,15 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.app.myapplication.fragment.PromoFragment;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.R;
 import com.facebook.CallbackManager;
@@ -30,10 +33,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AccountFragment extends Fragment {
 
     private CircleImageView userProfileIV;
-    private CustomBoldtextView userNameTV;
+    private CustomBoldtextView userNameTV,txt_upgrade,txt_email;
+    private LinearLayout ll_setting;
     CallbackManager callbackManager;
     LoginManager loginManager;
-    String  mypreference = "mypref",user_name="name";
+    String  mypreference = "mypref",user_name="name", img="profile_photo",email="email";
 
     public AccountFragment() {
         // Required empty public constructor
@@ -47,44 +51,44 @@ public class AccountFragment extends Fragment {
 
         userProfileIV=view.findViewById(R.id.accountFragment_userProfileIV);
         userNameTV=view.findViewById(R.id.accountFragment_userNameTV);
+        ll_setting=view.findViewById(R.id.ll_setting);
+        txt_email=view.findViewById(R.id.accountThree_txt_email);
 
 
         SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         String  name = pref.getString(user_name,"");
+        String image =pref.getString(img,"");
+        String emails=pref.getString(email,"");
 
         userNameTV.setText(name);
+        Picasso.get().load(image).into(userProfileIV);
+        txt_email.setText(emails);
 
-//        callbackManager = CallbackManager.Factory.create();
-//
-//        loginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//
-//                userNameTV.setText("User Id : " + loginResult.getAccessToken().getUserId());
-//                String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
-//                Picasso.get().load(imgURL).into(userProfileIV);
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
+        txt_upgrade=view.findViewById(R.id.txt_upgrade);
 
+        txt_upgrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Fragment someFragment = new PromoFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, someFragment ); // give your fragment container id in first parameter
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+
+            }
+        });
+
+        ll_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(),SettingActivity.class));
+
+            }
+        });
 
         return view;
 
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        callbackManager.onActivityResult(requestCode,resultCode,data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 }
