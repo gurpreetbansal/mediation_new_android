@@ -79,21 +79,20 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
         txt_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view) {
                 if (socialType.equals(GOOGLE)) {
                     googleLogout();
                 }
 
                 if (socialType.equals(FACEBOOK)) {
-                   getFacebookLogout();
+                    getFacebookLogout();
                 }
 
                 if (socialType.equals(EMAIL)) {
                     getLogout(userid);
                 }
-
-
+            }
+        });
 
         txt_no.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +110,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
             }
         });
+
     }
 
     private void getFacebookLogout(){
@@ -128,8 +128,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
         }).executeAsync();
 
     }
-        });
-    }
+
 
     private void getLogout(String userid) {
 

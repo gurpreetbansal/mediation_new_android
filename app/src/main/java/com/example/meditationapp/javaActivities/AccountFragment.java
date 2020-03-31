@@ -55,14 +55,14 @@ public class AccountFragment extends Fragment {
         txt_email=view.findViewById(R.id.accountThree_txt_email);
 
 
-        SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        String  name = pref.getString(user_name,"");
-        String image =pref.getString(img,"");
-        String emails=pref.getString(email,"");
-
-        userNameTV.setText(name);
-        Picasso.get().load(image).into(userProfileIV);
-        txt_email.setText(emails);
+//        SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+//        String  name = pref.getString(user_name,"");
+//        String image =pref.getString(img,"");
+//        String emails=pref.getString(email,"");
+//
+//        userNameTV.setText(name);
+//        Picasso.get().load(image).into(userProfileIV);
+//        txt_email.setText(emails);
 
         txt_upgrade=view.findViewById(R.id.txt_upgrade);
 
