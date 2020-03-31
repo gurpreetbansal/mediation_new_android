@@ -61,7 +61,7 @@ public class AccountFragment extends Fragment {
         String emails=pref.getString(email,"");
 
         userNameTV.setText(name);
-        Picasso.get().load(image).into(userProfileIV);
+//        Picasso.get().load(image).into(userProfileIV);
         txt_email.setText(emails);
 
         txt_upgrade=view.findViewById(R.id.txt_upgrade);

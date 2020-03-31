@@ -191,96 +191,15 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
         loginButton = findViewById(R.id.login_button_facebook_login);
         ll_login_facebook = findViewById(R.id.ll_login_facebook);
-//            loginButton.setReadPermissions(Arrays.asList(EMAIL));
-//        loginButton.setReadPermissions(Arrays.asList(EMAIL));
 
-
-//        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(final LoginResult loginResult) {
-//                LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email","user_birthday","user_hometown","public_profile","user_friends"));
-////                loginButton.setReadPermissions(Arrays.asList("email","user_birthday","user_hometown","public_profile"));
-////                Intent intent=new Intent(LoginActivityNew.this,HomeActivity.class);
-////                startActivity(intent);
-////                finish();
-////                Toast.makeText(LoginActivityNew.this, ""+loginResult.toString(), Toast.LENGTH_SHORT).show();
-//
-//        GraphRequest request = GraphRequest.newMeRequest(
-//                loginResult.getAccessToken()
-//                , new GraphRequest.GraphJSONObjectCallback() {
-//                    @Override
-//                    public void onCompleted(JSONObject object, GraphResponse response) {
-//
-//                        Log.e("Signup Activity",response.toString());
-//
-//                        try {
-//
-//                            String email= object.getString("email");
-//                            String name = object.getString("name");
-//                            String idfb  = loginResult.getAccessToken().getUserId();
-////                            String birthday= object.getString("user_birthday");
-////                            String hometown= object.getString("user_hometown");
-////                            String profile= object.getString("public_profile");
-////                            String first_name = object.getString("")
-////                            String first_name= object.getString("first_name");
-////                            String last_name= object.getString("last_name");
-////                            String profile = object.getString("public_profile");
-////                            String user_name = object.getString("name");
-//
-//                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
-//                            finish();
-////                            Toast.makeText(LoginActivityNew.this, "Login Successfully " + email, Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
-//
-//                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
-//                            SharedPreferences.Editor editor = pref.edit();
-//                            editor.putString("email",email);
-////                            editor.putString("public_profile",first_name);
-////                            editor.putString("user_name",last_name);
-//                            editor.apply();
-//
-//                            Log.e("RESULT EMAIL",email);
-//                            Log.e("RESULT NAME",name);
-//                            Log.e("RESULT ID",idfb);
-////                            Log.e("RESULT USER BIRTHDAY",birthday);
-//
-//                        } catch (JSONException e) {
-////                            e.printStackTrace();
-//                        }
-//
-//                    }
-//                }
-//                );
-//
-//                Bundle parameter = new Bundle();
-//                parameter.putString("fields","email");
-//                request.setParameters(parameter);
-//                request.executeAsync();
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Toast.makeText(LoginActivityNew.this, "Cancel", Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Toast.makeText(LoginActivityNew.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
-//                Log.e("FACEBOOK ERROR",error.toString());
-//
-//            }
-//        });
-
-
-      loginButton.setReadPermissions(Arrays.asList("email"));
+        loginButton.setReadPermissions(Arrays.asList("email"));
         ll_login_facebook.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 //                     loginButton.performClick();
-                     FacebookLogin(loginButton.performClick());
-                 }
-             });
+                FacebookLogin(loginButton.performClick());
+            }
+        });
 //        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                .requestEmail().build();
 //
@@ -295,11 +214,9 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                 showDialog();
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, REQ_CODE);
-
 //                firebaseAuthWithGoogle(googleSignInAccount);
             }
         });
-
     }
 
     public void retrofitData() {
@@ -396,13 +313,11 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     }
 
     public void showDialog() {
-
         if (progressDialog != null && !progressDialog.isShowing())
             progressDialog.show();
     }
 
     public void hideDialog() {
-
         if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
@@ -476,22 +391,22 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 //                });
 //    }
 
-  public void FacebookLogin(final boolean loginButton){
+    public void FacebookLogin(final boolean loginButton) {
 
-      if (!loginButton) {
+        if (!loginButton) {
 
-          LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email","user_birthday","user_hometown","public_profile","user_friends"));
+            LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email", "user_birthday", "user_hometown", "public_profile", "user_friends"));
 
-      }
-      sucessFacebook();
+        }
+        sucessFacebook();
 
-      //Register a callback
+        //Register a callback
 //        callbackManager = CallbackManager.Factory.create();
 //
 
-  }
+    }
 
-    public void sucessFacebook(){
+    public void sucessFacebook() {
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -499,49 +414,34 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                         GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
-                                    public void onCompleted(JSONObject object,GraphResponse response) {
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
 
                                         Log.e("Login Activity",response.toString());
 
-
-
                                         try {
                                             String name = object.getString("name");
-                                          String emails = object.getString("email");
-//                                              Integer image = object.getInt("public_profile");
-                                            String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+                                            String emails = object.getString("email");
+                                            String imgURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
 //                                              Picasso.get().load(imgURL).into(userProfileIV);
-                                            String idfb  = loginResult.getAccessToken().getUserId();
-                                            logarFb(idfb, emails,name,imgURL);
+                                            String idfb = loginResult.getAccessToken().getUserId();
+//                                            logarFb(idfb, emails,name,imgURL);
 
-                                            socialLoginRetrofit(idfb, FACEBOOK, emails, imgURL,
-                                                    name, device_type, UUID.randomUUID().toString());
-//                                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
-//                                            finish();
+//                                            socialLoginRetrofit(idfb, FACEBOOK, emails, imgURL,
+//                                                    name, device_type, UUID.randomUUID().toString());
+                                            Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
+                                            finish();
 //                                            Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
 //
 
-                                            SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
-                                            SharedPreferences.Editor editor = pref.edit();
-                                          editor.putString("email",emails);
-                                            editor.putString("name",name);
-                                            editor.putString("image",imgURL);
-//                            editor.putString("user_name",last_name);
-                                            editor.apply();
-
-                                            Log.e("RESULT NAME",name);
-                                          Log.e("RESULT EMAIL",emails);
-                                            Log.e("RESULT ID",idfb);
-                                            Log.e("RESULT PHOTO",imgURL);
+                                            Log.e("RESULT NAME", name);
+                                            Log.e("RESULT EMAIL", emails);
+                                            Log.e("RESULT ID", idfb);
+                                            Log.e("RESULT PHOTO", imgURL);
 //                            Log.e("RESULT USER BIRTHDAY",birthday);
 
-                                        } catch(JSONException ex) {
-                                            ex.printStackTrace();
+                                        } catch (JSONException ex) {
+                                            Log.e("error",ex.getMessage());
                                         }
-                                    }
-
-                                    private void logarFb(String idfb,String email, String name,String imageURL) {
-
                                     }
                                 });
                         Bundle parameters = new Bundle();
@@ -562,23 +462,5 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                         //error
                     }
                 });
-
     }
-
-
 }
-
-
-// Already google sign in
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        GoogleSignInAccount alreadyloggedAccount = GoogleSignIn.getLastSignedInAccount(this);
-//        if (alreadyloggedAccount != null) {
-//            Toast.makeText(this, "Already Logged In", Toast.LENGTH_SHORT).show();
-//            onLoggedIn(alreadyloggedAccount);
-//        } else {
-//            Log.d(TAG, "Not logged in");
-//        }
-//    }
