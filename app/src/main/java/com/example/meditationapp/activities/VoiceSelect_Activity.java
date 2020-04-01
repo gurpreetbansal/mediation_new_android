@@ -35,6 +35,7 @@ import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.VoiceAdapter;
 import com.example.meditationapp.javaActivities.CategoriesActivities;
+import com.example.meditationapp.javaActivities.LogoutActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,7 +122,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
         img_back_tool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cat = new Intent(VoiceSelect_Activity.this, LogOut_Activity.class);
+                Intent cat = new Intent(VoiceSelect_Activity.this, LogoutActivity.class);
                 startActivity(cat);
                 finish();
             }
