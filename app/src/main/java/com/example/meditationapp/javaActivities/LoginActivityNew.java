@@ -218,11 +218,9 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                 showDialog();
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, REQ_CODE);
-
 //                firebaseAuthWithGoogle(googleSignInAccount);
             }
         });
-
     }
 
     public void retrofitData() {
@@ -263,7 +261,6 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             public void onFailure(Call<LoginModelClass> call, Throwable t) {
 //                Log.e("Failure Response++++", t.getMessage());
                 Toast.makeText(LoginActivityNew.this, t.toString(), Toast.LENGTH_SHORT).show();
-
                 hideDialog();
             }
         });
@@ -320,13 +317,11 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     }
 
     public void showDialog() {
-
         if (progressDialog != null && !progressDialog.isShowing())
             progressDialog.show();
     }
 
     public void hideDialog() {
-
         if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
     }
@@ -334,7 +329,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-        Log.e("Failure Response++++", connectionResult.getErrorMessage());
+//        Log.e("Failure Response++++", connectionResult.getErrorMessage());
         Toast.makeText(this, "" + connectionResult, Toast.LENGTH_SHORT).show();
         hideDialog();
 
@@ -351,7 +346,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             handleSignInResult(task);
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            Log.e("data", "he-----------");
+//            Log.e("data", "he-----------");
         }
 
 

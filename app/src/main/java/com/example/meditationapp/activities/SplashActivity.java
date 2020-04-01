@@ -45,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
         pref.getString(user_id,"");
         pref.getString(email,"");
 
-        if (pref.getString(user_id,"") == ""){
+        if (pref.getString(user_id, "").equals("")){
 
             new Handler().postDelayed(new Runnable() {
                 @Override

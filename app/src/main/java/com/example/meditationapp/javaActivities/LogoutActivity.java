@@ -79,7 +79,9 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
         txt_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Log.e("socialtype", socialType);
+
                 if (socialType.equals(GOOGLE)) {
                     googleLogout();
                 }
@@ -189,6 +191,8 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                     editor.putString("user_id", null);
                     editor.putString("social_type", null);
                     editor.apply();
+                    startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
+                    finishAffinity();
                 } else {
                     Toast.makeText(LogoutActivity.this, status.getStatusMessage() + "failedddd", Toast.LENGTH_SHORT).show();
                 }
