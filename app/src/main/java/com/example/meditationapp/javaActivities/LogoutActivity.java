@@ -120,10 +120,19 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
             @Override
             public void onCompleted(GraphResponse response) {
 
-//                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("user_id", null);
+                    editor.putString("social_type", null);
+                    editor.apply();
+
+                Toast.makeText(LogoutActivity.this, "Logout successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
                 finishAffinity();
+
                 LoginManager.getInstance().logOut();
+
+
             }
         }).executeAsync();
 

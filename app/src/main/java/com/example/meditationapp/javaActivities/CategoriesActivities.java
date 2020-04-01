@@ -190,7 +190,7 @@ public class CategoriesActivities extends BaseActivity {
                     if (ok.equals(true)){
 
                         data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
-                        Toast.makeText(CategoriesActivities.this, "" +getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -210,6 +210,7 @@ public class CategoriesActivities extends BaseActivity {
                 public void onLongClick(View view, int position) {
 
                     Toast.makeText(CategoriesActivities.this, ""+getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
+
                 }
             }));
 
