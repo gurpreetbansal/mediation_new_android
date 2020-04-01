@@ -96,8 +96,9 @@ public class CategoriesModelClass {
     }
 
 
-    public void setSelected(boolean selected) {
+    public boolean setSelected(boolean selected) {
         isSelected = selected;
+        return selected;
     }
 
 

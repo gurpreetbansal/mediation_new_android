@@ -19,10 +19,15 @@ import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.CategoriesModelClass;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
+import com.example.meditationapp.ModelClasses.SetCategoriesModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.HomeActivity;
 import com.example.meditationapp.adapter.CategoriesAdapter;
+import com.rajesh.customcalendar.RecyclerItemClickListener;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,10 +44,20 @@ public class CategoriesActivities extends BaseActivity {
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
     List<CategoriesModelClass> categoriesModelClasses;
+    SetCategoriesModelClass setCategoriesModelClasses;
+    CategoriesAdapter categoriesAdapter;
+    GetCategoriesModelClass getCategoriesModelClass;
+
+    List<String> data = new ArrayList<>();
+    RecyclerItemClickListener mItemClickListener;
+    ArrayDeque mDataset;
+
      ProgressDialog progressDialog;
 
      String text= "";
      String image="";
+     boolean clicked;
+
 
 //    CategoriesModelClass categoriesModelClass=new CategoriesModelClass();
 
@@ -121,8 +136,8 @@ public class CategoriesActivities extends BaseActivity {
         next_cat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cat=new Intent(CategoriesActivities.this, HomeActivity.class);
-                startActivity(cat);
+
+                setContentData(userId,data);
             }
         });
         img_back_tool.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +158,7 @@ public class CategoriesActivities extends BaseActivity {
 
         call.enqueue(new Callback<GetCategoriesModelClass>() {
             @Override
-            public void onResponse(Call<GetCategoriesModelClass> call, Response<GetCategoriesModelClass> response) {
+            public void onResponse(final Call<GetCategoriesModelClass> call, final Response<GetCategoriesModelClass> response) {
 
                 if (response.isSuccessful()){
 
@@ -155,24 +170,51 @@ public class CategoriesActivities extends BaseActivity {
 
                        categoriesModelClasses = getCategoriesModelClass.getData();
 
+                        hideDialog();
                         recyclerView.setHasFixedSize(true);
                         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(CategoriesActivities.this);
                         recyclerView.setLayoutManager(linearLayoutManager);
-                        CategoriesAdapter categoriesAdapter=new CategoriesAdapter(categoriesModelClasses);
+                        categoriesAdapter=new CategoriesAdapter(categoriesModelClasses,CategoriesActivities.this);
                         recyclerView.setAdapter(categoriesAdapter);
 
-                        for (CategoriesModelClass categoriesModelClass : categoriesModelClasses){
-                            if (categoriesModelClass.isSelected()){
-                                text += categoriesModelClass.getName();
-                                image += categoriesModelClass.getFileImage();
+            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+//                                CategoriesModelClass cmc = categoriesModelClasses.get(position);
 
-                                Log.e("TAG","OUTPUT : " +text);
-                                Log.e("TAG","OUTPUT : " +image);
-                            }
+                    Integer cmc1 = categoriesModelClasses.get(position).getId();
+                    Boolean ok =categoriesModelClasses.get(position).isSelected();
 
-                        }
+//                    Log.e("CATEGORIES ID", cmc1.toString());
 
-                        hideDialog();
+                    if (ok.equals(true)){
+
+                        data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
+                        Toast.makeText(CategoriesActivities.this, "" + data, Toast.LENGTH_SHORT).show();
+
+
+                    }
+                    else if (ok.equals(false)){
+
+                        data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
+                        Toast.makeText(CategoriesActivities.this, "" + data, Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
+                }
+
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                    data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
+                    Toast.makeText(CategoriesActivities.this, ""+ data, Toast.LENGTH_SHORT).show();
+
+                }
+            }));
+
 
                     }
                 }
@@ -186,6 +228,38 @@ public class CategoriesActivities extends BaseActivity {
             }
         });
 
+    }
+
+    public void setContentData(String userId, List<String> data){
+
+        apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
+
+        Call<SetCategoriesModelClass> call = apiInterface.setCategory(userId,data);
+
+        call.enqueue(new Callback<SetCategoriesModelClass>() {
+            @Override
+            public void onResponse(Call<SetCategoriesModelClass> call, Response<SetCategoriesModelClass> response) {
+
+                if (response.isSuccessful()){
+
+                    setCategoriesModelClasses = response.body();
+
+                    if (setCategoriesModelClasses.getSuccess()){
+
+                        Intent cat=new Intent(CategoriesActivities.this, HomeActivity.class);
+                        startActivity(cat);
+                        finish();
+                        Toast.makeText(CategoriesActivities.this, ""+setCategoriesModelClasses.getMessages(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SetCategoriesModelClass> call, Throwable t) {
+
+            }
+        });
     }
 //    public void recyclerData(){
 //

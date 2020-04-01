@@ -79,32 +79,18 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
         txt_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View view) {
                 if (socialType.equals(GOOGLE)) {
                     googleLogout();
                 }
 
                 if (socialType.equals(FACEBOOK)) {
-
+                    getFacebookLogout();
                 }
 
                 if (socialType.equals(EMAIL)) {
                     getLogout(userid);
                 }
-
-                new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null
-                        , HttpMethod.DELETE, new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
-
-//                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
-                        finishAffinity();
-                        LoginManager.getInstance().logOut();
-                    }
-                }).executeAsync();
-
             }
         });
 
@@ -124,7 +110,25 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
             }
         });
+
     }
+
+    private void getFacebookLogout(){
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions", null
+                , HttpMethod.DELETE, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+
+//                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
+                finishAffinity();
+                LoginManager.getInstance().logOut();
+            }
+        }).executeAsync();
+
+    }
+
 
     private void getLogout(String userid) {
 

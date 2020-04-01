@@ -47,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -327,7 +328,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == SIGN_IN) {
             showDialog();
@@ -348,7 +349,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
             sendData.setEmail(account.getEmail());
             sendData.setDeviceType(device_type);
             sendData.setDeviceToken(UUID.randomUUID().toString());
-            sendData.setSocialType(FACEBOOK);
+            sendData.setSocialType(GOOGLE);
             sendData.setSocialId(account.getId());
 
             Log.e("socialid",account.getId());
@@ -367,13 +368,88 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 
     }
 
-//    private void signOut() {
-//        mGoogleSignInClient.signOut()
-//                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        Toast.makeText(MainActivity.this, "Logout sucess"+task, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+
+//    public void FacebookLogin(final boolean loginButton) {
+//
+//        if (!loginButton) {
+//            LoginManager.getInstance().logInWithReadPermissions(SignupActivityNew.this, Arrays.asList("email", "user_birthday", "user_hometown", "public_profile", "user_friends"));
+//
+//        } else {
+//
+//        }
+//
+//        {
+//            LoginManager.getInstance().registerCallback(callbackManager,
+//                    new FacebookCallback<LoginResult>() {
+//                        @Override
+//                        public void onSuccess(final LoginResult loginResult) {
+//                            GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+//                    new GraphRequest.GraphJSONObjectCallback() {
+//                        @Override
+//                        public void onCompleted(JSONObject object, GraphResponse response) {
+//                            try {
+//                                String name = object.getString("name");
+//                                String email = object.getString("email");
+//                                String imgURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+//                                String idfb = loginResult.getAccessToken().getUserId();
+//                                logarFb(idfb, name, email, imgURL);
+//
+//                                Intent intent = new Intent(SignupActivityNew.this, HomeActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                                Toast.makeText(SignupActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
+//
+//
+//                                SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+//                                SharedPreferences.Editor editor = pref.edit();
+//                                editor.putString("email", email);
+//                                editor.putString("name", name);
+//                                editor.putString("profile_photo", imgURL);
+//                                editor.apply();
+//
+//                                Log.e("RESULT NAME", name);
+//                                Log.e("RESULT EMAIL", email);
+//                                Log.e("RESULT ID", idfb);
+//                                Log.e("RESULT PROFILE", imgURL);
+////                                              Log.e("RESULT PHOTO",image.toString());
+////                            Log.e("RESULT USER BIRTHDAY",birthday);
+//
+//                                } catch (JSONException ex) {
+//                                    ex.printStackTrace();
+//                                }
+//                            }
+//
+//                            private void logarFb(String idfb, String nome, String email, String imageURL) {
+//
+//                                        }
+//                            });
+//                            Bundle parameters = new Bundle();
+//                            parameters.putString("fields", "id,name,email,gender, birthday");
+//                            request.setParameters(parameters);
+//                            request.executeAsync();
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//                            //cancelled
+//                        }
+//
+//                        @Override
+//                        public void onError(FacebookException exception) {
+//                            //error
+//                        }
+//                    });
+//        }
+//
+////    private void signOut() {
+////        mGoogleSignInClient.signOut()
+////                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+////                    @Override
+////                    public void onComplete(@NonNull Task<Void> task) {
+////                        Toast.makeText(MainActivity.this, "Logout sucess"+task, Toast.LENGTH_SHORT).show();
+////                    }
+////                });
+////    }
 //    }
+
 }

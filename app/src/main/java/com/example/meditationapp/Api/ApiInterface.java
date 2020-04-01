@@ -19,6 +19,8 @@ import com.example.meditationapp.ModelClasses.SignupModelClass;
 import com.example.meditationapp.ModelClasses.SignupSendData;
 import com.example.meditationapp.ModelClasses.SubscriptionModelClass;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -75,8 +77,9 @@ public interface ApiInterface {
     Call<GetCategoriesModelClass> getCategory(@Query("user_id") String userId,
                                               @Query("type_id") String typeId);
 
-    @POST("collections/setContentsInfo")
-    Call<SetCategoriesModelClass> setCategory();
+    @POST("collections/collectCategory")
+    Call<SetCategoriesModelClass> setCategory(@Query("user_id") String userId,
+                                              @Query("category_id") List<String> catagoryID);
 
 
 }

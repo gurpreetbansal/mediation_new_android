@@ -1,35 +1,35 @@
 package com.example.meditationapp.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.CategoriesModelClass;
-import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
 import com.example.meditationapp.R;
+import com.example.meditationapp.javaActivities.CategoriesActivities;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.MyViewHolder> {
 
     List<CategoriesModelClass> categoriesModelClasses;
+    List<String> data = new ArrayList<>();
+    Context context;
 
-    public CategoriesAdapter(List<CategoriesModelClass> categoriesModelClasses) {
+    public CategoriesAdapter(List<CategoriesModelClass> categoriesModelClasses, Context context) {
         this.categoriesModelClasses = categoriesModelClasses;
+        this.context=context;
     }
 
     @NonNull
@@ -40,7 +40,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CategoriesAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CategoriesAdapter.MyViewHolder holder, final int position) {
 
         final CategoriesModelClass categoriesModelClass = categoriesModelClasses.get(position);
         holder.cat_textView.setText(categoriesModelClasses.get(position).getName());
@@ -48,14 +48,17 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         Picasso.get().load(categoriesModelClasses.get(position).getFileImage()).into(holder.backImageView);
 
 
-        holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? Color.parseColor("#32b2df")  : Color.WHITE);
          holder.backImageView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+
+//                 categoriesModelClasses.get(position).setSelected(true);
+
                  categoriesModelClass.setSelected(!categoriesModelClass.isSelected());
                  holder.backRL.setBackgroundColor(categoriesModelClass.isSelected() ? Color.parseColor("#32b2df")  : Color.WHITE);
              }
          });
+
 
     }
 
@@ -65,7 +68,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
 //
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView backImageView;
         CustomBoldtextView cat_textView;
@@ -78,6 +81,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             backImageView=itemView.findViewById(R.id.recyclerListCat_back_img);
             cat_textView=itemView.findViewById(R.id.recyclerListCat_TextView);
 
+
         }
     }
 }
+
+//      data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
+//              Toast.makeText(context, ""+data, Toast.LENGTH_SHORT).show();
+//
+//
+//              for(int i=0; i<data.size(); i++){
+//        if(holder.backRL.equals(data.get(i))){
+//        data.remove(i);
+//        return;
+//        }
+//        }
