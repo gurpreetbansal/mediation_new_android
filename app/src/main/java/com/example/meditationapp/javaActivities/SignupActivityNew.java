@@ -266,6 +266,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("user_id", resource.getData().getUserId());
+                        editor.putString("social_type", EMAIL);
                         editor.apply();
 
 //                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);

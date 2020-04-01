@@ -35,6 +35,7 @@ import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.VoiceAdapter;
 import com.example.meditationapp.javaActivities.CategoriesActivities;
+import com.example.meditationapp.javaActivities.LogoutActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
     SetVoiceModelClass setVoiceModelClass = new SetVoiceModelClass();
     GetResponseSetVoice getResponseSetVoice;
     List<GetResponseSetVoiceData> setVoiceData;
-    String voice_id, mypreference = "mypref", user_id = "user_id", userID, status = "0";
+    String voice_id = "", mypreference = "mypref", user_id = "user_id", userID, status = "0";
     List<String> voiceId = new ArrayList<>();
     RelativeLayout progress_bar;
 
@@ -102,25 +103,29 @@ public class VoiceSelect_Activity extends AppCompatActivity {
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voiceId.add(voice_id);
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-                setVoiceModelClass.setUserId(userID);
-                Log.e("userID", userID + "----" + voiceId);
-                setVoiceModelClass.setVoiceId(voiceId);
-                setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
-                setVoiceModelClass.setStatus(status);
+                if (voice_id.equals("")) {
+                    Toast.makeText(VoiceSelect_Activity.this, "One voice must be seletced", Toast.LENGTH_SHORT).show();
+                } else {
+                    voiceId.add(String.valueOf(voiceData.get(Integer.valueOf(voice_id)).getId()));
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                    }
+                    setVoiceModelClass.setUserId(userID);
+                    Log.e("userID", userID + "----" + voiceId);
+                    setVoiceModelClass.setVoiceId(voiceId);
+                    setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
+                    setVoiceModelClass.setStatus(status);
 
-                retrofitSetVoice(setVoiceModelClass);
+                    retrofitSetVoice(setVoiceModelClass);
+                }
 
             }
         });
         img_back_tool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cat = new Intent(VoiceSelect_Activity.this, LogOut_Activity.class);
+                Intent cat = new Intent(VoiceSelect_Activity.this, LogoutActivity.class);
                 startActivity(cat);
                 finish();
             }
@@ -193,7 +198,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                             @Override
                             public void startPlayer(String url, int position, Boolean pause) {
                                 voice_id = String.valueOf(position);
-                                if (pause) {
+                                if (!pause) {
                                     try {
                                         if (mediaPlayer != null) {
                                             mediaPlayer.release();
@@ -208,7 +213,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                                             @Override
                                             public void onPrepared(MediaPlayer mp) {
                                                 mediaPlayer.start();
-                                                Log.e("play","play");
+                                                Log.e("play", "play");
                                             }
                                         });
                                     } catch (IOException e) {
@@ -216,7 +221,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                                     }
                                 } else {
                                     mediaPlayer.pause();
-                                    Log.e("pause","pause");
+                                    Log.e("pause", "pause");
                                 }
 
                             }

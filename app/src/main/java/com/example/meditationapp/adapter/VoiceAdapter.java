@@ -2,6 +2,7 @@ package com.example.meditationapp.adapter;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,17 +79,28 @@ public class VoiceAdapter extends RecyclerView.Adapter<VoiceAdapter.ItemView> {
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (a>=1) {
+                if (a > voiceData.size()) {
                     if (index == position) {
-                        pause = true;
+                        if (!pause) {
+                            pause = true;
+                        }else {
+                            pause=false;
+                        }
+                        Log.e("pause a","pause true");
                     } else {
                         pause = false;
+
+                        Log.e("pause a","pause false");
                     }
                 }
 
                 index = position;
                 notifyDataSetChanged();
-                holder.play_image.setImageResource(R.mipmap.pause);
+                if (pause){
+                    holder.play_image.setImageResource(R.mipmap.play_btn);
+                }else {
+                    holder.play_image.setImageResource(R.mipmap.pause);
+                }
 
                 String url = voiceData.get(position).getVoices();
                 if (onitemClickListener != null) {
@@ -99,6 +111,8 @@ public class VoiceAdapter extends RecyclerView.Adapter<VoiceAdapter.ItemView> {
         });
 
         a++;
+        Log.e("value",String.valueOf(a));
+        Log.e("value",String.valueOf(voiceData.size()));
 
     }
 
