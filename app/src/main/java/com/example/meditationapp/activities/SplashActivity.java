@@ -65,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    Intent intent=new Intent(SplashActivity.this,HomeActivity.class);
+                    Intent intent=new Intent(SplashActivity.this,VoiceSelect_Activity.class);
                     startActivity(intent);
                     finish();
 

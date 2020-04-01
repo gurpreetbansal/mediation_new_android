@@ -108,13 +108,13 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                     mediaPlayer = null;
                 }
                 setVoiceModelClass.setUserId(userID);
-                Log.e("userID",userID);
+                Log.e("userID", userID + "----" + voiceId);
                 setVoiceModelClass.setVoiceId(voiceId);
                 setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
                 setVoiceModelClass.setStatus(status);
 
 
-                retrofitSetVoice(setVoiceModelClass);
+//                retrofitSetVoice(setVoiceModelClass);
 
             }
         });
@@ -192,27 +192,32 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 
                         adapter.setOnitemClickListener(new VoiceAdapter.OnitemClickListener() {
                             @Override
-                            public void startPlayer(String url, int position) {
+                            public void startPlayer(String url, int position, Boolean pause) {
                                 voice_id = String.valueOf(position);
-                                try {
-                                    if (mediaPlayer != null) {
-                                        mediaPlayer.release();
-                                        mediaPlayer = null;
-                                    }
-                                    mediaPlayer = new MediaPlayer();
-
-                                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    mediaPlayer.setDataSource(url);
-                                    mediaPlayer.prepareAsync();
-                                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                        @Override
-                                        public void onPrepared(MediaPlayer mp) {
-                                            mediaPlayer.start();
+                                if (pause) {
+                                    try {
+                                        if (mediaPlayer != null) {
+                                            mediaPlayer.release();
+                                            mediaPlayer = null;
                                         }
-                                    });
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                        mediaPlayer = new MediaPlayer();
+
+                                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                                        mediaPlayer.setDataSource(url);
+                                        mediaPlayer.prepareAsync();
+                                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mediaPlayer.start();
+                                            }
+                                        });
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    mediaPlayer.pause();
                                 }
+
                             }
                         });
 

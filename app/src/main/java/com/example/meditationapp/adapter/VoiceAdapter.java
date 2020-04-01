@@ -25,14 +25,13 @@ public class VoiceAdapter extends RecyclerView.Adapter<VoiceAdapter.ItemView> {
     Context context;
     Integer[] id_selected;
     Integer[] id_unselected;
-    int index = 0;
-    MediaPlayer mediaPlayer;
+    int index = 0, a = 0;
+    Boolean pause = false;
 
     OnitemClickListener onitemClickListener;
 
     public interface OnitemClickListener {
-        void startPlayer(String url, int position);
-
+        void startPlayer(String url, int position, Boolean pause);
     }
 
     public void setOnitemClickListener(OnitemClickListener onitemClickListener) {
@@ -56,11 +55,13 @@ public class VoiceAdapter extends RecyclerView.Adapter<VoiceAdapter.ItemView> {
     @Override
     public void onBindViewHolder(@NonNull final ItemView holder, final int position) {
 
-        if (index == position) {
-            holder.ll.setBackgroundResource(id_selected[position]);
-        } else {
-            holder.ll.setBackgroundResource(id_unselected[position]);
-            holder.play_image.setImageResource(R.mipmap.play_btn);
+        if (a >= 1) {
+            if (index == position) {
+                holder.ll.setBackgroundResource(id_selected[position]);
+            } else {
+                holder.ll.setBackgroundResource(id_unselected[position]);
+                holder.play_image.setImageResource(R.mipmap.play_btn);
+            }
         }
 
         holder.name.setText(voiceData.get(position).getName());
@@ -74,21 +75,30 @@ public class VoiceAdapter extends RecyclerView.Adapter<VoiceAdapter.ItemView> {
                 .into(holder.image);
 
 
-
         holder.ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (a>=1) {
+                    if (index == position) {
+                        pause = true;
+                    } else {
+                        pause = false;
+                    }
+                }
+
                 index = position;
                 notifyDataSetChanged();
                 holder.play_image.setImageResource(R.mipmap.pause);
 
                 String url = voiceData.get(position).getVoices();
                 if (onitemClickListener != null) {
-                    onitemClickListener.startPlayer(url, position);
+                    onitemClickListener.startPlayer(url, position,pause);
                 }
 
             }
         });
+
+        a++;
 
     }
 
