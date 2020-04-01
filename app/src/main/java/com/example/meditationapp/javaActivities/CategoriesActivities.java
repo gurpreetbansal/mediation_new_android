@@ -162,7 +162,7 @@ public class CategoriesActivities extends BaseActivity {
 
                 if (response.isSuccessful()){
 
-                    GetCategoriesModelClass getCategoriesModelClass = response.body();
+                    final GetCategoriesModelClass getCategoriesModelClass = response.body();
                     Log.e("GET CONTENT +++++++", getCategoriesModelClass.getMessages());
                     Toast.makeText(CategoriesActivities.this, ""+getCategoriesModelClass.getMessages(), Toast.LENGTH_SHORT).show();
 
@@ -190,14 +190,14 @@ public class CategoriesActivities extends BaseActivity {
                     if (ok.equals(true)){
 
                         data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
-                        Toast.makeText(CategoriesActivities.this, "" + data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CategoriesActivities.this, "" +getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
 
 
                     }
                     else if (ok.equals(false)){
 
                         data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
-                        Toast.makeText(CategoriesActivities.this, "" + data, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -209,9 +209,7 @@ public class CategoriesActivities extends BaseActivity {
                 @Override
                 public void onLongClick(View view, int position) {
 
-                    data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
-                    Toast.makeText(CategoriesActivities.this, ""+ data, Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(CategoriesActivities.this, ""+getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
                 }
             }));
 
