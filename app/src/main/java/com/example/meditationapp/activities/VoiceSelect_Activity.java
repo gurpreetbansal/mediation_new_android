@@ -113,8 +113,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                 setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
                 setVoiceModelClass.setStatus(status);
 
-
-//                retrofitSetVoice(setVoiceModelClass);
+                retrofitSetVoice(setVoiceModelClass);
 
             }
         });

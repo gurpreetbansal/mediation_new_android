@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.meditationapp.R;
+import com.example.meditationapp.javaActivities.HomeActivitynew;
 import com.example.meditationapp.javaActivities.LoginActivityNew;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -47,32 +48,29 @@ public class SplashActivity extends AppCompatActivity {
 
         if (pref.getString(user_id, "").equals("")){
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivityNew.class);
+                        startActivity(intent);
+                        finish();
 
-                    Intent intent=new Intent(SplashActivity.this,LoginActivityNew.class);
-                    startActivity(intent);
-                    finish();
-
-                }
-            },3000);
+                    }
+                }, 3000);
 
         }
         else {
 
             new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
+                    @Override
+                    public void run() {
 
-                    Intent intent=new Intent(SplashActivity.this,VoiceSelect_Activity.class);
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
 
-
-                }
-            },3000);
-
+                    }
+                }, 3000);
         }
 
 //        accessTokenTracker = new AccessTokenTracker() {

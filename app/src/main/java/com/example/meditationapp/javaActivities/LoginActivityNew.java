@@ -200,10 +200,10 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
         loginButton = findViewById(R.id.login_button_facebook_login);
         ll_login_facebook = findViewById(R.id.ll_login_facebook);
 
-      loginButton.setReadPermissions(Arrays.asList("email"));
+        loginButton.setReadPermissions(Arrays.asList("email"));
         ll_login_facebook.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 //                     loginButton.performClick();
                 facebookLogin(loginButton.performClick());
             }
@@ -362,20 +362,20 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
     public void facebookLogin(final boolean loginButton) {
 
-      if (!loginButton) {
+        if (!loginButton) {
 
-          LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email","user_birthday","user_hometown","public_profile","user_friends"));
+            LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email", "user_birthday", "user_hometown", "public_profile", "user_friends"));
 
-      }
-      sucessFacebook();
+        }
+        sucessFacebook();
 
-      //Register a callback
+        //Register a callback
 //        callbackManager = CallbackManager.Factory.create();
 //
 
-  }
+    }
 
-    public void sucessFacebook(){
+    public void sucessFacebook() {
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -383,9 +383,9 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                         final GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
-                                    public void onCompleted(JSONObject object,GraphResponse response) {
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                        Log.e("Login Activity",response.toString());
+                                        Log.e("Login Activity", response.toString());
 
                                         try {
                                             String name = object.getString("name");
@@ -407,7 +407,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                                             loginManager.logOut();
 
                                         } catch (JSONException ex) {
-                                            Log.e("error",ex.getMessage());
+                                            Log.e("error", ex.getMessage());
                                         }
                                     }
 

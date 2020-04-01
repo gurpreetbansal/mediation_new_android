@@ -62,9 +62,10 @@ import retrofit2.Response;
 
 public class AccountSettingActivityNew extends BaseActivity {
     ImageView btn_back;
-    String userID;
+    String userID,socialType;
     ApiInterface apiInterface;
-    String mypreference = "mypref", user_id = "user_id";
+    String mypreference = "mypref", user_id = "user_id",social_type = "social_type";
+    private static final String EMAIL = "email", GOOGLE = "google", FACEBOOK = "facebook";
     CustomBoldtextView tv_email, firstname_edit, password_edit, firstname_change, password_change, save_changes, password_title;
     LinearLayout new_password_container;
     GetProfileResponse resource;
@@ -90,6 +91,7 @@ public class AccountSettingActivityNew extends BaseActivity {
 
         SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = pref.getString(user_id, "");
+        socialType = pref.getString(social_type,"");
 
         btn_back = findViewById(R.id.img_account_back);
         tv_firstname = findViewById(R.id.account_two_frag__first_name);
@@ -107,6 +109,10 @@ public class AccountSettingActivityNew extends BaseActivity {
 //        profile_image = findViewById(R.id.account_two_frag__profile_image);
         imageView = findViewById(R.id.account_two_frag__profile_image_temp);
         camera_icn = findViewById(R.id.account_two_frag__icn_camera);
+
+        if (socialType.equals(GOOGLE) || socialType.equals(FACEBOOK)){
+            password_edit.setVisibility(View.GONE);
+        }
 
         camera_icn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -210,15 +216,15 @@ public class AccountSettingActivityNew extends BaseActivity {
                         return;
                     }
                 }
-                File file = new File(path);
-                RequestBody fileReqBody = RequestBody.create(MediaType.parse("*/*"), file);
-                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+//                File file = new File(path);
+//                RequestBody fileReqBody = RequestBody.create(MediaType.parse("*/*"), file);
+//                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                 progress_rl.setVisibility(View.VISIBLE);
 
                 SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                 userID = pref.getString(user_id, "");
 
-                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString(),part);
+                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString());
             }
         });
 
@@ -275,7 +281,7 @@ public class AccountSettingActivityNew extends BaseActivity {
 
     }
 
-    public void retrofitEditProfileData(final String userID, final String firstName, String old_password, String new_password, MultipartBody.Part part) {
+    public void retrofitEditProfileData(final String userID, final String firstName, String old_password, String new_password) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
         Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password);
