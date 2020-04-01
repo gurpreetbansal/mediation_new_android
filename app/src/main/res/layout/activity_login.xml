@@ -186,15 +186,15 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15sdp" />
 
-                <com.google.android.gms.common.internal.SignInButtonImpl
-                    android:id="@+id/login_button_google"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+<!--                <com.google.android.gms.common.internal.SignInButtonImpl-->
+<!--                    android:id="@+id/login_button_google"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:visibility="invisible"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"/>-->
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
