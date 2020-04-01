@@ -406,9 +406,10 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                         String name = object.getString("name");
                       String emails = object.getString("email");
                         String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
-                        String idfb  = loginResult.getAccessToken().getUserId();
+//                        String idfb  = loginResult.getAccessToken().getUserId();
+                        String id = object.getString("id");
 
-                        socialLoginRetrofit(idfb, FACEBOOK, emails, imgURL,
+                        socialLoginRetrofit(id, FACEBOOK, emails, imgURL,
                                 name, device_type, UUID.randomUUID().toString());
 //                        Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
 //                        finish();
@@ -416,10 +417,10 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
                         Log.e("RESULT NAME",name);
                       Log.e("RESULT EMAIL",emails);
-                        Log.e("RESULT ID",idfb);
+                        Log.e("ID",id);
                         Log.e("RESULT PHOTO",imgURL);
 
-                        loginManager.logOut();
+//                        loginManager.logOut();
 
                     } catch(JSONException ex) {
                         ex.printStackTrace();
