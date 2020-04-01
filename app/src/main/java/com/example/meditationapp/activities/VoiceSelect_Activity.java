@@ -209,6 +209,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                                             @Override
                                             public void onPrepared(MediaPlayer mp) {
                                                 mediaPlayer.start();
+                                                Log.e("play","play");
                                             }
                                         });
                                     } catch (IOException e) {
@@ -216,6 +217,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                                     }
                                 } else {
                                     mediaPlayer.pause();
+                                    Log.e("pause","pause");
                                 }
 
                             }
