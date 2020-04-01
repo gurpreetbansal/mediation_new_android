@@ -25,7 +25,9 @@ import com.example.meditationapp.activities.HomeActivity;
 import com.example.meditationapp.adapter.CategoriesAdapter;
 import com.rajesh.customcalendar.RecyclerItemClickListener;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,13 +45,19 @@ public class CategoriesActivities extends BaseActivity {
     ApiInterface apiInterface;
     List<CategoriesModelClass> categoriesModelClasses;
     SetCategoriesModelClass setCategoriesModelClasses;
+    CategoriesAdapter categoriesAdapter;
+    GetCategoriesModelClass getCategoriesModelClass;
 
     List<String> data = new ArrayList<>();
+    RecyclerItemClickListener mItemClickListener;
+    ArrayDeque mDataset;
 
      ProgressDialog progressDialog;
 
      String text= "";
      String image="";
+     boolean clicked;
+
 
 //    CategoriesModelClass categoriesModelClass=new CategoriesModelClass();
 
@@ -128,10 +136,8 @@ public class CategoriesActivities extends BaseActivity {
         next_cat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent cat=new Intent(CategoriesActivities.this, HomeActivity.class);
-//                startActivity(cat);
-                setContentData();
 
+                setContentData(userId,data);
             }
         });
         img_back_tool.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +162,7 @@ public class CategoriesActivities extends BaseActivity {
 
                 if (response.isSuccessful()){
 
-                    GetCategoriesModelClass getCategoriesModelClass = response.body();
+                    final GetCategoriesModelClass getCategoriesModelClass = response.body();
                     Log.e("GET CONTENT +++++++", getCategoriesModelClass.getMessages());
                     Toast.makeText(CategoriesActivities.this, ""+getCategoriesModelClass.getMessages(), Toast.LENGTH_SHORT).show();
 
@@ -164,74 +170,49 @@ public class CategoriesActivities extends BaseActivity {
 
                        categoriesModelClasses = getCategoriesModelClass.getData();
 
+                        hideDialog();
                         recyclerView.setHasFixedSize(true);
                         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(CategoriesActivities.this);
                         recyclerView.setLayoutManager(linearLayoutManager);
-                        final CategoriesAdapter categoriesAdapter=new CategoriesAdapter(categoriesModelClasses);
+                        categoriesAdapter=new CategoriesAdapter(categoriesModelClasses,CategoriesActivities.this);
                         recyclerView.setAdapter(categoriesAdapter);
 
-                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
+            recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
 //                                CategoriesModelClass cmc = categoriesModelClasses.get(position);
-                                Integer cmc1 = categoriesModelClasses.get(position).getId();
 
-                                Log.e("CATEGORIES ID",cmc1.toString());
+                    Integer cmc1 = categoriesModelClasses.get(position).getId();
+                    Boolean ok =categoriesModelClasses.get(position).isSelected();
 
+//                    Log.e("CATEGORIES ID", cmc1.toString());
 
-                                if (data == null){
-                                    data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
-                                    Toast.makeText(CategoriesActivities.this, ""+data, Toast.LENGTH_SHORT).show();
+                    if (ok.equals(true)){
 
-                                }
-                                else {
-                                    data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
-                                    Toast.makeText(CategoriesActivities.this, ""+data, Toast.LENGTH_SHORT).show();
+                        data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
+                        Toast.makeText(CategoriesActivities.this, "" +getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
 
 
-//                                    categoriesAdapter.notifyDataSetChanged();
-                                }
+                    }
+                    else if (ok.equals(false)){
 
-//                                data.add(String.valueOf(cmc.getCategoryId()));
-//
-//                                Toast.makeText(CategoriesActivities.this, ""+cmc.getName(), Toast.LENGTH_SHORT).show();
-//                                Log.e("All Position", String.valueOf(position));
-//
-                            }
-//                            public void setSelectedPosition(int position){
-//
-//                                for (int i=0; i<categoriesModelClasses.size(); i++){
-//                                    categoriesModelClasses.get(i).setSelected(i == position);
-//                                }
-//                                categoriesAdapter.notifyDataSetChanged();
-//                            }
+                        data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
+                        Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
+                    }
 
-//                            public void clearSelection(){
-//
-//                                for (int i=0; i<categoriesModelClasses.size(); i++){
-//                                    categoriesModelClasses.get(i).setSelected(false);
-//                                }
-//                                categoriesAdapter.notifyDataSetChanged();
-//                            }
 
-                            @Override
-                            public void onLongClick(View view, int position) {
 
-                            }
-                        }));
 
-                        for (CategoriesModelClass categoriesModelClass : categoriesModelClasses){
-                            if (categoriesModelClass.isSelected()){
-                                text += categoriesModelClass.getName();
-                                image += categoriesModelClass.getFileImage();
+                }
 
-//                                Log.e("TAG","OUTPUT : " +text);
-//                                Log.e("TAG","OUTPUT : " +image);
-                            }
 
-                        }
+                @Override
+                public void onLongClick(View view, int position) {
 
-                        hideDialog();
+                    Toast.makeText(CategoriesActivities.this, ""+getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
+                }
+            }));
+
 
                     }
                 }
@@ -247,12 +228,11 @@ public class CategoriesActivities extends BaseActivity {
 
     }
 
-
-    public void setContentData(){
+    public void setContentData(String userId, List<String> data){
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
-        Call<SetCategoriesModelClass> call = apiInterface.setCategory();
+        Call<SetCategoriesModelClass> call = apiInterface.setCategory(userId,data);
 
         call.enqueue(new Callback<SetCategoriesModelClass>() {
             @Override
@@ -264,7 +244,10 @@ public class CategoriesActivities extends BaseActivity {
 
                     if (setCategoriesModelClasses.getSuccess()){
 
-                        Toast.makeText(CategoriesActivities.this, "Successfully Add Data"+setCategoriesModelClasses.getMessages(), Toast.LENGTH_SHORT).show();
+                        Intent cat=new Intent(CategoriesActivities.this, HomeActivity.class);
+                        startActivity(cat);
+                        finish();
+                        Toast.makeText(CategoriesActivities.this, ""+setCategoriesModelClasses.getMessages(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
