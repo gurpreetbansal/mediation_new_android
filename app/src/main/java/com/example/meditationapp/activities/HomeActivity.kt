@@ -211,6 +211,8 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
 //        }
 //        else {
 
+
+
         img_bottom_lib.visibility = View.VISIBLE
         img_bottom_sound.visibility = View.INVISIBLE
         img_bottom_record.visibility = View.INVISIBLE
@@ -280,6 +282,5 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             startActivity(intent)
         }
     }
-
 
 }

@@ -31,6 +31,7 @@ import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -441,18 +442,3 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
 
 }
-
-
-// Already google sign in
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        GoogleSignInAccount alreadyloggedAccount = GoogleSignIn.getLastSignedInAccount(this);
-//        if (alreadyloggedAccount != null) {
-//            Toast.makeText(this, "Already Logged In", Toast.LENGTH_SHORT).show();
-//            onLoggedIn(alreadyloggedAccount);
-//        } else {
-//            Log.d(TAG, "Not logged in");
-//        }
-//    }
