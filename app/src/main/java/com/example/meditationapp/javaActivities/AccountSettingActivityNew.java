@@ -8,7 +8,9 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -62,27 +64,26 @@ import retrofit2.Response;
 
 public class AccountSettingActivityNew extends BaseActivity {
     ImageView btn_back;
-    String userID,socialType;
+    String userID, socialType;
     ApiInterface apiInterface;
-    String mypreference = "mypref", user_id = "user_id",social_type = "social_type";
+    String mypreference = "mypref", user_id = "user_id", social_type = "social_type";
     private static final String EMAIL = "email", GOOGLE = "google", FACEBOOK = "facebook";
     CustomBoldtextView tv_email, firstname_edit, password_edit, firstname_change, password_change, save_changes, password_title;
     LinearLayout new_password_container;
     GetProfileResponse resource;
     RelativeLayout progress_rl;
     CustomBoldEditText tv_firstname, tv_password, tv_new_password;
-    String path;
-//    File savedFile = null;
+    String path, mediaPath;
+    //    File savedFile = null;
     Uri uri;
     //    Dialog dialog;
 //    SimpleDraweeView profile_image;
-    String mediaPath, postPath;
 
-    private static final int CAMERA_REQUEST = 1888;
+    private static final int CAMERA_REQUEST = 0, GALLERY_REQUEST = 1;
     //    ImageView imageView;
     CircleImageView imageView;
     ImageView camera_icn;
-    private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100, MY_GALLERY_PERMISSION_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +93,7 @@ public class AccountSettingActivityNew extends BaseActivity {
 
         SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = pref.getString(user_id, "");
-        socialType = pref.getString(social_type,"");
+        socialType = pref.getString(social_type, "");
 
         btn_back = findViewById(R.id.img_account_back);
         tv_firstname = findViewById(R.id.account_two_frag__first_name);
@@ -111,50 +112,51 @@ public class AccountSettingActivityNew extends BaseActivity {
         imageView = findViewById(R.id.account_two_frag__profile_image_temp);
         camera_icn = findViewById(R.id.account_two_frag__icn_camera);
 
-        if (socialType.equals(GOOGLE) || socialType.equals(FACEBOOK)){
+        if (socialType.equals(GOOGLE) || socialType.equals(FACEBOOK)) {
             password_edit.setVisibility(View.GONE);
         }
 
         camera_icn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                    } else {
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+//                    } else {
+//                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//                        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+//                            // Create the File where the photo should go
+//                            try {
+//                                File file = null;
+//                                file = createImageFile();
+//                                // Continue only if the File was successfully created
+//                                Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
+//                                        getApplicationContext().getPackageName() + ".provider",
+//                                        file);
+//                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                            } catch (Exception ex) {
+//                                // Error occurred while creating the File
+//                                Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+////                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//
+//
+//                    }
+//                } else {
+//                    if (ContextCompat.checkSelfPermission
+//                            (AccountSettingActivityNew.this, Manifest.permission.CAMERA)
+//                            != PackageManager.PERMISSION_GRANTED) {
+//                        ActivityCompat.requestPermissions(
+//                                AccountSettingActivityNew.this,
+//                                new String[]{Manifest.permission.CAMERA},
+//                                MY_CAMERA_PERMISSION_CODE);
+//                    }
+//                }
 
-                        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-                            // Create the File where the photo should go
-                            try {
-                                File file = null;
-                                file = createImageFile();
-//                                Toast.makeText(AccountSettingActivityNew.this, file.toString(), Toast.LENGTH_SHORT).show();
-                                // Continue only if the File was successfully created
-                                Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
-                                        getApplicationContext().getPackageName() + ".provider",
-                                        file);
-                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                            } catch (Exception ex) {
-                                // Error occurred while creating the File
-                                Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-//                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
-
-
-                    }
-                } else {
-                    if (ContextCompat.checkSelfPermission
-                            (AccountSettingActivityNew.this, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(
-                                AccountSettingActivityNew.this,
-                                new String[]{Manifest.permission.CAMERA},
-                                MY_CAMERA_PERMISSION_CODE);
-                    }
-                }
+                selectImage(AccountSettingActivityNew.this);
             }
         });
 
@@ -226,12 +228,12 @@ public class AccountSettingActivityNew extends BaseActivity {
                 userID = pref.getString(user_id, "");
 
                 RequestBody.create(MediaType.parse("text/plain"), "image-type");
-                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"),userID);
-                RequestBody name = RequestBody.create(MediaType.parse("text/plain"),tv_firstname.getText().toString());
-                RequestBody oldPaswword = RequestBody.create(MediaType.parse("text/plain"),tv_password.getText().toString());
-                RequestBody newPasword = RequestBody.create(MediaType.parse("text/plain"),tv_new_password.getText().toString());
+                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), userID);
+                RequestBody name = RequestBody.create(MediaType.parse("text/plain"), tv_firstname.getText().toString());
+                RequestBody oldPaswword = RequestBody.create(MediaType.parse("text/plain"), tv_password.getText().toString());
+                RequestBody newPasword = RequestBody.create(MediaType.parse("text/plain"), tv_new_password.getText().toString());
 
-                retrofitEditProfileData(userId, name , oldPaswword, newPasword,part);
+                retrofitEditProfileData(userId, name, oldPaswword, newPasword, part);
 //                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString(),part);
             }
         });
@@ -294,13 +296,13 @@ public class AccountSettingActivityNew extends BaseActivity {
     public void retrofitEditProfileData(final RequestBody userID, final RequestBody firstName, final RequestBody old_password, final RequestBody new_password, MultipartBody.Part part) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
-        Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password,part);
+        Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password, part);
         call.enqueue(new Callback<GetEditProfileResponse>() {
             @Override
             public void onResponse(@NotNull Call<GetEditProfileResponse> call, @NotNull Response<GetEditProfileResponse> response) {
                 if (response.isSuccessful()) {
 
-                    Log.e("data",userID+"-"+firstName+"-"+old_password+"-"+new_password+"-");
+                    Log.e("data", userID + "-" + firstName + "-" + old_password + "-" + new_password + "-");
                     GetEditProfileResponse getEditProfileresources = response.body();
 
                     assert getEditProfileresources != null;
@@ -350,6 +352,14 @@ public class AccountSettingActivityNew extends BaseActivity {
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
+        } else if (requestCode == MY_GALLERY_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, GALLERY_REQUEST);
+            } else {
+                Toast.makeText(this, "gallery permission denied", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -357,9 +367,32 @@ public class AccountSettingActivityNew extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case 0:
+                    if (data != null) {
+                        imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                    }
+                    break;
+                case 1:
+                    if (data != null) {
+                        Uri imageData = data.getData();
+                        imageView.setImageURI(imageData);
+
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+                        Cursor cursor = getContentResolver().query(imageData, filePathColumn, null, null, null);
+                        assert cursor != null;
+                        cursor.moveToFirst();
+
+                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                        mediaPath = cursor.getString(columnIndex);
+//                        imageView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                        cursor.close();
+
+                        path = mediaPath;
+                    }
+                    break;
             }
         }
 
@@ -375,5 +408,81 @@ public class AccountSettingActivityNew extends BaseActivity {
         // Save a file: path for use with ACTION_VIEW intents
         path = image.getAbsolutePath();
         return image;
+    }
+
+    private void selectImage(Context context) {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choose your profile picture");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+//                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(takePicture, 0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                        } else {
+                            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                            if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                                // Create the File where the photo should go
+                                try {
+                                    File file = null;
+                                    file = createImageFile();
+                                    // Continue only if the File was successfully created
+                                    Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
+                                            getApplicationContext().getPackageName() + ".provider",
+                                            file);
+                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                                } catch (Exception ex) {
+                                    // Error occurred while creating the File
+                                    Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    } else {
+                        if (ContextCompat.checkSelfPermission
+                                (AccountSettingActivityNew.this, Manifest.permission.CAMERA)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(
+                                    AccountSettingActivityNew.this,
+                                    new String[]{Manifest.permission.CAMERA},
+                                    MY_CAMERA_PERMISSION_CODE);
+                        }
+                    }
+
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_GALLERY_PERMISSION_CODE);
+                        } else {
+                            Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickPhoto, GALLERY_REQUEST);
+                        }
+                    } else {
+                        if (ContextCompat.checkSelfPermission
+                                (AccountSettingActivityNew.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(
+                                    AccountSettingActivityNew.this,
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    MY_GALLERY_PERMISSION_CODE);
+                        }
+                    }
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 }
