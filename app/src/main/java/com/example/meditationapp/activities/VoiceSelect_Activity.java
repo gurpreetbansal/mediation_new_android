@@ -122,14 +122,14 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 
             }
         });
-        img_back_tool.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cat = new Intent(VoiceSelect_Activity.this, LogoutActivity.class);
-                startActivity(cat);
-                finish();
-            }
-        });
+//        img_back_tool.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent cat = new Intent(VoiceSelect_Activity.this, LogoutActivity.class);
+//                startActivity(cat);
+//                finish();
+//            }
+//        });
 
 
         LinearGradient shade = new LinearGradient(0f, 0f, 0f, time.getTextSize(), getResources().getColor(R.color.time_color_a), getResources().getColor(R.color.time_color_b), Shader.TileMode.CLAMP);
@@ -256,16 +256,26 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                     if (resource.getSuccess()) {
                         setVoiceData = getResponseSetVoice.getData();
 //                        Toast.makeText(VoiceSelect_Activity.this, getResponseSetVoice.getCode(), Toast.LENGTH_SHORT).show();
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("voice_selected",true);
+                        editor.apply();
+
+                        Log.e("response_success",response.body().getMessages());
+
                         Intent cat = new Intent(VoiceSelect_Activity.this, CategoriesActivities.class);
                         startActivity(cat);
                     }
                 }
+
+                Log.e("response",response.body().getMessages());
 
             }
 
             @Override
             public void onFailure(Call<GetResponseSetVoice> call, Throwable t) {
                 Toast.makeText(VoiceSelect_Activity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("response_fail",t.getMessage());
             }
         });
     }

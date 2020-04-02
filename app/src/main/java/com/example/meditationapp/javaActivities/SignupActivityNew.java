@@ -267,6 +267,8 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("user_id", resource.getData().getUserId());
                         editor.putString("social_type", EMAIL);
+                        editor.putBoolean("voice_selected",false);
+                        editor.putBoolean("category_selected",false);
                         editor.apply();
 
 //                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -274,6 +276,7 @@ public class SignupActivityNew extends BaseActivity implements GoogleApiClient.O
 //                        pref.getString(user_id,"");
 
                         startActivity(new Intent(SignupActivityNew.this, VoiceSelect_Activity.class));
+                        finish();
                         Toast.makeText(SignupActivityNew.this, msg, Toast.LENGTH_SHORT).show();
 
                         hideDialog();
