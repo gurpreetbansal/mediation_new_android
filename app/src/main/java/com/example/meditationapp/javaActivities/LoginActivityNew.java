@@ -14,19 +14,20 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.meditationapp.ModelClasses.GetSocialLoginResponse;
-import com.example.meditationapp.activities.LoginActivity;
 import com.example.meditationapp.activities.VoiceSelect_Activity;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookRequestError;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
-import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -38,10 +39,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.internal.SignInButtonImpl;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -51,7 +48,6 @@ import com.example.meditationapp.ModelClasses.LoginModelClass;
 import com.example.meditationapp.ModelClasses.LoginSendData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.HomeActivity;
-import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -81,9 +77,6 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     String email_txt, password_txt, device_type = "Android";
     ProgressDialog progressDialog;
 
-//    private FirebaseAuth mAuth;
-
-    //    private SignInButtonImpl signInButton;
     private ConstraintLayout loginActivity_ll_google;
     //    GoogleApiClient googleApiClient;
     private static final int REQ_CODE = 1;
@@ -96,7 +89,6 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     ConstraintLayout ll_login_facebook;
     private static final String EMAIL = "email", GOOGLE = "google", FACEBOOK = "facebook";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,12 +96,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         loginManager = LoginManager.getInstance();
-//        AppEventsLogger.activateApp(this);
 
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-//        AppEventsLogger.activateApp(this);
-//        mAuth = FirebaseAuth.getInstance();
-//          printHashKey();
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -201,6 +188,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
         ll_login_facebook = findViewById(R.id.ll_login_facebook);
 
         loginButton.setReadPermissions(Arrays.asList("email"));
+        loginButton.setLoginBehavior(LoginBehavior.WEB_VIEW_ONLY);
         ll_login_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -208,6 +196,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                 facebookLogin(loginButton.performClick());
             }
         });
+
 
         loginActivity_ll_google.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -244,7 +233,6 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
                         startActivity(new Intent(LoginActivityNew.this, HomeActivity.class));
                         Toast.makeText(LoginActivityNew.this, msg, Toast.LENGTH_SHORT).show();
-
                         hideDialog();
                         finish();
 
@@ -326,17 +314,109 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     }
 
     @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+//        Log.e("Failure Response++++", connectionResult.getErrorMessage());
+        Toast.makeText(this, "" + connectionResult, Toast.LENGTH_SHORT).show();
+        hideDialog();
+
+    }
+
+
+    public void facebookLogin(final boolean loginButton){
+
+        if (!loginButton) {
+
+            loginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email"));
+
+        }
+        sucessFacebook();
+
+        //Register a callback
+//        callbackManager = CallbackManager.Factory.create();
+//
+
+    }
+
+    public void sucessFacebook(){
+        loginManager.getInstance().registerCallback(callbackManager,
+    new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(final LoginResult loginResult) {
+            AccessToken accessToken = loginResult.getAccessToken();
+
+            final GraphRequest request = GraphRequest.newMeRequest(accessToken,
+            new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object,GraphResponse response) {
+
+
+                JSONObject json =response.getJSONObject();
+
+                try {
+                    if (json != null){
+
+                        String name = object.getString("name");
+                        String emails = object.getString("email");
+                        String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+//                        String idfb  = loginResult.getAccessToken().getUserId();
+                        String id = object.getString("id");
+
+                        socialLoginRetrofit(id, FACEBOOK, emails, imgURL,
+                                name, device_type, UUID.randomUUID().toString());
+
+                        Log.e("RESULT NAME",name);
+                        Log.e("RESULT EMAIL",emails);
+                        Log.e("ID",id);
+                        Log.e("RESULT PHOTO",imgURL);
+
+                        loginManager.logOut();
+
+                    }
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+                }
+
+            });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email");
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(LoginActivityNew.this, "Cancel", Toast.LENGTH_SHORT).show();
+                        //cancelled
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+//                        Toast.makeText(LoginActivityNew.this, "" + exception, Toast.LENGTH_SHORT).show();
+                        //error
+                    }
+                });
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_CODE) {
 //            showDialog();
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+
         } else {
+
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            Log.e("data", "he-----------");
+//            Log.e("data", "he-----------");
         }
 
 
@@ -360,83 +440,5 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     }
 
 
-    public void facebookLogin(final boolean loginButton) {
 
-        if (!loginButton) {
-
-            LoginManager.getInstance().logInWithReadPermissions(LoginActivityNew.this, Arrays.asList("email", "user_birthday", "user_hometown", "public_profile", "user_friends"));
-
-        }
-        sucessFacebook();
-
-        //Register a callback
-//        callbackManager = CallbackManager.Factory.create();
-//
-
-    }
-
-    public void sucessFacebook() {
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(final LoginResult loginResult) {
-                        final GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject object, GraphResponse response) {
-
-                                        Log.e("Login Activity", response.toString());
-
-                                        try {
-                                            String name = object.getString("name");
-                                            String emails = object.getString("email");
-                                            String imgURL = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
-                                            String idfb = loginResult.getAccessToken().getUserId();
-
-                                            socialLoginRetrofit(idfb, FACEBOOK, emails, imgURL,
-                                                    name, device_type, UUID.randomUUID().toString());
-//                        Intent intent=new Intent(LoginActivityNew.this, HomeActivity.class);startActivity(intent);
-//                        finish();
-//                        Toast.makeText(LoginActivityNew.this, "Login Successfully ", Toast.LENGTH_SHORT).show();
-
-                                            Log.e("RESULT NAME", name);
-                                            Log.e("RESULT EMAIL", emails);
-                                            Log.e("RESULT ID", idfb);
-                                            Log.e("RESULT PHOTO", imgURL);
-
-                                            loginManager.logOut();
-
-                                        } catch (JSONException ex) {
-                                            Log.e("error", ex.getMessage());
-                                        }
-                                    }
-
-                                });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,email,gender, birthday");
-                        request.setParameters(parameters);
-                        request.executeAsync();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(LoginActivityNew.this, "Cancel", Toast.LENGTH_SHORT).show();
-                        //cancelled
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Toast.makeText(LoginActivityNew.this, "" + exception, Toast.LENGTH_SHORT).show();
-                        //error
-                    }
-                });
-    }
-
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.e("Failure Response++++", connectionResult.getErrorMessage());
-        Toast.makeText(this, "" + connectionResult, Toast.LENGTH_SHORT).show();
-        hideDialog();
-    }
 }

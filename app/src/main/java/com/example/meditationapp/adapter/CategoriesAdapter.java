@@ -45,7 +45,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         final CategoriesModelClass categoriesModelClass = categoriesModelClasses.get(position);
         holder.cat_textView.setText(categoriesModelClasses.get(position).getName());
 //        holder.backImageView.setImageResource(categoriesModelClasses.get(position).getFileImage());
-        Picasso.get().load(categoriesModelClasses.get(position).getFileImage()).into(holder.backImageView);
+        Picasso.get().load(categoriesModelClasses.get(position).getImage()).into(holder.backImageView);
 
 
          holder.backImageView.setOnClickListener(new View.OnClickListener() {

@@ -82,7 +82,8 @@ public interface ApiInterface {
     @POST("auth/forgotPassword")
     Call<ForgetPasswordModel> forgetPassword(@Query("email") String email);
 
-    @POST("collections/getContentsInfo")
+//    @POST("collections/getContentsInfo")
+    @POST("collections/getCategoryes")
     Call<GetCategoriesModelClass> getCategory(@Query("user_id") String userId,
                                               @Query("type_id") String typeId);
 

@@ -9,14 +9,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.myapplication.fragment.PromoFragment;
+import com.example.meditationapp.Api.ApiInterface;
+import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
+import com.example.meditationapp.ModelClasses.GetProfileResponse;
 import com.example.meditationapp.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -26,6 +31,9 @@ import com.facebook.login.LoginResult;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +45,13 @@ public class AccountFragment extends Fragment {
     private LinearLayout ll_setting;
     CallbackManager callbackManager;
     LoginManager loginManager;
-    String  mypreference = "mypref",user_name="name", img="profile_photo",email="email";
+//    String  mypreference = "mypref",user_name="name", img="profile_photo",email="email";
+    String userID;
+    String mypreference = "mypref", user_id = "user_id";
+    ApiInterface apiInterface;
+    GetProfileResponse resource;
+
+
 
     public AccountFragment() {
         // Required empty public constructor
@@ -54,15 +68,11 @@ public class AccountFragment extends Fragment {
         ll_setting=view.findViewById(R.id.ll_setting);
         txt_email=view.findViewById(R.id.accountThree_txt_email);
 
+        SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        userID = pref.getString(user_id, "");
 
-//        SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-//        String  name = pref.getString(user_name,"");
-//        String image =pref.getString(img,"");
-//        String emails=pref.getString(email,"");
-//
-//        userNameTV.setText(name);
-//        Picasso.get().load(image).into(userProfileIV);
-//        txt_email.setText(emails);
+        retrofitGetProfileData(userID);
+
 
         txt_upgrade=view.findViewById(R.id.txt_upgrade);
 
@@ -91,4 +101,41 @@ public class AccountFragment extends Fragment {
         return view;
 
     }
+
+    public void retrofitGetProfileData(String userID) {
+        apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
+
+        Call<GetProfileResponse> call = apiInterface.getProfile(userID);
+
+        call.enqueue(new Callback<GetProfileResponse>() {
+            @Override
+            public void onResponse(Call<GetProfileResponse> call, Response<GetProfileResponse> response) {
+                if (response.isSuccessful()) {
+                    resource = response.body();
+                    assert resource != null;
+                    Log.e("success", resource.getMessages());
+                    if (resource.getSuccess()) {
+                        userNameTV.setText(resource.getData().getFirstName());
+                        txt_email.setText(resource.getData().getEmail());
+                        if (!resource.getData().getProfile().equals("")) {
+                            Picasso.get()
+                                    .load(resource.getData().getProfile())
+                                    .into(userProfileIV);
+//                            Log.e("assss",resource.getData().getProfile()+"assa");
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetProfileResponse> call, Throwable t) {
+                Log.e("Failure Response++++", t.getMessage());
+                Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
