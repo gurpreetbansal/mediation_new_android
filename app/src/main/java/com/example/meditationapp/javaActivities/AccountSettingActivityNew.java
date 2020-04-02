@@ -72,6 +72,7 @@ public class AccountSettingActivityNew extends BaseActivity {
     RelativeLayout progress_rl;
     CustomBoldEditText tv_firstname, tv_password, tv_new_password;
     String path;
+//    File savedFile = null;
     Uri uri;
     //    Dialog dialog;
 //    SimpleDraweeView profile_image;
@@ -216,15 +217,22 @@ public class AccountSettingActivityNew extends BaseActivity {
                         return;
                     }
                 }
-//                File file = new File(path);
-//                RequestBody fileReqBody = RequestBody.create(MediaType.parse("*/*"), file);
-//                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+                File file = new File(path);
+                RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
+                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                 progress_rl.setVisibility(View.VISIBLE);
 
                 SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                 userID = pref.getString(user_id, "");
 
-                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString());
+                RequestBody.create(MediaType.parse("text/plain"), "image-type");
+                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"),userID);
+                RequestBody name = RequestBody.create(MediaType.parse("text/plain"),tv_firstname.getText().toString());
+                RequestBody oldPaswword = RequestBody.create(MediaType.parse("text/plain"),tv_password.getText().toString());
+                RequestBody newPasword = RequestBody.create(MediaType.parse("text/plain"),tv_new_password.getText().toString());
+
+                retrofitEditProfileData(userId, name , oldPaswword, newPasword,part);
+//                retrofitEditProfileData(userID, tv_firstname.getText().toString(), tv_password.getText().toString(), tv_new_password.getText().toString(),part);
             }
         });
 
@@ -281,14 +289,18 @@ public class AccountSettingActivityNew extends BaseActivity {
 
     }
 
-    public void retrofitEditProfileData(final String userID, final String firstName, String old_password, String new_password) {
+//    public void retrofitEditProfileData(final String userID, final String firstName, final String old_password, final String new_password, MultipartBody.Part part)
+
+    public void retrofitEditProfileData(final RequestBody userID, final RequestBody firstName, final RequestBody old_password, final RequestBody new_password, MultipartBody.Part part) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
-        Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password);
+        Call<GetEditProfileResponse> call = apiInterface.editProfile(userID, firstName, firstName, old_password, new_password,part);
         call.enqueue(new Callback<GetEditProfileResponse>() {
             @Override
             public void onResponse(@NotNull Call<GetEditProfileResponse> call, @NotNull Response<GetEditProfileResponse> response) {
                 if (response.isSuccessful()) {
+
+                    Log.e("data",userID+"-"+firstName+"-"+old_password+"-"+new_password+"-");
                     GetEditProfileResponse getEditProfileresources = response.body();
 
                     assert getEditProfileresources != null;
@@ -347,43 +359,7 @@ public class AccountSettingActivityNew extends BaseActivity {
 
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-
-//                Uri selected = data.getData();
-//                String[] filePath = {MediaStore.Images.Media.DATA};
-
-//                Cursor cursor = getContentResolver().query(selected, filePath, null, null, null);
-//                assert cursor != null;
-//                cursor.moveToFirst();
-//
-//                int columnIndex = cursor.getColumnIndex(filePath[0]);
-//                mediaPath = cursor.getString(columnIndex);
-
                 imageView.setImageBitmap(BitmapFactory.decodeFile(path));
-//                mediaPath = path;
-
-//                postPath = mediaPath;
-//                Bitmap photo = (Bitmap) data.getExtras().get("data");aa
-//                imageView.setImageBitmap(photo);aa
-
-//            file = new File("path");
-//                OutputStream os = null;aaaa
-//                try {
-//                    os = new BufferedOutputStream(new FileOutputStream(file));
-//                    photo.compress(Bitmap.CompressFormat.JPEG, 100, os);
-//                    os.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }aaaa
-//            if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-//                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-//                imageView.setImageBitmap(myBitmap);
-//            } else {
-//                Toast.makeText(this, "Request cancelled or something went wrong.", Toast.LENGTH_SHORT).show();
-////
-//                Bitmap photo = (Bitmap) data.getExtras().get("data");
-//                imageView.setImageBitmap(photo);
-//
-//            }
             }
         }
 
