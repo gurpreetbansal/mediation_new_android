@@ -82,15 +82,20 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
             public void onClick(View view) {
                 if (socialType.equals(GOOGLE)) {
                     googleLogout();
+                    Log.e("logout", "google");
                 }
 
                 if (socialType.equals(FACEBOOK)) {
                     getFacebookLogout();
+                    Log.e("logout", "facebook");
                 }
 
                 if (socialType.equals(EMAIL)) {
                     getLogout(userid);
+                    Log.e("logout", "email");
                 }
+                Log.e("logout", socialType);
+
             }
         });
 
@@ -110,7 +115,6 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
             }
         });
-
     }
 
     private void getFacebookLogout(){
@@ -119,7 +123,10 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                 , HttpMethod.DELETE, new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
-
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("user_id", null);
+                editor.putString("social_type", null);
 //                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
                 finishAffinity();
@@ -152,6 +159,8 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                         editor.putString("social_type", null);
                         editor.apply();
 
+                        Log.e("logout", "logout");
+
                         Toast.makeText(LogoutActivity.this, logoutModelClass.getMessages(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
                         finishAffinity();
@@ -163,7 +172,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
             public void onFailure(Call<LogoutModelClass> call, Throwable t) {
                 Toast.makeText(LogoutActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
 //                t.printStackTrace();
-
+                Log.e("logout", "logout error");
             }
         });
 
@@ -180,6 +189,9 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                     editor.putString("user_id", null);
                     editor.putString("social_type", null);
                     editor.apply();
+                    startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
+                    finishAffinity();
+                    Log.e("logout", "google logout");
                 } else {
                     Toast.makeText(LogoutActivity.this, status.getStatusMessage() + "failedddd", Toast.LENGTH_SHORT).show();
                 }
@@ -189,7 +201,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.e("logout", "google logout error");
     }
 
     public void handleSignInResult(GoogleSignInResult result) {

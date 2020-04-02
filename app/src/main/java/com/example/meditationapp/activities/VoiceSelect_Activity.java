@@ -35,6 +35,7 @@ import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.VoiceAdapter;
 import com.example.meditationapp.javaActivities.CategoriesActivities;
+import com.example.meditationapp.javaActivities.LogoutActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
     SetVoiceModelClass setVoiceModelClass = new SetVoiceModelClass();
     GetResponseSetVoice getResponseSetVoice;
     List<GetResponseSetVoiceData> setVoiceData;
-    String voice_id, mypreference = "mypref", user_id = "user_id", userID, status = "0";
+    String voice_id = "", mypreference = "mypref", user_id = "user_id", userID, status = "0";
     List<String> voiceId = new ArrayList<>();
     RelativeLayout progress_bar;
 
@@ -102,29 +103,33 @@ public class VoiceSelect_Activity extends AppCompatActivity {
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voiceId.add(voice_id);
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
+                if (voice_id.equals("")) {
+                    Toast.makeText(VoiceSelect_Activity.this, "One voice must be seletced", Toast.LENGTH_SHORT).show();
+                } else {
+                    voiceId.add(String.valueOf(voiceData.get(Integer.valueOf(voice_id)).getId()));
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
+                    }
+                    setVoiceModelClass.setUserId(userID);
+                    Log.e("userID", userID + "----" + voiceId);
+                    setVoiceModelClass.setVoiceId(voiceId);
+                    setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
+                    setVoiceModelClass.setStatus(status);
+
+                    retrofitSetVoice(setVoiceModelClass);
                 }
-                setVoiceModelClass.setUserId(userID);
-                setVoiceModelClass.setVoiceId(voiceId);
-                setVoiceModelClass.setUserTime(time.getText().toString() + ":00");
-                setVoiceModelClass.setStatus(status);
-
-
-                retrofitSetVoice(setVoiceModelClass);
 
             }
         });
-        img_back_tool.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cat = new Intent(VoiceSelect_Activity.this, LogOut_Activity.class);
-                startActivity(cat);
-                finish();
-            }
-        });
+//        img_back_tool.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent cat = new Intent(VoiceSelect_Activity.this, LogoutActivity.class);
+//                startActivity(cat);
+//                finish();
+//            }
+//        });
 
 
         LinearGradient shade = new LinearGradient(0f, 0f, 0f, time.getTextSize(), getResources().getColor(R.color.time_color_a), getResources().getColor(R.color.time_color_b), Shader.TileMode.CLAMP);
@@ -191,27 +196,34 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 
                         adapter.setOnitemClickListener(new VoiceAdapter.OnitemClickListener() {
                             @Override
-                            public void startPlayer(String url, int position) {
+                            public void startPlayer(String url, int position, Boolean pause) {
                                 voice_id = String.valueOf(position);
-                                try {
-                                    if (mediaPlayer != null) {
-                                        mediaPlayer.release();
-                                        mediaPlayer = null;
-                                    }
-                                    mediaPlayer = new MediaPlayer();
-
-                                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    mediaPlayer.setDataSource(url);
-                                    mediaPlayer.prepareAsync();
-                                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                        @Override
-                                        public void onPrepared(MediaPlayer mp) {
-                                            mediaPlayer.start();
+                                if (!pause) {
+                                    try {
+                                        if (mediaPlayer != null) {
+                                            mediaPlayer.release();
+                                            mediaPlayer = null;
                                         }
-                                    });
-                                } catch (IOException e) {
-                                    e.printStackTrace();
+                                        mediaPlayer = new MediaPlayer();
+
+                                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                                        mediaPlayer.setDataSource(url);
+                                        mediaPlayer.prepareAsync();
+                                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mediaPlayer.start();
+                                                Log.e("play", "play");
+                                            }
+                                        });
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    mediaPlayer.pause();
+                                    Log.e("pause", "pause");
                                 }
+
                             }
                         });
 
@@ -244,20 +256,27 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                     if (resource.getSuccess()) {
                         setVoiceData = getResponseSetVoice.getData();
 //                        Toast.makeText(VoiceSelect_Activity.this, getResponseSetVoice.getCode(), Toast.LENGTH_SHORT).show();
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("voice_selected", true);
+                        editor.apply();
+
+                        Log.e("response_success", response.body().getMessages());
+
                         Intent cat = new Intent(VoiceSelect_Activity.this, CategoriesActivities.class);
                         startActivity(cat);
                     }
                 }
-
+                Log.e("response", response.body().getMessages());
             }
 
             @Override
             public void onFailure(Call<GetResponseSetVoice> call, Throwable t) {
                 Toast.makeText(VoiceSelect_Activity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("response_fail", t.getMessage());
             }
         });
     }
-
 
     @Override
     protected void onPause() {

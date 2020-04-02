@@ -22,6 +22,7 @@ import com.example.meditationapp.ModelClasses.SubscriptionModelClass;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -41,10 +42,18 @@ public interface ApiInterface {
     @POST("auth/getProfile")
     Call<GetProfileResponse> getProfile(@Query("user_id") String userId);
 
+//    @Multipart
+//    @POST("auth/editProfile")
+//    Call<GetEditProfileResponse> editProfile(@Part("user_id") String userId, @Part("first_name") String firstName,
+//                                             @Part("last_name") String lastName, @Part("old_password") String password,
+//                                             @Part("new_password") String new_password,@Part MultipartBody.Part part);
+
+    @Multipart
     @POST("auth/editProfile")
-    Call<GetEditProfileResponse> editProfile(@Query("user_id") String userId, @Query("first_name") String firstName,
-                                             @Query("last_name") String lastName, @Query("old_password") String password,
-                                             @Query("new_password") String new_password);
+    Call<GetEditProfileResponse> editProfile(@Part("user_id") RequestBody userId, @Part("first_name") RequestBody firstName,
+                                             @Part("last_name") RequestBody lastName, @Part("old_password") RequestBody password,
+                                             @Part("new_password") RequestBody new_password, @Part MultipartBody.Part part);
+
 
     @POST("auth/socailLogin")
     Call<GetSocialLoginResponse> getSocialLogin(@Query("social_id") String socialId, @Query("social_type") String socialType,

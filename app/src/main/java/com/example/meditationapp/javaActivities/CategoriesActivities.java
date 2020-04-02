@@ -244,9 +244,14 @@ public class CategoriesActivities extends BaseActivity {
 
                     if (setCategoriesModelClasses.getSuccess()){
 
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("category_selected",true);
+                        editor.apply();
+
                         Intent cat=new Intent(CategoriesActivities.this, HomeActivity.class);
                         startActivity(cat);
-                        finish();
+                        finishAffinity();
                         Toast.makeText(CategoriesActivities.this, ""+setCategoriesModelClasses.getMessages(), Toast.LENGTH_SHORT).show();
                     }
 
