@@ -82,7 +82,6 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
             public void onClick(View v) {
                 Log.e("socialtype", socialType);
 
-            public void onClick(View view) {
                 if (socialType.equals(GOOGLE)) {
                     googleLogout();
                     Log.e("logout", "google");
