@@ -79,7 +79,9 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
         txt_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Log.e("socialtype", socialType);
+
                 if (socialType.equals(GOOGLE)) {
                     googleLogout();
                     Log.e("logout", "google");
@@ -115,6 +117,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
             }
         });
+
     }
 
     private void getFacebookLogout(){
@@ -123,13 +126,17 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                 , HttpMethod.DELETE, new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("user_id", null);
-                editor.putString("social_type", null);
-//                        Toast.makeText(LogoutActivity.this, "Logout Success", Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("user_id", null);
+                    editor.putString("social_type", null);
+                    editor.apply();
+
+                Toast.makeText(LogoutActivity.this, "Logout successfully", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
                 finishAffinity();
+
                 LoginManager.getInstance().logOut();
             }
         }).executeAsync();

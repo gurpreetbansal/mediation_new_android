@@ -3,10 +3,12 @@ package com.example.meditationapp.javaActivities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import com.example.meditationapp.Custom_Widgets.CustomBoldEditText;
+import com.facebook.CallbackManager;
 
 import java.net.InetAddress;
 
@@ -43,4 +45,5 @@ public class BaseActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
