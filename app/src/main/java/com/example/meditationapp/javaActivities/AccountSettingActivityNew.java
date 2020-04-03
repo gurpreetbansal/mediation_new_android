@@ -74,6 +74,8 @@ public class AccountSettingActivityNew extends BaseActivity {
     RelativeLayout progress_rl;
     CustomBoldEditText tv_firstname, tv_password, tv_new_password;
     String path, mediaPath;
+    MultipartBody.Part part;
+    File file;
     //    File savedFile = null;
     Uri uri;
     //    Dialog dialog;
@@ -111,10 +113,6 @@ public class AccountSettingActivityNew extends BaseActivity {
 //        profile_image = findViewById(R.id.account_two_frag__profile_image);
         imageView = findViewById(R.id.account_two_frag__profile_image_temp);
         camera_icn = findViewById(R.id.account_two_frag__icn_camera);
-
-        if (socialType.equals(GOOGLE) || socialType.equals(FACEBOOK)) {
-            password_edit.setVisibility(View.GONE);
-        }
 
         camera_icn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -219,9 +217,15 @@ public class AccountSettingActivityNew extends BaseActivity {
                         return;
                     }
                 }
-                File file = new File(path);
-                RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
-                MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+                if (path!=null) {
+                    file = new File(path);
+                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
+                    part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+                }else {
+//                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
+//                    part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+                    part = null;
+                }
                 progress_rl.setVisibility(View.VISIBLE);
 
                 SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
