@@ -415,7 +415,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
         } else {
 
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
 //            Log.e("data", "he-----------");
         }
 
