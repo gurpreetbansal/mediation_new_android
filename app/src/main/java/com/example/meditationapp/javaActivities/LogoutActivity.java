@@ -198,6 +198,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                     editor.apply();
                     startActivity(new Intent(LogoutActivity.this, LoginActivityNew.class));
                     finishAffinity();
+                    Toast.makeText(LogoutActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
                     Log.e("logout", "google logout");
                 } else {
                     Toast.makeText(LogoutActivity.this, status.getStatusMessage() + "failedddd", Toast.LENGTH_SHORT).show();

@@ -263,7 +263,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             public void onResponse(Call<GetSocialLoginResponse> call, Response<GetSocialLoginResponse> response) {
 
                 GetSocialLoginResponse resource = response.body();
-                if (response.isSuccessful()) {
+                if (resource.getSuccess()) {
 
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
                     SharedPreferences.Editor editor = pref.edit();
