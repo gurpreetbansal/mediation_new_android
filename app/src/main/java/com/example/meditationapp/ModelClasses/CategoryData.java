@@ -3,13 +3,13 @@ package com.example.meditationapp.ModelClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetHomeDataResponseBannerData {
+public class CategoryData {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("content_id")
+    @SerializedName("cat_id")
     @Expose
-    private Integer contentId;
+    private Integer catId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -19,15 +19,21 @@ public class GetHomeDataResponseBannerData {
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("file_image")
+    @SerializedName("image")
     @Expose
-    private String fileImage;
-    @SerializedName("is_favourite")
+    private String image;
+    @SerializedName("status")
     @Expose
-    private Integer isFavourite;
+    private Integer status;
+    @SerializedName("is_delete")
+    @Expose
+    private Object isDelete;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
 
     public Integer getId() {
         return id;
@@ -37,12 +43,12 @@ public class GetHomeDataResponseBannerData {
         this.id = id;
     }
 
-    public Integer getContentId() {
-        return contentId;
+    public Integer getCatId() {
+        return catId;
     }
 
-    public void setContentId(Integer contentId) {
-        this.contentId = contentId;
+    public void setCatId(Integer catId) {
+        this.catId = catId;
     }
 
     public String getName() {
@@ -69,20 +75,28 @@ public class GetHomeDataResponseBannerData {
         this.description = description;
     }
 
-    public String getFileImage() {
-        return fileImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setFileImage(String fileImage) {
-        this.fileImage = fileImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public Integer getIsFavourite() {
-        return isFavourite;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setIsFavourite(Integer isFavourite) {
-        this.isFavourite = isFavourite;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Object getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Object isDelete) {
+        this.isDelete = isDelete;
     }
 
     public String getCreatedAt() {
@@ -91,5 +105,13 @@ public class GetHomeDataResponseBannerData {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

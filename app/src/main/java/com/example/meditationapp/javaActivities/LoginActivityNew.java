@@ -254,7 +254,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
     }
 
-    public void socialLoginRetrofit(String socialId, final String socialType, String email, String profile, String name, String deviceType, String deviceToken) {
+    public void socialLoginRetrofit(final String socialId, final String socialType, String email, String profile, String name, String deviceType, final String deviceToken) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<GetSocialLoginResponse> call = apiInterface.getSocialLogin(socialId, socialType, email, profile, name, deviceType, deviceToken);
 
@@ -263,11 +263,12 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             public void onResponse(Call<GetSocialLoginResponse> call, Response<GetSocialLoginResponse> response) {
 
                 GetSocialLoginResponse resource = response.body();
-                if (response.isSuccessful()) {
+                if (resource.getSuccess()) {
 
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("user_id", resource.getData().getUserId());
+                    Log.e("data",socialId+"---"+deviceToken);
                     editor.putString("social_type", socialType);
                     editor.apply();
 

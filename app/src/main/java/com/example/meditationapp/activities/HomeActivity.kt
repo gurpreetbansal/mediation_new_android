@@ -14,6 +14,7 @@ import com.app.myapplication.fragment.RecordFragment
 import com.app.myapplication.fragment.SoundFragment
 import com.example.meditationapp.R
 import com.example.meditationapp.javaActivities.AccountFragment
+import com.example.meditationapp.javaActivities.LibraryFragmentNew
 import com.example.meditationapp.javaActivities.LogoutActivity
 import kotlinx.android.synthetic.main.bottom_navi_layout.*
 
@@ -25,7 +26,7 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
 
     val mypreference = "mypref"
     val user_id = "user_id"
-    val email= "email"
+    val email = "email"
 
 //    private val onNavigationItemSelectedListener =
 //        BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -114,7 +115,7 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             Context.MODE_PRIVATE
         )
 
-        Log.e("userID",pref.getString(user_id,""))
+        Log.e("userID", pref.getString(user_id, ""))
 
         lib.setOnClickListener {
             img_bottom_lib.visibility = View.VISIBLE
@@ -122,9 +123,13 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             img_bottom_record.visibility = View.INVISIBLE
             img_bottom_account.visibility = View.INVISIBLE
 
+            val fragment = LibraryFragmentNew()
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, fragment)
+            transaction.commit()
 
-            val homeFragment = LibraryFragment.newInstance()
-            openFragment(homeFragment)
+//            val homeFragment = LibraryFragment.newInstance()
+//            openFragment(homeFragment)
 
         }
         sound.setOnClickListener {
@@ -212,13 +217,17 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
 //        else {
 
 
-
         img_bottom_lib.visibility = View.VISIBLE
         img_bottom_sound.visibility = View.INVISIBLE
         img_bottom_record.visibility = View.INVISIBLE
         img_bottom_account.visibility = View.INVISIBLE
-        val homeFragment = LibraryFragment.newInstance()
-        openFragment(homeFragment)
+
+        val fragment = LibraryFragmentNew()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.commit()
+//        val homeFragment = LibraryFragment.newInstance()
+//        openFragment(homeFragment)
         //  }
 
     }
