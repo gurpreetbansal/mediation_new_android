@@ -97,5 +97,4 @@ public interface ApiInterface {
     @POST("collections/support")
     Call<GetSupportResponse> sendQuery(@Query("user_id") String userId, @Query("suppert_subject") String subject, @Query("support_message") String message);
 
-
 }

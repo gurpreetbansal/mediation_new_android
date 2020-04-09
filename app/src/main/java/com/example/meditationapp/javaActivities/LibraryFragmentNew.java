@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
@@ -41,6 +42,7 @@ public class LibraryFragmentNew extends Fragment {
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
     GetHomeResponse resource;
+    RelativeLayout progressBar;
 
     public LibraryFragmentNew() {
         // Required empty public constructor
@@ -54,11 +56,14 @@ public class LibraryFragmentNew extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
 
+        progressBar = view.findViewById(R.id.lib_frag__prog_rl);
         ll_weight_lib = view.findViewById(R.id.ll_weight_lib);
         ll_weight_lib_two = view.findViewById(R.id.ll_weight_lib_two);
         interestRecyclerView = view.findViewById(R.id.lib_interestRecyclerView);
         natureRecyclerView = view.findViewById(R.id.lib_natureRecyclerView);
         categoryRecyclerView = view.findViewById(R.id.lib_categoryRecyclerView);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         LinearLayoutManager llManager_interest = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         interestRecyclerView.setLayoutManager(llManager_interest);
@@ -84,26 +89,32 @@ public class LibraryFragmentNew extends Fragment {
                     resource = response.body();
                     assert resource != null;
                     if (resource.getSuccess()) {
-                        InterestAdapter interestAdapter = new InterestAdapter(getActivity().getApplicationContext(),resource.getData().getInterested());
+                        InterestAdapter interestAdapter = new InterestAdapter(getActivity(),resource.getData().getInterested());
                         interestRecyclerView.setAdapter(interestAdapter);
                         Log.e("interest",String.valueOf(resource.getData().getInterested().size()));
 
-                        NatureAdapter natureAdapter = new NatureAdapter(getActivity().getApplicationContext(),resource.getData().getNature());
+                        NatureAdapter natureAdapter = new NatureAdapter(getActivity(),resource.getData().getNature());
                         natureRecyclerView.setAdapter(natureAdapter);
                         Log.e("nature",String.valueOf(resource.getData().getNature().size()));
 
-                        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity().getApplicationContext(),resource.getData().getCategories());
+                        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(),resource.getData().getCategories());
                         categoryRecyclerView.setAdapter(categoryAdapter);
                         Log.e("interest",String.valueOf(resource.getData().getCategories().size()));
+
+                        progressBar.setVisibility(View.GONE);
                     }
                 }else {
                     Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
+
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<GetHomeResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
