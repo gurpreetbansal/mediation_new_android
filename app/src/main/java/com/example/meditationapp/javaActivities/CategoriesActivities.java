@@ -48,7 +48,7 @@ public class CategoriesActivities extends BaseActivity {
     CategoriesAdapter categoriesAdapter;
     GetCategoriesModelClass getCategoriesModelClass;
 
-    List<String> data = new ArrayList<>();
+    ArrayList<String> data = new ArrayList<>();
     RecyclerItemClickListener mItemClickListener;
     ArrayDeque mDataset;
 
@@ -182,7 +182,7 @@ public class CategoriesActivities extends BaseActivity {
                 public void onClick(View view, int position) {
 //                                CategoriesModelClass cmc = categoriesModelClasses.get(position);
 
-                    Integer cmc1 = categoriesModelClasses.get(position).getId();
+//                    Integer cmc1 = categoriesModelClasses.get(position).getId();
                     Boolean ok =categoriesModelClasses.get(position).isSelected();
 
 //                    Log.e("CATEGORIES ID", cmc1.toString());
@@ -190,6 +190,8 @@ public class CategoriesActivities extends BaseActivity {
                     if (ok.equals(true)){
 
                         data.remove(String.valueOf(categoriesModelClasses.get(position).getId()));
+//                        data.remove(categoriesModelClasses.get(position).getId());
+                        Log.e("Remove Data :  ", ""+data);
 //                        Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
 
 
@@ -197,6 +199,8 @@ public class CategoriesActivities extends BaseActivity {
                     else if (ok.equals(false)){
 
                         data.add(String.valueOf(categoriesModelClasses.get(position).getId()));
+//                        data.add(categoriesModelClasses.get(position).getId());
+                        Log.e("Add Data :  ", ""+data);
 //                        Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getData().get(position).getName(), Toast.LENGTH_SHORT).show();
                     }
 
@@ -229,7 +233,7 @@ public class CategoriesActivities extends BaseActivity {
 
     }
 
-    public void setContentData(String userId, List<String> data){
+    public void setContentData(String userId, ArrayList<String> data){
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
