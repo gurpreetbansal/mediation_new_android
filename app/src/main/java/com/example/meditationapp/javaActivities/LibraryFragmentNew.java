@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -95,12 +96,14 @@ public class LibraryFragmentNew extends Fragment {
                         categoryRecyclerView.setAdapter(categoryAdapter);
                         Log.e("interest",String.valueOf(resource.getData().getCategories().size()));
                     }
+                }else {
+                    Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<GetHomeResponse> call, Throwable t) {
-
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.meditationapp.R
 import com.example.meditationapp.javaActivities.AccountSettingActivityNew
+import com.example.meditationapp.javaActivities.SupportActivity_new
 import kotlinx.android.synthetic.main.account_fragment.*
 
 class SettingActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         })
         txt_support.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@SettingActivity, SupportActivity::class.java)
+            val intent = Intent(this@SettingActivity, SupportActivity_new::class.java)
             startActivity(intent)
         })
         txt_privacy.setOnClickListener(View.OnClickListener {
