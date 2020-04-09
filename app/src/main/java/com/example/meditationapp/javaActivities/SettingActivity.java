@@ -115,7 +115,7 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(SettingActivity.this, SupportActivity.class));
+                startActivity(new Intent(SettingActivity.this, SupportActivity_new.class));
 
             }
         });

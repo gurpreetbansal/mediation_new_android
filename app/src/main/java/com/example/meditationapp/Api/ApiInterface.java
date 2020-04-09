@@ -10,6 +10,7 @@ import com.example.meditationapp.ModelClasses.GetResponseSetVoice;
 import com.example.meditationapp.ModelClasses.GetResponseSubscription;
 import com.example.meditationapp.ModelClasses.GetResponseTermsAndCondition;
 import com.example.meditationapp.ModelClasses.GetSocialLoginResponse;
+import com.example.meditationapp.ModelClasses.GetSupportResponse;
 import com.example.meditationapp.ModelClasses.GetVoiceResponse;
 import com.example.meditationapp.ModelClasses.LoginModelClass;
 import com.example.meditationapp.ModelClasses.LoginSendData;
@@ -94,5 +95,8 @@ public interface ApiInterface {
 
     @POST("collections/randomCategory")
     Call<GetHomeResponse> getHome(@Query("user_id") String userId, @Query("type_id") String typeId);
+
+    @POST("collections/support")
+    Call<GetSupportResponse> sendQuery(@Query("user_id") String userId, @Query("suppert_subject") String subject, @Query("support_message") String message);
 
 }
