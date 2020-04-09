@@ -201,7 +201,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
                     Toast.makeText(LogoutActivity.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
                     Log.e("logout", "google logout");
                 } else {
-                    Toast.makeText(LogoutActivity.this, status.getStatusMessage() + "failedddd", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogoutActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -53,76 +53,76 @@ class LibraryFragment : Fragment()
             val voice = Intent(activity, My_FavoritesActivity::class.java)
             startActivity(voice)
         })
-        ll_weight_loss_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, WeighTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_weight_loss2_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, WeighTwoActivity::class.java)
-            startActivity(voice)
-        })
-        llprofessional_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, ProfessionalTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_professional2_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, ProfessionalTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_stress_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, StressTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_stress2_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, StressTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_relation_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, RelationshipTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_athletic_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, AthleicTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_healths_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, HealthTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_fincial_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, FinancialTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_abun_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, AbundanceTwoActivity::class.java)
-            startActivity(voice)
-        })
+//        ll_weight_loss_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, WeighTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_weight_loss2_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, WeighTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        llprofessional_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, ProfessionalTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_professional2_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, ProfessionalTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_stress_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, StressTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_stress2_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, StressTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_relation_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, RelationshipTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_athletic_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, AthleicTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_healths_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, HealthTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_fincial_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, FinancialTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_abun_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, AbundanceTwoActivity::class.java)
+//            startActivity(voice)
+//        })
 
-        img_lib_drop.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
-            startActivity(voice)
-        })
-        img_lib_stone.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
-            startActivity(voice)
-        })
-        img_lib_tree.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
-            startActivity(voice)
-        })
-        img_lib_water.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_lib_flower.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-
-        img_lib_beat.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
+//        img_lib_drop.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
+//            startActivity(voice)
+//        })
+//        img_lib_stone.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
+//            startActivity(voice)
+//        })
+//        img_lib_tree.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
+//            startActivity(voice)
+//        })
+//        img_lib_water.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_lib_flower.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//
+//        img_lib_beat.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
     }
 
     companion object {

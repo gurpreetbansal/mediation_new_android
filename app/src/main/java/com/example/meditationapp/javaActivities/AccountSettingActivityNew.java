@@ -69,10 +69,10 @@ public class AccountSettingActivityNew extends BaseActivity {
     String mypreference = "mypref", user_id = "user_id", social_type = "social_type";
     private static final String EMAIL = "email", GOOGLE = "google", FACEBOOK = "facebook";
     CustomBoldtextView tv_email, firstname_edit, password_edit, firstname_change, password_change, save_changes, password_title;
-    LinearLayout new_password_container;
+    LinearLayout new_password_container, confirm_password_container;
     GetProfileResponse resource;
     RelativeLayout progress_rl;
-    CustomBoldEditText tv_firstname, tv_password, tv_new_password;
+    CustomBoldEditText tv_firstname, tv_password, tv_new_password, tv_confirm_password;
     String path, mediaPath;
     MultipartBody.Part part;
     File file;
@@ -102,6 +102,7 @@ public class AccountSettingActivityNew extends BaseActivity {
         tv_email = findViewById(R.id.account_two_frag__email);
         tv_password = findViewById(R.id.account_two_frag__password);
         tv_new_password = findViewById(R.id.account_two_frag__new_password);
+        tv_confirm_password = findViewById(R.id.account_two_frag__confirm_password);
         progress_rl = findViewById(R.id.account_two_frag__prog_rl);
         firstname_change = findViewById(R.id.account_two_frag__first_name_change);
         firstname_edit = findViewById(R.id.account_two_frag__first_name_edit);
@@ -110,50 +111,13 @@ public class AccountSettingActivityNew extends BaseActivity {
         password_title = findViewById(R.id.account_two_frag__password_title);
         save_changes = findViewById(R.id.account_two_frag__done);
         new_password_container = findViewById(R.id.account_two_frag__new_password_container);
+        confirm_password_container = findViewById(R.id.account_two_frag__confirm_password_container);
 //        profile_image = findViewById(R.id.account_two_frag__profile_image);
         imageView = findViewById(R.id.account_two_frag__profile_image_temp);
         camera_icn = findViewById(R.id.account_two_frag__icn_camera);
 
         camera_icn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                        requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-//                    } else {
-//                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//                        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-//                            // Create the File where the photo should go
-//                            try {
-//                                File file = null;
-//                                file = createImageFile();
-//                                // Continue only if the File was successfully created
-//                                Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
-//                                        getApplicationContext().getPackageName() + ".provider",
-//                                        file);
-//                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-//                            } catch (Exception ex) {
-//                                // Error occurred while creating the File
-//                                Toast.makeText(AccountSettingActivityNew.this, ex.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-////                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
-//
-//
-//                    }
-//                } else {
-//                    if (ContextCompat.checkSelfPermission
-//                            (AccountSettingActivityNew.this, Manifest.permission.CAMERA)
-//                            != PackageManager.PERMISSION_GRANTED) {
-//                        ActivityCompat.requestPermissions(
-//                                AccountSettingActivityNew.this,
-//                                new String[]{Manifest.permission.CAMERA},
-//                                MY_CAMERA_PERMISSION_CODE);
-//                    }
-//                }
-
                 selectImage(AccountSettingActivityNew.this);
             }
         });
@@ -182,14 +146,16 @@ public class AccountSettingActivityNew extends BaseActivity {
 
                 tv_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 tv_new_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
+                tv_confirm_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
                 tv_password.setEnabled(true);
                 password_edit.setVisibility(View.GONE);
                 password_change.setVisibility(View.VISIBLE);
                 password_title.setText(R.string.old_password);
                 new_password_container.setVisibility(View.VISIBLE);
+                confirm_password_container.setVisibility(View.VISIBLE);
                 tv_new_password.setEnabled(true);
+                tv_confirm_password.setEnabled(true);
             }
         });
 
@@ -200,12 +166,14 @@ public class AccountSettingActivityNew extends BaseActivity {
                 if (tv_password.getText().toString().equals("") && tv_new_password.getText().toString().equals("")) {
                     password_title.setText(R.string.password);
                     new_password_container.setVisibility(View.GONE);
+                    confirm_password_container.setVisibility(View.GONE);
                 }
 
                 password_edit.setVisibility(View.VISIBLE);
                 password_change.setVisibility(View.GONE);
                 tv_password.setEnabled(false);
                 tv_new_password.setEnabled(false);
+                tv_confirm_password.setEnabled(false);
             }
         });
 
@@ -217,11 +185,16 @@ public class AccountSettingActivityNew extends BaseActivity {
                         return;
                     }
                 }
-                if (path!=null) {
+                if (!tv_confirm_password.getText().toString().equals(tv_new_password.getText().toString())) {
+                    tv_confirm_password.setError("Confirm password and new password does not match!!");
+                    tv_confirm_password.requestFocus();
+                    return;
+                }
+                if (path != null) {
                     file = new File(path);
                     RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
                     part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
-                }else {
+                } else {
 //                    RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
 //                    part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                     part = null;
@@ -315,11 +288,14 @@ public class AccountSettingActivityNew extends BaseActivity {
                         tv_email.setText(getEditProfileresources.getData().getEmail());
                         tv_password.setText("");
                         new_password_container.setVisibility(View.GONE);
+                        confirm_password_container.setVisibility(View.GONE);
                         password_title.setText(R.string.password);
                         password_change.setVisibility(View.GONE);
                         password_edit.setVisibility(View.VISIBLE);
                         tv_new_password.setText("");
                         tv_new_password.setEnabled(false);
+                        tv_confirm_password.setText("");
+                        tv_confirm_password.setEnabled(false);
                         tv_password.setEnabled(false);
                         Toast.makeText(AccountSettingActivityNew.this, getEditProfileresources.getMessages(), Toast.LENGTH_SHORT).show();
                         progress_rl.setVisibility(View.GONE);

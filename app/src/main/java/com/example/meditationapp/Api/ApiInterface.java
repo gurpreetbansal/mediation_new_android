@@ -3,6 +3,7 @@ package com.example.meditationapp.Api;
 import com.example.meditationapp.ModelClasses.ForgetPasswordModel;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.GetEditProfileResponse;
+import com.example.meditationapp.ModelClasses.GetHomeResponse;
 import com.example.meditationapp.ModelClasses.GetProfileResponse;
 import com.example.meditationapp.ModelClasses.GetResponsePricyAndPolicy;
 import com.example.meditationapp.ModelClasses.GetResponseSetVoice;
@@ -14,6 +15,7 @@ import com.example.meditationapp.ModelClasses.LoginModelClass;
 import com.example.meditationapp.ModelClasses.LoginSendData;
 import com.example.meditationapp.ModelClasses.LogoutModelClass;
 import com.example.meditationapp.ModelClasses.SetCategoriesModelClass;
+import com.example.meditationapp.ModelClasses.SetCategoryResponse;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.ModelClasses.SignupModelClass;
 import com.example.meditationapp.ModelClasses.SignupSendData;
@@ -43,12 +45,6 @@ public interface ApiInterface {
 
     @POST("auth/getProfile")
     Call<GetProfileResponse> getProfile(@Query("user_id") String userId);
-
-//    @Multipart
-//    @POST("auth/editProfile")
-//    Call<GetEditProfileResponse> editProfile(@Part("user_id") String userId, @Part("first_name") String firstName,
-//                                             @Part("last_name") String lastName, @Part("old_password") String password,
-//                                             @Part("new_password") String new_password,@Part MultipartBody.Part part);
 
     @Multipart
     @POST("auth/editProfile")
@@ -84,14 +80,19 @@ public interface ApiInterface {
     @POST("auth/forgotPassword")
     Call<ForgetPasswordModel> forgetPassword(@Query("email") String email);
 
-//    @POST("collections/getContentsInfo")
+    //    @POST("collections/getContentsInfo")
     @POST("collections/getCategoryes")
     Call<GetCategoriesModelClass> getCategory(@Query("user_id") String userId,
                                               @Query("type_id") String typeId);
 
-    @POST("collections/collectCategory")
-    Call<SetCategoriesModelClass> setCategory(@Query("user_id") String userId,
-                                              @Query("category_id") ArrayList<String> catagoryID);
+//    @POST("collections/collectCategory")
+//    Call<SetCategoriesModelClass> setCategory(@Query("user_id") String userId,
+//                                              @Query("category_id") List<String> catagoryID);
 
+    @POST("collections/collectCategory")
+    Call<SetCategoriesModelClass> setCategory(@Body SetCategoryResponse setCategoryResponse);
+
+    @POST("collections/randomCategory")
+    Call<GetHomeResponse> getHome(@Query("user_id") String userId, @Query("type_id") String typeId);
 
 }

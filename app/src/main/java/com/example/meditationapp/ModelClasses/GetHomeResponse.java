@@ -3,7 +3,7 @@ package com.example.meditationapp.ModelClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetHomeDataResponse {
+public class GetHomeResponse {
     @SerializedName("code")
     @Expose
     private String code;
@@ -15,7 +15,7 @@ public class GetHomeDataResponse {
     private String messages;
     @SerializedName("data")
     @Expose
-    private GetHomeDataResponseData data;
+    private HomeData data;
 
     public String getCode() {
         return code;
@@ -41,11 +41,11 @@ public class GetHomeDataResponse {
         this.messages = messages;
     }
 
-    public GetHomeDataResponseData getData() {
+    public HomeData getData() {
         return data;
     }
 
-    public void setData(GetHomeDataResponseData data) {
+    public void setData(HomeData data) {
         this.data = data;
     }
 
