@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditationapp.ModelClasses.NatureData;
 import com.example.meditationapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,7 +36,8 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
 
     @Override
     public void onBindViewHolder(@NonNull itemHolder holder, int position) {
-        Log.e("nature",String.valueOf(nature.size()));
+        Picasso.get().load(nature.get(position).getImages()).into(holder.image);
+        Log.e("nature", String.valueOf(nature.size()));
     }
 
     @Override
@@ -43,8 +46,13 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
     }
 
     public class itemHolder extends RecyclerView.ViewHolder {
+
+        AppCompatImageView image;
+
         public itemHolder(@NonNull View itemView) {
             super(itemView);
+
+            image = itemView.findViewById(R.id.nature_lib_drop);
         }
     }
 }

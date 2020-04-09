@@ -73,30 +73,30 @@ class LibraryFragment : Fragment()
 //            val voice = Intent(activity, StressTwoActivity::class.java)
 //            startActivity(voice)
 //        })
-        ll_stress2_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, StressTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_relation_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, RelationshipTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_athletic_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, AthleicTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_healths_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, HealthTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_fincial_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, FinancialTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_abun_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, AbundanceTwoActivity::class.java)
-            startActivity(voice)
-        })
+//        ll_stress2_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, StressTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_relation_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, RelationshipTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_athletic_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, AthleicTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_healths_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, HealthTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_fincial_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, FinancialTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_abun_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, AbundanceTwoActivity::class.java)
+//            startActivity(voice)
+//        })
 
 //        img_lib_drop.setOnClickListener(View.OnClickListener {
 //            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)

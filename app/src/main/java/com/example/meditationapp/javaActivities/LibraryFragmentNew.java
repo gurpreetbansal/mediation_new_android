@@ -22,6 +22,7 @@ import com.example.meditationapp.ModelClasses.GetHomeResponse;
 import com.example.meditationapp.ModelClasses.HomeData;
 import com.example.meditationapp.ModelClasses.InterestedData;
 import com.example.meditationapp.R;
+import com.example.meditationapp.adapter.CategoryAdapter;
 import com.example.meditationapp.adapter.InterestAdapter;
 import com.example.meditationapp.adapter.NatureAdapter;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
@@ -34,7 +35,7 @@ public class LibraryFragmentNew extends Fragment {
 
     CustomBoldtextView ll_weight_lib;
     LinearLayout ll_weight_lib_two;
-    RecyclerView interestRecyclerView, natureRecyclerView;
+    RecyclerView interestRecyclerView, natureRecyclerView,categoryRecyclerView;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
@@ -56,12 +57,16 @@ public class LibraryFragmentNew extends Fragment {
         ll_weight_lib_two = view.findViewById(R.id.ll_weight_lib_two);
         interestRecyclerView = view.findViewById(R.id.lib_interestRecyclerView);
         natureRecyclerView = view.findViewById(R.id.lib_natureRecyclerView);
+        categoryRecyclerView = view.findViewById(R.id.lib_categoryRecyclerView);
 
         LinearLayoutManager llManager_interest = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         interestRecyclerView.setLayoutManager(llManager_interest);
 
         GridLayoutManager glManager_nature = new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false);
         natureRecyclerView.setLayoutManager(glManager_nature);
+
+        LinearLayoutManager llManager_allcat = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+        categoryRecyclerView.setLayoutManager(llManager_allcat);
 
         getHomeData(userID, "2");
 
@@ -85,6 +90,10 @@ public class LibraryFragmentNew extends Fragment {
                         NatureAdapter natureAdapter = new NatureAdapter(getActivity().getApplicationContext(),resource.getData().getNature());
                         natureRecyclerView.setAdapter(natureAdapter);
                         Log.e("nature",String.valueOf(resource.getData().getNature().size()));
+
+                        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity().getApplicationContext(),resource.getData().getCategories());
+                        categoryRecyclerView.setAdapter(categoryAdapter);
+                        Log.e("interest",String.valueOf(resource.getData().getCategories().size()));
                     }
                 }
             }
