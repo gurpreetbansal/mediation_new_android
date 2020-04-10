@@ -100,6 +100,8 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 
         img_back_tool = (ImageView) findViewById(R.id.img_back_tool);
 
+        img_back_tool.setVisibility(View.VISIBLE);
+
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -47,6 +47,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
     private static final String EMAIL = "email", GOOGLE = "google", FACEBOOK = "facebook";
     GoogleApiClient googleApiClient;
     GoogleSignInOptions gso;
+    CustomBoldtextView textview;
 
     LoginManager loginManager;
 
@@ -57,6 +58,7 @@ public class LogoutActivity extends BaseActivity implements GoogleApiClient.OnCo
 
         txt_yes = findViewById(R.id.txt_yes);
         txt_no = findViewById(R.id.txt_no);
+        textview = findViewById(R.id.quit_text);
         txt_help_center_quit = findViewById(R.id.txt_help_center_quit);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
