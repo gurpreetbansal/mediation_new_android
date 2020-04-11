@@ -1,4 +1,4 @@
-package com.example.meditationapp.javaActivities;
+package com.example.meditationapp.JavaFragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;

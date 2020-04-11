@@ -8,13 +8,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.app.myapplication.fragment.AccountThreeFragment
 import com.app.myapplication.fragment.LibraryFragment
 import com.app.myapplication.fragment.RecordFragment
 import com.app.myapplication.fragment.SoundFragment
 import com.example.meditationapp.R
-import com.example.meditationapp.javaActivities.AccountFragment
-import com.example.meditationapp.javaActivities.LibraryFragmentNew
+import com.example.meditationapp.JavaFragment.AccountFragment
+import com.example.meditationapp.JavaFragment.LibraryFragmentNew
 import com.example.meditationapp.javaActivities.LogoutActivity
 import kotlinx.android.synthetic.main.bottom_navi_layout.*
 
@@ -123,7 +122,8 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             img_bottom_record.visibility = View.INVISIBLE
             img_bottom_account.visibility = View.INVISIBLE
 
-            val fragment = LibraryFragmentNew()
+            val fragment =
+                LibraryFragmentNew()
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, fragment)
             transaction.commit()
@@ -139,8 +139,11 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             img_bottom_account.visibility = View.INVISIBLE
 
 
-            val homeFragment = SoundFragment.newInstance()
-            openFragment(homeFragment)
+            val fragment =
+                com.example.meditationapp.JavaFragment.SoundFragment()
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, fragment)
+            transaction.commit()
 
         }
         record.setOnClickListener {
@@ -163,7 +166,8 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
             img_bottom_record.visibility = View.INVISIBLE
             img_bottom_account.visibility = View.VISIBLE
 
-            val fragment = AccountFragment()
+            val fragment =
+                AccountFragment()
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.container, fragment)
             transaction.commit()
@@ -222,7 +226,8 @@ class HomeActivity : AppCompatActivity()/*, FragmentLifecycle*/ {
         img_bottom_record.visibility = View.INVISIBLE
         img_bottom_account.visibility = View.INVISIBLE
 
-        val fragment = LibraryFragmentNew()
+        val fragment =
+            LibraryFragmentNew()
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container, fragment)
         transaction.commit()

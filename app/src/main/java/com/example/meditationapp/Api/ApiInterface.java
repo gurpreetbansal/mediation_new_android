@@ -20,6 +20,7 @@ import com.example.meditationapp.ModelClasses.SetCategoryResponse;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.ModelClasses.SignupModelClass;
 import com.example.meditationapp.ModelClasses.SignupSendData;
+import com.example.meditationapp.ModelClasses.SoundModel.GetSoundAndScapeResponse;
 import com.example.meditationapp.ModelClasses.SubscriptionModelClass;
 
 import java.util.ArrayList;
@@ -99,4 +100,6 @@ public interface ApiInterface {
     @POST("collections/support")
     Call<GetSupportResponse> sendQuery(@Query("user_id") String userId, @Query("suppert_subject") String subject, @Query("support_message") String message);
 
+    @POST("collections/music")
+    Call<GetSoundAndScapeResponse> getMusicList(@Query("user_id") String userId);
 }

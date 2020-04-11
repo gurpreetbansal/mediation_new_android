@@ -94,7 +94,7 @@
 
 
     <LinearLayout
-        android:id="@+id/ll_home_search"
+        android:id="@+id/ll_sound_search"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="center"
@@ -136,8 +136,7 @@
 
 
 
-    <ScrollView
-
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -151,6 +150,7 @@
             android:layout_marginRight="@dimen/_10sdp">
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/soundScape_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -167,104 +167,113 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <FrameLayout
-                    android:id="@+id/fl_drop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/soundFragment_soundScapeRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/drop_two" />
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_57sdp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone" />
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_drop"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/drop_two" />-->
 
-                <FrameLayout
-                    android:id="@+id/fl_stone_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp">
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_57sdp"-->
+<!--                        android:layout_marginTop="@dimen/_15sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone" />-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/stone_lock" />
+<!--                </FrameLayout>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_stone_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp">-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/stone_lock" />-->
 
-                <FrameLayout
-                    android:id="@+id/fl_tree_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp">
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/treee_lock" />
+<!--                </FrameLayout>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_tree_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp">-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/treee_lock" />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
+
+<!--                </FrameLayout>-->
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                android:layout_marginRight="@dimen/_10sdp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="1"-->
+<!--                android:layout_marginTop="@dimen/_5sdp">-->
+
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_water_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/water_lock" />-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
+
+<!--                </FrameLayout>-->
+
+
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                android:layout_marginTop="@dimen/_5sdp">
 
-                <FrameLayout
-                    android:id="@+id/fl_water_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/water_lock" />
-
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
-
-                </FrameLayout>
-
-
-
-            </LinearLayout>
             <!--second section-->
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/music_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -274,6 +283,13 @@
                 android:textSize="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_10sdp"/>
 
+            <ProgressBar
+                android:id="@+id/sound_progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -282,121 +298,126 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <FrameLayout
-                    android:id="@+id/fl_flower_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/soundFragment_musicRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/flower_lock" />
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_flower_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_57sdp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/flower_lock" />-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_57sdp"-->
+<!--                        android:layout_marginTop="@dimen/_15sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone" />-->
 
-                <FrameLayout
-                    android:id="@+id/fl_beat_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp">
+<!--                </FrameLayout>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/beat_lock" />
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_beat_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/beat_lock" />-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
 
-                <FrameLayout
-                    android:id="@+id/fl_mouth_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp">
+<!--                </FrameLayout>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/mout_lock" />
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_mouth_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/mout_lock" />-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
 
-            </LinearLayout>
+<!--                </FrameLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:orientation="horizontal"
-                android:weightSum="1"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_60sdp">
+<!--            </LinearLayout>-->
 
-                <FrameLayout
-                    android:id="@+id/fl_flute_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                android:layout_marginRight="@dimen/_10sdp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="1"-->
+<!--                android:layout_marginTop="@dimen/_5sdp"-->
+<!--                android:layout_marginBottom="@dimen/_60sdp">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/flute_lock" />
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_flute_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_1sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/flute_lock" />-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_1sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
 
-                <FrameLayout
-                    android:id="@+id/fl_beat_two_sound"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp">
+<!--                </FrameLayout>-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_80sdp"
-                        android:layout_height="@dimen/_80sdp"
-                        android:src="@mipmap/beat_lock" />
+<!--                <FrameLayout-->
+<!--                    android:id="@+id/fl_beat_two_sound"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp">-->
 
-                    <ImageView
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginLeft="@dimen/_50sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:src="@mipmap/lock"
-                        android:visibility="gone"/>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_80sdp"-->
+<!--                        android:layout_height="@dimen/_80sdp"-->
+<!--                        android:src="@mipmap/beat_lock" />-->
 
-                </FrameLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/_15sdp"-->
+<!--                        android:layout_height="@dimen/_15sdp"-->
+<!--                        android:layout_marginLeft="@dimen/_50sdp"-->
+<!--                        android:layout_marginTop="@dimen/_5sdp"-->
+<!--                        android:src="@mipmap/lock"-->
+<!--                        android:visibility="gone"/>-->
+
+<!--                </FrameLayout>-->
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
