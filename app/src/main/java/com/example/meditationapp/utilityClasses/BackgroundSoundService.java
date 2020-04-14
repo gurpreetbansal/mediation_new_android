@@ -80,7 +80,30 @@ public class BackgroundSoundService extends Service {
                 }
             }
             //
-
+            if (intent.getStringExtra("player").equals("Change")) {
+                song = intent.getStringExtra("main_song");
+                if (song != null) {
+                    try {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mediaPlayer.setDataSource(song);
+                        mediaPlayer.prepareAsync();
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                mediaPlayer.start();
+                                Log.e("player", "play");
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
         return Service.START_STICKY;
     }

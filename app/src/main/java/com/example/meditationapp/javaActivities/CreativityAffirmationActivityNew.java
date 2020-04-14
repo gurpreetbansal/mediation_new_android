@@ -26,7 +26,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
 
     LinearLayout ll_options, img_vol_bar;
-    ImageView musicbtn,back_btn;
+    ImageView musicbtn, back_btn;
     AppCompatImageView player_play;
     CustomBoldtextView player_timer;
     String song;
@@ -38,7 +38,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         setContentView(R.layout.creativity_two_fragment);
 
         SharedPreferences preferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
-        playing = preferences.getBoolean("playing",false);
+        playing = preferences.getBoolean("playing", false);
 
         ll_options = findViewById(R.id.ll_options);
         musicbtn = findViewById(R.id.img_music);
@@ -55,6 +55,24 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        if (isMyServiceRunning(BackgroundSoundService.class)) {
+            player_timer.setText("Changed");
+            player_play.setImageResource(R.mipmap.pause);
+            Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
+            m_intent.putExtra("main_song", song);
+            m_intent.putExtra("player", "Change");
+            startService(m_intent);
+            playing = true;
+        } else {
+            player_timer.setText("Started");
+            player_play.setImageResource(R.mipmap.pause);
+            Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
+            m_intent.putExtra("main_song", song);
+            m_intent.putExtra("player", "Play");
+            startService(m_intent);
+            playing = true;
+        }
 
         musicbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,15 +135,6 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                         }
                         playing = true;
                     }
-
-                } else {
-                    player_timer.setText("Started");
-                    player_play.setImageResource(R.mipmap.pause);
-                    Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
-                    m_intent.putExtra("main_song", song);
-                    m_intent.putExtra("player", "Play");
-                    startService(m_intent);
-                    playing = true;
                 }
             }
         });
@@ -145,7 +154,8 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
+        stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
+        stopService(new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class));
     }
 
     @Override
@@ -153,7 +163,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         super.onBackPressed();
         SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("playing",playing);
+        editor.putBoolean("playing", playing);
         editor.apply();
     }
 }
