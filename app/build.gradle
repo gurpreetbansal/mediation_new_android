@@ -64,13 +64,16 @@ dependencies {
 
 //    implementation 'com.facebook.android:facebook-login:[5,6)'
 
-    implementation 'com.facebook.android:facebook-login:5.15.3'
+    implementation 'com.facebook.android:facebook-login:6.3.0'
     implementation 'com.facebook.android:facebook-android-sdk:6.3.0'
 
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+//    implementation 'com.paypal.sdk.:paypal-android-sdk:2.15.3'
+    implementation'com.paypal.sdk:paypal-android-sdk:2.16.0'
 
 //    implementation 'com.google.firebase:firebase-auth:19.3.0'
 

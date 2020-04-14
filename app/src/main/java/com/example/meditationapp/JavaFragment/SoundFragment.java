@@ -30,6 +30,7 @@ import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
 import com.example.meditationapp.activities.GetMore_Activity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
+import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
 
@@ -143,7 +144,7 @@ public class SoundFragment extends Fragment {
                                      startActivity(intent);
                                      break;
                                  case 1:
-                                     Intent intent1 = new Intent(getActivity(), GetMore_Activity.class);
+                                     Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
                                      startActivity(intent1);
                                      break;
                                  case 2:
@@ -151,23 +152,23 @@ public class SoundFragment extends Fragment {
                                      startActivity(intent2);
                                      break;
                                  case 3:
-                                     Intent intent3 = new Intent(getActivity(), GetMore_Activity.class);
+                                     Intent intent3 = new Intent(getActivity(), GetMorePaymentActivity.class);
                                      startActivity(intent3);
                                      break;
                                  case 4:
-                                     Intent intent4 = new Intent(getActivity(), GetMore_Activity.class);
+                                     Intent intent4 = new Intent(getActivity(), GetMorePaymentActivity.class);
                                      startActivity(intent4);
                                      break;
                                  case 5:
-                                     Intent intent5 = new Intent(getActivity(), GetMore_Activity.class);
+                                     Intent intent5 = new Intent(getActivity(), GetMorePaymentActivity.class);
                                      startActivity(intent5);
                                      break;
                                  case 6:
-                                     Intent intent6 = new Intent(getActivity(), GetMore_Activity.class);
+                                     Intent intent6 = new Intent(getActivity(), GetMorePaymentActivity.class);
                                      startActivity(intent6);
                                      break;
                                  case 7:
-                                     Intent intent7 = new Intent(getActivity(), GetMore_Activity.class);
+                                     Intent intent7 = new Intent(getActivity(), GetMorePaymentActivity.class);
                                      startActivity(intent7);
                                      break;
                              }
@@ -192,7 +193,7 @@ public class SoundFragment extends Fragment {
                                 editor.putString("songs", musicSongURL);
                                 editor.apply();
 
-                                Intent intent = new Intent(getActivity(), GetMore_Activity.class);
+                                Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
                                 startActivity(intent);
 
 

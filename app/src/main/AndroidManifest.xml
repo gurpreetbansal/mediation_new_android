@@ -26,7 +26,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
-        <activity android:name=".javaActivities.SupportActivity_new"></activity>
+        <activity android:name=".javaActivities.GetMorePaymentActivity"></activity>
+        <activity android:name=".javaActivities.SupportActivity_new" />
         <activity android:name=".javaActivities.HomeActivitynew" />
 
         <provider
