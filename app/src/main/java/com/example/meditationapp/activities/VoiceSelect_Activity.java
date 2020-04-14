@@ -66,6 +66,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
     String voice_id = "", mypreference = "mypref", user_id = "user_id", userID, status = "0";
     List<String> voiceId = new ArrayList<>();
     RelativeLayout progress_bar;
+    private static long back_pressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 
         img_back_tool = (ImageView) findViewById(R.id.img_back_tool);
 
-        img_back_tool.setVisibility(View.VISIBLE);
+        img_back_tool.setVisibility(View.INVISIBLE);
 
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,5 +306,13 @@ public class VoiceSelect_Activity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
     }
 }

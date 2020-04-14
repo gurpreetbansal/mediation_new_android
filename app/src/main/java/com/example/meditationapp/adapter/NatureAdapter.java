@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.meditationapp.ModelClasses.NatureData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,12 +38,17 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull itemHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final itemHolder holder, final int position) {
         Picasso.get().load(nature.get(position).getImages()).into(holder.image);
-//        Intent intent = new Intent(context, CreativtyAffirmationsActivity.class);
-//        intent.putExtra("song", nature.get(position).getSongs());
-//        holder.itemView.getContext().startActivity(intent);
-        Log.e("nature", String.valueOf(nature.size()));
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CreativityAffirmationActivityNew.class);
+                intent.putExtra("song", nature.get(position).getSongs());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        Log.e("nature", String.valueOf(nature.get(position).getSongs()));
     }
 
     @Override

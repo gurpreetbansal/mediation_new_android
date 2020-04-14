@@ -1,6 +1,7 @@
 package com.example.meditationapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.CategoryData;
 import com.example.meditationapp.ModelClasses.InterestedData;
 import com.example.meditationapp.R;
+import com.example.meditationapp.activities.WeighTwoActivity;
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,9 +39,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryAdapter.itemHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CategoryAdapter.itemHolder holder, final int position) {
         Picasso.get().load(categoryData.get(position).getImage()).into(holder.image);
         holder.name.setText(categoryData.get(position).getName());
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, WeighTwoActivity.class);
+//                intent.putExtra("song", categoryData);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
