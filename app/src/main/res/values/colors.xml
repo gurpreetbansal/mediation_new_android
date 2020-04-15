@@ -22,4 +22,8 @@
 
     <color name="time_color_a">#9CA0DD</color>
     <color name="time_color_b">#E49ACC</color>
+
+    <color name="weight_loss">#FD9691</color>
+    <color name="weight_loss_pointer">#F38581</color>
+
 </resources>

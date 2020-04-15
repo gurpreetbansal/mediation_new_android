@@ -2,6 +2,7 @@ package com.example.meditationapp.javaActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -26,6 +27,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
 
     LinearLayout ll_options, img_vol_bar;
+    ConstraintLayout ll_options_cl;
     ImageView musicbtn, back_btn;
     AppCompatImageView player_play;
     CustomBoldtextView player_timer;
@@ -46,6 +48,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_play = findViewById(R.id.player_play);
         player_timer = findViewById(R.id.player_timer);
         back_btn = findViewById(R.id.img_back_four);
+        ll_options_cl = findViewById(R.id.ll_options_cl);
 
         song = getIntent().getStringExtra("song");
 
@@ -77,8 +80,8 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         musicbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ll_options.getVisibility() == View.VISIBLE) {
-                    ll_options.setVisibility(View.INVISIBLE);
+                if (ll_options_cl.getVisibility() == View.VISIBLE) {
+                    ll_options_cl.setVisibility(View.INVISIBLE);
                     if (img_vol_bar.getVisibility() == View.VISIBLE) {
                         img_vol_bar.setVisibility(View.INVISIBLE);
                     }
@@ -86,12 +89,12 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                         stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
                     }
                 } else {
-                    ll_options.setVisibility(View.VISIBLE);
+                    ll_options_cl.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        ll_options.setOnClickListener(new View.OnClickListener() {
+        ll_options_cl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 img_vol_bar.setVisibility(View.VISIBLE);
