@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.meditationapp">
+    package="com.example.meditationapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -14,6 +14,7 @@
 
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -28,13 +29,20 @@
         tools:ignore="AllowBackup,LockedOrientationActivity">
         <activity android:name=".javaActivities.GetMorePaymentActivity"></activity>
         <activity android:name=".javaActivities.SupportActivity_new" />
+        tools:ignore="AllowBackup,LockedOrientationActivity" >
+
+        <service android:enabled="true" android:name=".utilityClasses.BackgroundSoundService" />
+        <service android:enabled="true" android:name=".utilityClasses.NatureSoundService" />
+
+        <activity android:name=".javaActivities.CreativityAffirmationActivityNew" />
+        <activity android:name=".javaActivities.SupportActivity_new" />
         <activity android:name=".javaActivities.HomeActivitynew" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
@@ -165,7 +173,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".javaActivities.CategoriesActivities"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -192,7 +200,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -210,7 +218,7 @@
             android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

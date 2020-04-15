@@ -75,7 +75,7 @@ public class AccountSettingActivityNew extends BaseActivity {
     CustomBoldEditText tv_firstname, tv_password, tv_new_password, tv_confirm_password;
     String path, mediaPath;
     MultipartBody.Part part;
-    File file;
+    File file, createdfile;
     //    File savedFile = null;
     Uri uri;
     //    Dialog dialog;
@@ -191,7 +191,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                     return;
                 }
                 if (path != null) {
-                    file = new File(path);
+//                    file = new File(path);
                     RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
                     part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                 } else {
@@ -334,7 +334,7 @@ public class AccountSettingActivityNew extends BaseActivity {
             }
         } else if (requestCode == MY_GALLERY_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "gallery permission granted", Toast.LENGTH_LONG).show();
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, GALLERY_REQUEST);
             } else {
@@ -350,8 +350,25 @@ public class AccountSettingActivityNew extends BaseActivity {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case 0:
-                    if (data != null) {
-                        imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+//                    if (data != null) {
+                    if (path!=null){
+//                        imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                        //
+                        file = new File(path);
+                        imageView.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                        //
+                        //
+//                        imageView.setImageBitmap((Bitmap) data.getExtras().get("data"));
+                        //
+//                        if(data.getData()==null){
+//                            imageView.setImageBitmap((Bitmap) data.getExtras().get("data"));
+//                        }else{
+//                            try {
+//                                imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
                     }
                     break;
                 case 1:
@@ -413,7 +430,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                             if (cameraIntent.resolveActivity(getPackageManager()) != null) {
                                 // Create the File where the photo should go
                                 try {
-                                    File file = null;
+                                    createdfile = null;
                                     file = createImageFile();
                                     // Continue only if the File was successfully created
                                     Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,

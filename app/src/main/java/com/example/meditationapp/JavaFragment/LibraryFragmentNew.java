@@ -105,7 +105,6 @@ public class LibraryFragmentNew extends Fragment {
                     }
                 }else {
                     Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
-
                     progressBar.setVisibility(View.GONE);
                 }
             }
