@@ -99,18 +99,18 @@ public class GetMorePaymentActivity extends AppCompatActivity {
                 if (confirm != null) {
                     try {
                         String aa = confirm.toJSONObject().toString(4);
-                        Log.e("DETAILS :  ",aa);
-                        String name = confirm.toJSONObject().getString("name");
-                        String email = confirm.toJSONObject().getString("email_id");
-                        String id = confirm.toJSONObject().getString("id");
-                        Log.e("NAME",name);
-                        Log.e("EMAil",email);
-                        Log.e("ID",id);
+                        Log.e("DETAILS :  ",""+confirm +aa);
+//                        String name = confirm.toJSONObject().getString("name");
+//                        String email = confirm.toJSONObject().getString("email_id");
+//                        String id = confirm.toJSONObject().getString("id");
+//                        Log.e("NAME",name);
+//                        Log.e("EMAil",email);
+//                        Log.e("ID",id);
 
                         Log.i("TAG", confirm.toJSONObject().toString(4));
                         Log.i("TAG", confirm.getPayment().toJSONObject().toString(4));//                        String PaymentDetail = configuration.toJsonObject.toString(4);
 //                        startActivity(new Intent(GetMorePaymentActivity.this,GetMorePaymentActivity.class));
-                        Toast.makeText(this, "PaymentConfirmation info received from PayPal", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Payment Confirmation info received from PayPal", Toast.LENGTH_SHORT).show();
 
 
                     } catch (Exception e) {
