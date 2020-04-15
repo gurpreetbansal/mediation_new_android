@@ -30,6 +30,7 @@ import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
 import com.example.meditationapp.activities.GetMore_Activity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
@@ -129,18 +130,14 @@ public class SoundFragment extends Fragment {
                          @Override
                          public void onClick(View view, int position) {
 
-                             String songURL = soundScapeModelClass.get(position).getSongs();
-                             Log.e("SOUND_SCAPE_URL :  ", songURL);
-
-                             SharedPreferences pref = getActivity().getSharedPreferences("myPref", 0);
-                             SharedPreferences.Editor editor = pref.edit();
-                             editor.putString("songs", songURL);
-                             editor.apply();
+                             String nature = soundScapeModelClass.get(position).getSongs();
+                             Log.e("SOUND_SCAPE_URL :  ", nature);
 
 
                              switch (position){
                                  case 0:
-                                     Intent intent = new Intent(getActivity(), CreativtyAffirmationsActivity.class);
+                                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                     intent.putExtra("song", nature);
                                      startActivity(intent);
                                      break;
                                  case 1:
@@ -148,7 +145,8 @@ public class SoundFragment extends Fragment {
                                      startActivity(intent1);
                                      break;
                                  case 2:
-                                     Intent intent2 = new Intent(getActivity(), CreativtyAffirmationsActivity.class);
+                                     Intent intent2 = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                     intent2.putExtra("song", nature);
                                      startActivity(intent2);
                                      break;
                                  case 3:
@@ -164,12 +162,9 @@ public class SoundFragment extends Fragment {
                                      startActivity(intent5);
                                      break;
                                  case 6:
-                                     Intent intent6 = new Intent(getActivity(), GetMorePaymentActivity.class);
+                                     Intent intent6 = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                     intent6.putExtra("song", nature);
                                      startActivity(intent6);
-                                     break;
-                                 case 7:
-                                     Intent intent7 = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                     startActivity(intent7);
                                      break;
                              }
 
@@ -185,13 +180,8 @@ public class SoundFragment extends Fragment {
                             @Override
                             public void onClick(View view, int position) {
 
-                                String musicSongURL = musicModelClasses.get(position).getSongs();
-                                Log.e("MUSIC_SOUND_URL :  ", musicSongURL);
-
-                                SharedPreferences pref = getActivity().getSharedPreferences("myPref", 0);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("songs", musicSongURL);
-                                editor.apply();
+                                String natureMusic = musicModelClasses.get(position).getSongs();
+                                Log.e("MUSIC_SOUND_URL :  ", natureMusic);
 
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
                                 startActivity(intent);

@@ -29,13 +29,11 @@
         tools:ignore="AllowBackup,LockedOrientationActivity">
         <activity android:name=".javaActivities.GetMorePaymentActivity"></activity>
         <activity android:name=".javaActivities.SupportActivity_new" />
-        tools:ignore="AllowBackup,LockedOrientationActivity" >
 
         <service android:enabled="true" android:name=".utilityClasses.BackgroundSoundService" />
         <service android:enabled="true" android:name=".utilityClasses.NatureSoundService" />
 
         <activity android:name=".javaActivities.CreativityAffirmationActivityNew" />
-        <activity android:name=".javaActivities.SupportActivity_new" />
         <activity android:name=".javaActivities.HomeActivitynew" />
 
         <provider
