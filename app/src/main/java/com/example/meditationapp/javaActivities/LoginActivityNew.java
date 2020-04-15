@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -359,7 +361,13 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
                         String name = object.getString("name");
                         String emails = object.getString("email");
-                        String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+//                        String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
+//                        String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?type=large";
+
+                        int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
+                        Uri profilePictureUri= Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize , dimensionPixelSize);
+                        String imgURL = String.valueOf(profilePictureUri);
+
 //                        String idfb  = loginResult.getAccessToken().getUserId();
                         String id = object.getString("id");
 
@@ -369,7 +377,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                         Log.e("RESULT NAME",name);
                         Log.e("RESULT EMAIL",emails);
                         Log.e("ID",id);
-                        Log.e("RESULT PHOTO",imgURL);
+                        Log.e("RESULT PHOTO", imgURL);
 
                         loginManager.logOut();
 

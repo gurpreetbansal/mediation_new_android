@@ -108,7 +108,7 @@ public class AccountFragment extends Fragment {
 
     }
 
-    public void retrofitGetProfileData(String userID) {
+    public void retrofitGetProfileData(final String userID) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
         Call<GetProfileResponse> call = apiInterface.getProfile(userID);
