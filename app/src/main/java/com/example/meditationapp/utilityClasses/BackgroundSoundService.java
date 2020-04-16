@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.meditationapp.R;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
@@ -20,7 +22,9 @@ public class BackgroundSoundService extends Service {
 
     private static final String TAG = "BackgroundSoundService";
     MediaPlayer mediaPlayer;
-    String song;
+    String song, time;
+    //    int durationTimer;
+    private boolean isPrepared;
 
     @Nullable
     @Override
@@ -41,6 +45,8 @@ public class BackgroundSoundService extends Service {
 
             if (intent.getStringExtra("player").equals("Play")) {
                 song = intent.getStringExtra("main_song");
+//                durationTimer = intent.getIntExtra("duration", 0);
+//                time = milliSecondsToTimer(durationTimer);
                 if (song != null) {
                     try {
                         if (mediaPlayer != null) {
@@ -55,7 +61,14 @@ public class BackgroundSoundService extends Service {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 mediaPlayer.start();
-                                Log.e("player", "play");
+                                Log.e("current", String.valueOf(mediaPlayer.getCurrentPosition()));
+                                sendInfoBroadcast();
+                                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mp) {
+                                        CreativityAffirmationActivityNew.pause();
+                                    }
+                                });
                             }
                         });
                     } catch (IOException e) {
@@ -96,6 +109,7 @@ public class BackgroundSoundService extends Service {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 mediaPlayer.start();
+                                sendInfoBroadcast();
                                 Log.e("player", "play");
                             }
                         });
@@ -104,6 +118,16 @@ public class BackgroundSoundService extends Service {
                     }
                 }
             }
+            //
+            if (intent.getStringExtra("player").equals("ACTION_SEND_INFO")) {
+                sendInfoBroadcast();
+            }
+            //
+            if (intent.getStringExtra("player").equals("ACTION_SEEK_TO")) {
+                int time = intent.getIntExtra("seek_to", 0);
+                seekTo(time);
+            }
+
         }
         return Service.START_STICKY;
     }
@@ -153,6 +177,106 @@ public class BackgroundSoundService extends Service {
             mediaPlayer.stop();
             Log.e("player", "stop");
         }
+    }
+
+    public static void startActionSeekTo(Context context, int time) {
+        Intent intent = new Intent(context, BackgroundSoundService.class);
+        intent.putExtra("ACTION_SEEK_TO", "ACTION_SEEK_TO");
+        intent.putExtra("EXTRA_PARAM1", time);
+        context.startService(intent);
+    }
+
+    private void seekTo(int time) {
+//        if (!isPrepared)
+//            return;
+
+        mediaPlayer.seekTo(time);
+
+        Intent updateIntent = new Intent();
+        updateIntent.putExtra("GUI_UPDATE_ACTION", "GUI_UPDATE_ACTION");
+        updateIntent.putExtra("ACTUAL_TIME_VALUE_EXTRA", mediaPlayer.getCurrentPosition()/1000);
+        updateIntent.putExtra("TOTAL_TIME_VALUE_EXTRA", mediaPlayer.getDuration() / 1000);
+        sendBroadcast(updateIntent);
+    }
+
+    //
+
+    /**
+     * Function to convert milliseconds time to
+     * Timer Format
+     * Hours:Minutes:Seconds
+     */
+    public String milliSecondsToTimer(long milliseconds) {
+        String finalTimerString = "";
+        String secondsString = "";
+
+        // Convert total duration into time
+        int hours = (int) (milliseconds / (1000 * 60 * 60));
+        int minutes = (int) (milliseconds % (1000 * 60 * 60)) / (1000 * 60);
+        int seconds = (int) ((milliseconds % (1000 * 60 * 60)) % (1000 * 60) / 1000);
+        // Add hours if there
+        if (hours > 0) {
+            finalTimerString = hours + ":";
+        }
+
+        // Prepending 0 to seconds if it is one digit
+        if (seconds < 10) {
+            secondsString = "0" + seconds;
+        } else {
+            secondsString = "" + seconds;
+        }
+
+        finalTimerString = finalTimerString + minutes + ":" + secondsString;
+
+        // return timer string
+        return finalTimerString;
+    }
+
+    /**
+     * Function to get Progress percentage
+     *
+     * @param currentDuration
+     * @param totalDuration
+     */
+    public int getProgressPercentage(long currentDuration, long totalDuration) {
+        Double percentage = (double) 0;
+
+        long currentSeconds = (int) (currentDuration / 1000);
+        long totalSeconds = (int) (totalDuration / 1000);
+
+        // calculating percentage
+        percentage = (((double) currentSeconds) / totalSeconds) * 100;
+
+        // return percentage
+        return percentage.intValue();
+    }
+
+    /**
+     * Function to change progress to timer
+     *
+     * @param progress      -
+     * @param totalDuration returns current duration in milliseconds
+     */
+    public int progressToTimer(int progress, int totalDuration) {
+        int currentDuration = 0;
+        totalDuration = (int) (totalDuration / 1000);
+        currentDuration = (int) ((((double) progress) / 100) * totalDuration);
+
+        // return current duration in milliseconds
+        return currentDuration * 1000;
+    }
+
+    private void sendInfoBroadcast() {
+        if (mediaPlayer == null)
+            return;
+
+        Log.e("test", "++++++++working" + mediaPlayer.getCurrentPosition());
+
+        Intent updateIntent = new Intent("GUI_UPDATE_ACTION");
+        updateIntent.putExtra("ACTUAL_TIME_VALUE_EXTRA", mediaPlayer.getCurrentPosition() / 1000);
+        updateIntent.putExtra("TOTAL_TIME_VALUE_EXTRA", mediaPlayer.getDuration() / 1000);
+//        updateIntent.putExtra("msg", "msg");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(updateIntent);
     }
 
 }
