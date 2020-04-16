@@ -22,6 +22,7 @@ import com.example.meditationapp.ModelClasses.SignupModelClass;
 import com.example.meditationapp.ModelClasses.SignupSendData;
 import com.example.meditationapp.ModelClasses.SoundModel.GetSoundAndScapeResponse;
 import com.example.meditationapp.ModelClasses.SubscriptionModelClass;
+import com.example.meditationapp.ModelClasses.UserPayModel.GetUserPayModelClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,4 +103,13 @@ public interface ApiInterface {
 
     @POST("collections/music")
     Call<GetSoundAndScapeResponse> getMusicList(@Query("user_id") String userId);
+
+    @POST("payment/userPayment")
+    Call<GetUserPayModelClass> getUserPayData(@Query("payment_users") String user_id,@Query("payment_type") String payment_type,
+                                              @Query("payment_id") String payment_id, @Query("payment_amount") String payment_amount,
+                                              @Query("payment_date") String payment_date, @Query("payment_plan_id") String plan_id,
+                                              @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,
+                                              @Query("short_description") String short_desc, @Query("intent") String intent,
+                                              @Query("payment_status") String payment_status);
+
 }
