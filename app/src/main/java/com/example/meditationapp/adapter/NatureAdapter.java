@@ -17,6 +17,7 @@ import com.example.meditationapp.ModelClasses.NatureData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
+import com.example.meditationapp.javaActivities.Test;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
                 holder.itemView.getContext().startActivity(intent);
             }
         });
-        Log.e("nature", String.valueOf(nature.get(position).getSongs()));
+        Log.e("songs",nature.get(position).getSongs());
     }
 
     @Override

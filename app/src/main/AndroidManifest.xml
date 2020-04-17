@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -27,9 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
-        <activity android:name=".javaActivities.HelpCenterNew"></activity>
-        <activity android:name=".javaActivities.GetMorePaymentActivity" />
-        <activity android:name=".javaActivities.SupportActivity_new" />
+        <activity android:name=".javaActivities.Test" />
 
         <service
             android:name=".utilityClasses.BackgroundSoundService"
@@ -37,8 +34,15 @@
         <service
             android:name=".utilityClasses.NatureSoundService"
             android:enabled="true" />
+        <service
+            android:name=".utilityClasses.MusicService"
+            android:enabled="true" />
 
         <activity android:name=".javaActivities.CreativityAffirmationActivityNew" />
+        tools:ignore="AllowBackup,LockedOrientationActivity">
+        <activity android:name=".javaActivities.HelpCenterNew"></activity>
+        <activity android:name=".javaActivities.GetMorePaymentActivity" />
+        <activity android:name=".javaActivities.SupportActivity_new" />
         <activity android:name=".javaActivities.HomeActivitynew" />
 
         <provider

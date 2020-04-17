@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.meditationapp.R;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
@@ -20,7 +22,9 @@ public class BackgroundSoundService extends Service {
 
     private static final String TAG = "BackgroundSoundService";
     MediaPlayer mediaPlayer;
-    String song;
+    String song, time;
+    //    int durationTimer;
+    private boolean isPrepared;
 
     @Nullable
     @Override
@@ -32,8 +36,8 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "Service started...", Toast.LENGTH_SHORT).show();
-        Log.e("player", "onCreate() , service started...");
+//        Toast.makeText(this, "Service startedM...", Toast.LENGTH_SHORT).show();
+        Log.e("playerM", "onCreate() , service started...");
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -41,6 +45,8 @@ public class BackgroundSoundService extends Service {
 
             if (intent.getStringExtra("player").equals("Play")) {
                 song = intent.getStringExtra("main_song");
+//                durationTimer = intent.getIntExtra("duration", 0);
+//                time = milliSecondsToTimer(durationTimer);
                 if (song != null) {
                     try {
                         if (mediaPlayer != null) {
@@ -55,7 +61,14 @@ public class BackgroundSoundService extends Service {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
                                 mediaPlayer.start();
-                                Log.e("player", "play");
+                                Log.e("current", String.valueOf(mediaPlayer.getCurrentPosition()));
+                                sendInfoBroadcast();
+                                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                                    @Override
+                                    public void onCompletion(MediaPlayer mp) {
+                                        CreativityAffirmationActivityNew.pause();
+                                    }
+                                });
                             }
                         });
                     } catch (IOException e) {
@@ -80,30 +93,53 @@ public class BackgroundSoundService extends Service {
                 }
             }
             //
-            if (intent.getStringExtra("player").equals("Change")) {
-                song = intent.getStringExtra("main_song");
-                if (song != null) {
-                    try {
-                        if (mediaPlayer != null) {
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setDataSource(song);
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mp) {
-                                mediaPlayer.start();
-                                Log.e("player", "play");
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//            if (intent.getStringExtra("player").equals("Change")) {
+//                song = intent.getStringExtra("main_song");
+//                if (song != null) {
+//                    try {
+//                        if (mediaPlayer != null) {
+//                            mediaPlayer.release();
+//                            mediaPlayer = null;
+//                        }
+//                        mediaPlayer = new MediaPlayer();
+//                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                        mediaPlayer.setDataSource(song);
+//                        mediaPlayer.prepareAsync();
+//                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                            @Override
+//                            public void onPrepared(MediaPlayer mp) {
+//                                mediaPlayer.start();
+//                                sendInfoBroadcast();
+//                                Log.e("player", "play");
+//                            }
+//                        });
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+            //
+            if (intent.getStringExtra("player").equals("ACTION_SEND_INFO")) {
+                sendInfoBroadcast();
+            }
+            //
+            if (intent.getStringExtra("player").equals("ACTION_SEEK_TO")) {
+                int time = intent.getIntExtra("seek_to", 0);
+                seekTo(time);
+            }
+
+            if (intent.getStringExtra("player").equals("Seek_backward")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 5000);
                 }
             }
+
+            if (intent.getStringExtra("player").equals("Seek_forward")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 5000);
+                }
+            }
+
         }
         return Service.START_STICKY;
     }
@@ -118,7 +154,7 @@ public class BackgroundSoundService extends Service {
     public void onDestroy() {
         stop();
         release();
-        Toast.makeText(this, "Service stopped...", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Service stoppedM...", Toast.LENGTH_SHORT).show();
         Log.e("player", "onCreate() , service stopped...");
     }
 
@@ -153,6 +189,30 @@ public class BackgroundSoundService extends Service {
             mediaPlayer.stop();
             Log.e("player", "stop");
         }
+    }
+
+    private void seekTo(int time) {
+
+        mediaPlayer.seekTo(time);
+
+        Intent updateIntent = new Intent();
+        updateIntent.putExtra("GUI_UPDATE_ACTION", "GUI_UPDATE_ACTION");
+        updateIntent.putExtra("ACTUAL_TIME_VALUE_EXTRA", mediaPlayer.getCurrentPosition() / 1000);
+        updateIntent.putExtra("TOTAL_TIME_VALUE_EXTRA", mediaPlayer.getDuration() / 1000);
+        sendBroadcast(updateIntent);
+    }
+
+    private void sendInfoBroadcast() {
+        if (mediaPlayer == null)
+            return;
+
+        Log.e("test", "++++++++working" + mediaPlayer.getCurrentPosition());
+
+        Intent updateIntent = new Intent("GUI_UPDATE_ACTION");
+        updateIntent.putExtra("ACTUAL_TIME_VALUE_EXTRA", mediaPlayer.getCurrentPosition() / 1000);
+        updateIntent.putExtra("TOTAL_TIME_VALUE_EXTRA", mediaPlayer.getDuration() / 1000);
+//        updateIntent.putExtra("msg", "msg");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(updateIntent);
     }
 
 }

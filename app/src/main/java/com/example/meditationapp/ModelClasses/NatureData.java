@@ -17,6 +17,12 @@ public class NatureData {
     @SerializedName("nature_sound")
     @Expose
     private String natureSound;
+    @SerializedName("duration")
+    @Expose
+    private String duration;
+    @SerializedName("music_type")
+    @Expose
+    private String musicType;
     @SerializedName("nature_date")
     @Expose
     private String natureDate;
@@ -62,6 +68,22 @@ public class NatureData {
         this.natureSound = natureSound;
     }
 
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getMusicType() {
+        return musicType;
+    }
+
+    public void setMusicType(String musicType) {
+        this.musicType = musicType;
+    }
+
     public String getNatureDate() {
         return natureDate;
     }
@@ -93,5 +115,6 @@ public class NatureData {
     public void setImages(String images) {
         this.images = images;
     }
+
 
 }
