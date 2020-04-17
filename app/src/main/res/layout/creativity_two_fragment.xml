@@ -132,8 +132,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:padding="@dimen/_10sdp"
             android:adjustViewBounds="true"
+            android:padding="@dimen/_10sdp"
             app:srcCompat="@mipmap/player_btn_bg" />
 
         <!--        <androidx.appcompat.widget.AppCompatSeekBar-->
@@ -203,7 +203,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ll_bg"/>
+                app:srcCompat="@mipmap/ll_bg" />
 
             <LinearLayout
                 android:id="@+id/ll_options"
@@ -296,13 +296,14 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_weight="0.3" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/player_backward"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_weight="0.2"
-                android:src="@mipmap/five_two" />
+                app:srcCompat="@mipmap/five_two" />
 
             <ImageView
                 android:id="@+id/img_music"
@@ -313,14 +314,15 @@
                 android:layout_weight="0.2"
                 android:src="@mipmap/music" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/player_forward"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_weight="0.2"
-                android:src="@mipmap/five_one" />
+                app:srcCompat="@mipmap/five_one" />
 
             <ImageView
                 android:layout_width="0dp"

@@ -27,8 +27,8 @@ public class NatureSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "Service started...", Toast.LENGTH_SHORT).show();
-        Log.e("player", "onCreate() , service started...");
+//        Toast.makeText(this, "Service startedN...", Toast.LENGTH_SHORT).show();
+        Log.e("playerN", "onCreate() , service started...");
 
     }
 
@@ -115,7 +115,7 @@ public class NatureSoundService extends Service {
     public void onDestroy() {
         stop();
         release();
-        Toast.makeText(this, "Service stopped...", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Service stoppedN...", Toast.LENGTH_SHORT).show();
         Log.e("player", "onCreate() , service stopped...");
     }
 

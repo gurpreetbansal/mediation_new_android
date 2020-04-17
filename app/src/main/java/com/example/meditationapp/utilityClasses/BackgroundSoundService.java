@@ -36,8 +36,8 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "Service started...", Toast.LENGTH_SHORT).show();
-        Log.e("player", "onCreate() , service started...");
+//        Toast.makeText(this, "Service startedM...", Toast.LENGTH_SHORT).show();
+        Log.e("playerM", "onCreate() , service started...");
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -93,31 +93,31 @@ public class BackgroundSoundService extends Service {
                 }
             }
             //
-            if (intent.getStringExtra("player").equals("Change")) {
-                song = intent.getStringExtra("main_song");
-                if (song != null) {
-                    try {
-                        if (mediaPlayer != null) {
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setDataSource(song);
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mp) {
-                                mediaPlayer.start();
-                                sendInfoBroadcast();
-                                Log.e("player", "play");
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+//            if (intent.getStringExtra("player").equals("Change")) {
+//                song = intent.getStringExtra("main_song");
+//                if (song != null) {
+//                    try {
+//                        if (mediaPlayer != null) {
+//                            mediaPlayer.release();
+//                            mediaPlayer = null;
+//                        }
+//                        mediaPlayer = new MediaPlayer();
+//                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                        mediaPlayer.setDataSource(song);
+//                        mediaPlayer.prepareAsync();
+//                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                            @Override
+//                            public void onPrepared(MediaPlayer mp) {
+//                                mediaPlayer.start();
+//                                sendInfoBroadcast();
+//                                Log.e("player", "play");
+//                            }
+//                        });
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
             //
             if (intent.getStringExtra("player").equals("ACTION_SEND_INFO")) {
                 sendInfoBroadcast();
@@ -126,6 +126,18 @@ public class BackgroundSoundService extends Service {
             if (intent.getStringExtra("player").equals("ACTION_SEEK_TO")) {
                 int time = intent.getIntExtra("seek_to", 0);
                 seekTo(time);
+            }
+
+            if (intent.getStringExtra("player").equals("Seek_backward")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 5000);
+                }
+            }
+
+            if (intent.getStringExtra("player").equals("Seek_forward")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 5000);
+                }
             }
 
         }
@@ -142,7 +154,7 @@ public class BackgroundSoundService extends Service {
     public void onDestroy() {
         stop();
         release();
-        Toast.makeText(this, "Service stopped...", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Service stoppedM...", Toast.LENGTH_SHORT).show();
         Log.e("player", "onCreate() , service stopped...");
     }
 
@@ -179,91 +191,15 @@ public class BackgroundSoundService extends Service {
         }
     }
 
-    public static void startActionSeekTo(Context context, int time) {
-        Intent intent = new Intent(context, BackgroundSoundService.class);
-        intent.putExtra("ACTION_SEEK_TO", "ACTION_SEEK_TO");
-        intent.putExtra("EXTRA_PARAM1", time);
-        context.startService(intent);
-    }
-
     private void seekTo(int time) {
-//        if (!isPrepared)
-//            return;
 
         mediaPlayer.seekTo(time);
 
         Intent updateIntent = new Intent();
         updateIntent.putExtra("GUI_UPDATE_ACTION", "GUI_UPDATE_ACTION");
-        updateIntent.putExtra("ACTUAL_TIME_VALUE_EXTRA", mediaPlayer.getCurrentPosition()/1000);
+        updateIntent.putExtra("ACTUAL_TIME_VALUE_EXTRA", mediaPlayer.getCurrentPosition() / 1000);
         updateIntent.putExtra("TOTAL_TIME_VALUE_EXTRA", mediaPlayer.getDuration() / 1000);
         sendBroadcast(updateIntent);
-    }
-
-    //
-
-    /**
-     * Function to convert milliseconds time to
-     * Timer Format
-     * Hours:Minutes:Seconds
-     */
-    public String milliSecondsToTimer(long milliseconds) {
-        String finalTimerString = "";
-        String secondsString = "";
-
-        // Convert total duration into time
-        int hours = (int) (milliseconds / (1000 * 60 * 60));
-        int minutes = (int) (milliseconds % (1000 * 60 * 60)) / (1000 * 60);
-        int seconds = (int) ((milliseconds % (1000 * 60 * 60)) % (1000 * 60) / 1000);
-        // Add hours if there
-        if (hours > 0) {
-            finalTimerString = hours + ":";
-        }
-
-        // Prepending 0 to seconds if it is one digit
-        if (seconds < 10) {
-            secondsString = "0" + seconds;
-        } else {
-            secondsString = "" + seconds;
-        }
-
-        finalTimerString = finalTimerString + minutes + ":" + secondsString;
-
-        // return timer string
-        return finalTimerString;
-    }
-
-    /**
-     * Function to get Progress percentage
-     *
-     * @param currentDuration
-     * @param totalDuration
-     */
-    public int getProgressPercentage(long currentDuration, long totalDuration) {
-        Double percentage = (double) 0;
-
-        long currentSeconds = (int) (currentDuration / 1000);
-        long totalSeconds = (int) (totalDuration / 1000);
-
-        // calculating percentage
-        percentage = (((double) currentSeconds) / totalSeconds) * 100;
-
-        // return percentage
-        return percentage.intValue();
-    }
-
-    /**
-     * Function to change progress to timer
-     *
-     * @param progress      -
-     * @param totalDuration returns current duration in milliseconds
-     */
-    public int progressToTimer(int progress, int totalDuration) {
-        int currentDuration = 0;
-        totalDuration = (int) (totalDuration / 1000);
-        currentDuration = (int) ((((double) progress) / 100) * totalDuration);
-
-        // return current duration in milliseconds
-        return currentDuration * 1000;
     }
 
     private void sendInfoBroadcast() {
