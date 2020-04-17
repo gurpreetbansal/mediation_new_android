@@ -2,6 +2,7 @@ package com.example.meditationapp.javaActivities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
+import com.example.meditationapp.JavaFragment.SoundFragment;
 import com.example.meditationapp.ModelClasses.UserPayModel.GetUserPayModelClass;
+import com.example.meditationapp.ModelClasses.UserPayModel.UserPayModelClass;
 import com.example.meditationapp.R;
 import com.google.gson.JsonObject;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -29,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +50,8 @@ public class GetMorePaymentActivity extends AppCompatActivity {
     private static final String PAYMENT_TYPE = "Paypal";
     ApiInterface apiInterface;
     GetUserPayModelClass getUserPayModelClass;
+    List<UserPayModelClass> userPayModelClasses;
+    String payment_status;
 
     private static PayPalConfiguration configuration = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
@@ -133,25 +139,41 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
     }
 
-    public void payPalLogin(String user_id,String payment_type, String payment_id, String payment_amount, String payment_date,
+    public void payPalLogin(final String userID, String payment_type, String payment_id, String payment_amount, String payment_date,
                             String payment_plan_id, String payment_plan_name, String currency_code, String short_desp,
-                            String intent, String payment_status){
+                            final String intent){
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
-        Call<GetUserPayModelClass> call = apiInterface.getUserPayData(user_id,payment_type,payment_id,payment_amount,payment_date,
-                payment_plan_id,payment_plan_name,currency_code,short_desp,intent,payment_status);
+        Call<GetUserPayModelClass> call = apiInterface.getUserPayData(userID,payment_type,payment_id,payment_amount,payment_date,
+                payment_plan_id,payment_plan_name,currency_code,short_desp,intent);
 
         call.enqueue(new Callback<GetUserPayModelClass>() {
             @Override
             public void onResponse(Call<GetUserPayModelClass> call, Response<GetUserPayModelClass> response) {
 
-               getUserPayModelClass = response.body();
+                    GetUserPayModelClass resource = response.body();
+                    assert resource != null;
+                    if (resource.getSuccess()){
 
+//                     SoundFragment soundFragment = new SoundFragment();
+//                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                     fragmentTransaction.replace(R.id.container,soundFragment);
+//                     fragmentTransaction.addToBackStack("");
+//                     fragmentTransaction.commit();
+                        onBackPressed();
+                     Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
 
-            }
+                    }
+                    else {
+                        Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
 
             @Override
             public void onFailure(Call<GetUserPayModelClass> call, Throwable t) {
+                Toast.makeText(GetMorePaymentActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -196,15 +218,15 @@ public class GetMorePaymentActivity extends AppCompatActivity {
                         Log.e("PAYMENT_SHORT_DESP",""+short_desp);
                         Log.e("PAYMENT_CLIENT : ",""+payment_client);
 
-                        Toast.makeText(this, "Successfully PayPal Payment", Toast.LENGTH_SHORT).show();
-
+//                        Toast.makeText(this, "Successfully PayPal Payment", Toast.LENGTH_SHORT).show();
+                    payPalLogin(userID,PAYMENT_TYPE,paymentId,amount,payment_date,song_id,song_name,currency_code,short_desp,intent);
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-            else if (requestCode == Activity.RESULT_CANCELED){
+            else if (resultCode == Activity.RESULT_CANCELED){
                 Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
             }
             else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID){
