@@ -333,7 +333,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/img_vol_bar"
+            android:id="@+id/player_vol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -343,22 +343,31 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/player_vol_low"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.3"
                 android:adjustViewBounds="true"
                 app:srcCompat="@mipmap/player_sound_down" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <SeekBar
+                android:id="@+id/player_vol_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="2"
-                android:adjustViewBounds="true"
-                app:srcCompat="@mipmap/player_sound_seekbar" />
+                android:maxWidth="5dp"
+                android:maxHeight="5dp"
+                android:minWidth="5dp"
+                android:minHeight="5dp"
+                android:progress="50"
+                android:progressDrawable="@drawable/seekbar_style"
+                android:splitTrack="false"
+                android:thumb="@drawable/seekbar_thumb" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/player_vol_high"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"

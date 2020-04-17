@@ -20,4 +20,10 @@
         <item name="actualImageScaleType">center</item>
     </style>
 
+    <style name="SeekbarTheme" parent="Widget.AppCompat.SeekBar">
+        <item name="android:colorControlActivated">#FD9691</item>
+        <item name="android:progressTint">#FD9691</item>
+        <item name="android:progressBackgroundTint">#FD9691</item>
+    </style>
+
 </resources>
