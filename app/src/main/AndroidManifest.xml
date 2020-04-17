@@ -39,8 +39,7 @@
             android:enabled="true" />
 
         <activity android:name=".javaActivities.CreativityAffirmationActivityNew" />
-        tools:ignore="AllowBackup,LockedOrientationActivity">
-        <activity android:name=".javaActivities.HelpCenterNew"></activity>
+        <activity android:name=".javaActivities.HelpCenterNew" />
         <activity android:name=".javaActivities.GetMorePaymentActivity" />
         <activity android:name=".javaActivities.SupportActivity_new" />
         <activity android:name=".javaActivities.HomeActivitynew" />
