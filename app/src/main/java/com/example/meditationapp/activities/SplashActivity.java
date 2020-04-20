@@ -14,8 +14,8 @@ import android.view.WindowManager;
 
 import com.example.meditationapp.R;
 import com.example.meditationapp.javaActivities.CategoriesActivities;
-import com.example.meditationapp.javaActivities.HomeActivitynew;
 import com.example.meditationapp.javaActivities.LoginActivityNew;
+import com.example.meditationapp.javaActivities.VoiceSelect_Activity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 

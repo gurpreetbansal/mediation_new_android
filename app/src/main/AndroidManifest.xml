@@ -202,7 +202,7 @@
             android:name=".activities.CongratulationActivity"
             android:screenOrientation="portrait" /> <!-- <activity android:name=".activities.HomeActivity" /> -->
         <activity
-            android:name=".activities.VoiceSelect_Activity"
+            android:name=".javaActivities.VoiceSelect_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SplashActivity"
