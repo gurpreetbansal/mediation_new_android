@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.example.meditationapp.ModelClasses.SoundModel.SoundScapeModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
 import com.example.meditationapp.activities.GetMore_Activity;
+import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
@@ -58,6 +60,8 @@ public class SoundFragment extends Fragment {
     private List<SoundScapeModelClass> soundScapeModelClass;
     private List<MusicModelClass> musicModelClasses;
 
+    private ImageView img_back_tool,hurt_img;
+
     public SoundFragment() {
         // Required empty public constructor
     }
@@ -77,6 +81,25 @@ public class SoundFragment extends Fragment {
         ll_sound_search=view.findViewById(R.id.ll_sound_search);
         soundScape_text=view.findViewById(R.id.soundScape_text);
         music_text=view.findViewById(R.id.music_text);
+        hurt_img = view.findViewById(R.id.hurt_img);
+        img_back_tool = view.findViewById(R.id.img_back_tool);
+       hurt_img.setVisibility(View.VISIBLE);
+
+        img_back_tool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        hurt_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(getActivity(), My_FavoritesActivity.class);
+                startActivity(intent);
+            }
+        });
 
         progressBar.setVisibility(View.VISIBLE);
         ll_sound_search.setVisibility(View.INVISIBLE);

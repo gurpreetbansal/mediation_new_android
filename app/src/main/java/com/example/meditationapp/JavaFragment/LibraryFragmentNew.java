@@ -1,10 +1,12 @@
 package com.example.meditationapp.JavaFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.app.myapplication.fragment.RecordFragment;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
@@ -26,6 +29,7 @@ import com.example.meditationapp.ModelClasses.HomeData;
 import com.example.meditationapp.ModelClasses.InterestedData;
 import com.example.meditationapp.ModelClasses.RandomData;
 import com.example.meditationapp.R;
+import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.CategoryAdapter;
 import com.example.meditationapp.adapter.InterestAdapter;
 import com.example.meditationapp.adapter.NatureAdapter;
@@ -36,9 +40,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_account;
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_lib;
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_record;
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_sound;
+
 public class LibraryFragmentNew extends Fragment {
 
-    CustomBoldtextView ll_weight_lib,txt_home_my_recording;
+    CustomBoldtextView ll_weight_lib,txt_home_my_recording,txt_home_my_favourite;
     LinearLayout ll_weight_lib_two;
     RecyclerView interestRecyclerView, natureRecyclerView,categoryRecyclerView;
     String userID;
@@ -69,11 +78,31 @@ public class LibraryFragmentNew extends Fragment {
         natureRecyclerView = view.findViewById(R.id.lib_natureRecyclerView);
         categoryRecyclerView = view.findViewById(R.id.lib_categoryRecyclerView);
         txt_home_my_recording = view.findViewById(R.id.txt_home_my_recording);
+        txt_home_my_favourite = view.findViewById(R.id.txt_home_my_favourite);
 
         txt_home_my_recording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                img_bottom_lib.setVisibility(View.GONE);
+                img_bottom_sound.setVisibility(View.GONE);
+                img_bottom_record.setVisibility(View.VISIBLE);
+                img_bottom_account.setVisibility(View.GONE);
+
+                RecordFragment recordFragment = new RecordFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container,recordFragment);
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+            }
+        });
+
+        txt_home_my_favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(getActivity(), My_FavoritesActivity.class);
+                startActivity(intent);
             }
         });
 

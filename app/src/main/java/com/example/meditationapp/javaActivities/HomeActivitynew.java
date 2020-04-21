@@ -1,6 +1,7 @@
 package com.example.meditationapp.javaActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -20,8 +21,9 @@ import com.example.meditationapp.R;
 public class HomeActivitynew extends BaseActivity {
 
     private LinearLayout lib,sound,record,account;
-    private ImageView img_bottom_lib,img_bottom_sound,img_bottom_record,img_bottom_account;
+    public static ImageView img_bottom_lib,img_bottom_sound,img_bottom_record,img_bottom_account;
     private FrameLayout container;
+    private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,libraryFragmentNew);
+                fragmentTransaction.replace(R.id.container,libraryFragmentNew,TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -78,7 +80,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 SoundFragment soundFragment = new SoundFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,soundFragment);
+                fragmentTransaction.replace(R.id.container,soundFragment,TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -96,7 +98,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 RecordFragment recordFragment = new RecordFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,recordFragment);
+                fragmentTransaction.replace(R.id.container,recordFragment,TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -114,7 +116,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 AccountFragment accountFragment = new AccountFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,accountFragment);
+                fragmentTransaction.replace(R.id.container,accountFragment,TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -125,8 +127,12 @@ public class HomeActivitynew extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent =new Intent(HomeActivitynew.this,LogoutActivity.class);
-        startActivity(intent);
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
+            getFragmentManager().popBackStack();
+        } else {
+            Intent intent =new Intent(HomeActivitynew.this,LogoutActivity.class);
+            startActivity(intent);
+        }
+
     }
 }
