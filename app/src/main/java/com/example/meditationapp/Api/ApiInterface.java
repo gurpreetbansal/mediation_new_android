@@ -1,5 +1,6 @@
 package com.example.meditationapp.Api;
 
+import com.example.meditationapp.ModelClasses.AllCatModelClasses.GetCategoryAndRecomendedModelClass;
 import com.example.meditationapp.ModelClasses.ForgetPasswordModel;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.GetEditProfileResponse;
@@ -111,4 +112,7 @@ public interface ApiInterface {
                                               @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,
                                               @Query("short_description") String short_desc, @Query("intent") String intent);
 
+    @POST("collections/affirmationCategoies")
+    Call<GetCategoryAndRecomendedModelClass> getCatAndRecomended(@Query("user_id") String user_Id,
+                                                                 @Query("cat_id") String cat_ID);
 }

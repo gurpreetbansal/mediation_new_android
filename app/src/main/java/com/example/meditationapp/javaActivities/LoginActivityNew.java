@@ -274,7 +274,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                     if (resource.getData().getUserType().equals("0")) {
                         startActivity(new Intent(LoginActivityNew.this, VoiceSelect_Activity.class));
                     } else if (resource.getData().getUserType().equals("1")) {
-                        startActivity(new Intent(LoginActivityNew.this, HomeActivity.class));
+                        startActivity(new Intent(LoginActivityNew.this, HomeActivitynew.class));
                     }
                     Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
                     hideDialog();

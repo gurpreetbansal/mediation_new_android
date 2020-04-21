@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -23,11 +24,13 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.GetHomeResponse;
 import com.example.meditationapp.ModelClasses.HomeData;
 import com.example.meditationapp.ModelClasses.InterestedData;
+import com.example.meditationapp.ModelClasses.RandomData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.CategoryAdapter;
 import com.example.meditationapp.adapter.InterestAdapter;
 import com.example.meditationapp.adapter.NatureAdapter;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +38,7 @@ import retrofit2.Response;
 
 public class LibraryFragmentNew extends Fragment {
 
-    CustomBoldtextView ll_weight_lib;
+    CustomBoldtextView ll_weight_lib,txt_home_my_recording;
     LinearLayout ll_weight_lib_two;
     RecyclerView interestRecyclerView, natureRecyclerView,categoryRecyclerView;
     String userID;
@@ -43,6 +46,8 @@ public class LibraryFragmentNew extends Fragment {
     ApiInterface apiInterface;
     GetHomeResponse resource;
     RelativeLayout progressBar;
+    ImageView bigMainImage;
+    RandomData randomData;
 
     public LibraryFragmentNew() {
         // Required empty public constructor
@@ -57,11 +62,20 @@ public class LibraryFragmentNew extends Fragment {
         userID = preferences.getString(user_id, "");
 
         progressBar = view.findViewById(R.id.lib_frag__prog_rl);
-        ll_weight_lib = view.findViewById(R.id.ll_weight_lib);
-        ll_weight_lib_two = view.findViewById(R.id.ll_weight_lib_two);
+//        ll_weight_lib = view.findViewById(R.id.ll_weight_lib);
+//        ll_weight_lib_two = view.findViewById(R.id.ll_weight_lib_two);
+        bigMainImage = view.findViewById(R.id.weight_lib_two_image);
         interestRecyclerView = view.findViewById(R.id.lib_interestRecyclerView);
         natureRecyclerView = view.findViewById(R.id.lib_natureRecyclerView);
         categoryRecyclerView = view.findViewById(R.id.lib_categoryRecyclerView);
+        txt_home_my_recording = view.findViewById(R.id.txt_home_my_recording);
+
+        txt_home_my_recording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -89,6 +103,9 @@ public class LibraryFragmentNew extends Fragment {
                     resource = response.body();
                     assert resource != null;
                     if (resource.getSuccess()) {
+
+                        Picasso.get().load(resource.getData().getRandom().getImage()).into(bigMainImage);
+
                         InterestAdapter interestAdapter = new InterestAdapter(getActivity(),resource.getData().getInterested());
                         interestRecyclerView.setAdapter(interestAdapter);
                         Log.e("interest",String.valueOf(resource.getData().getInterested().size()));

@@ -26,6 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
+        <activity android:name=".javaActivities.AllCatAndRecomendedActivity"></activity>
         <activity android:name=".javaActivities.Test" />
 
         <service
@@ -42,7 +43,8 @@
         <activity android:name=".javaActivities.HelpCenterNew" />
         <activity android:name=".javaActivities.GetMorePaymentActivity" />
         <activity android:name=".javaActivities.SupportActivity_new" />
-        <activity android:name=".javaActivities.HomeActivitynew" />
+        <activity android:name=".javaActivities.HomeActivitynew"
+            android:windowSoftInputMode="stateHidden"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

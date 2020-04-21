@@ -168,7 +168,6 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 //                        }, mHour, mMinute, false);
 //                timePickerDialog.show();
 
-//                loopView.setVisibility(View.VISIBLE);
 
                 View dialogView = getLayoutInflater().inflate(R.layout.time_picker_dialog, null);
                 final BottomSheetDialog dialog = new BottomSheetDialog(VoiceSelect_Activity.this);
@@ -214,8 +213,6 @@ public class VoiceSelect_Activity extends AppCompatActivity {
                                 time.setText(""+i + ":"+ i1 + " PM");
                             }
                         }
-
-
                     }
                 });
                 assert done_txt != null;
@@ -233,20 +230,6 @@ public class VoiceSelect_Activity extends AppCompatActivity {
 
             }
         });
-
-
-//        loopView = (LoopView) findViewById(R.id.loop_view);
-//        loopView.setInitPosition(2);
-//        loopView.setCanLoop(false);
-//        loopView.setLoopListener(new LoopScrollListener() {
-//            @Override
-//            public void onItemSelect(int item) {
-//                Toast.makeText(VoiceSelect_Activity.this, "ok", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        loopView.setTextSize(25);//must be called before setDateList
-//        loopView.setDataList(getlist());
-
 
 
         toggle_off.setOnClickListener(new View.OnClickListener() {

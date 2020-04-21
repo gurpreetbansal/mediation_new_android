@@ -250,7 +250,7 @@ public class CategoriesActivities extends BaseActivity {
                         Log.e("list", data.toString());
                         Log.e("list", setCategoryResponse.getCategoryId().toString());
 
-                        Intent cat = new Intent(CategoriesActivities.this, HomeActivity.class);
+                        Intent cat = new Intent(CategoriesActivities.this, HomeActivitynew.class);
                         startActivity(cat);
                         finishAffinity();
                         Toast.makeText(CategoriesActivities.this, "" + setCategoriesModelClasses.getMessages(), Toast.LENGTH_SHORT).show();

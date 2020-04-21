@@ -22,52 +22,52 @@ class WeighTwoActivity : AppCompatActivity() {
 
         })
 
-        img_back_two.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(this@WeighTwoActivity, HomeActivity::class.java)
-//            // val intent = Intent(this, VideocallingActivity::class.java)
+//        img_back_two.setOnClickListener(View.OnClickListener {
+////            val intent = Intent(this@WeighTwoActivity, HomeActivity::class.java)
+////            // val intent = Intent(this, VideocallingActivity::class.java)
+////            startActivity(intent)
+//            finish()
+//        })
+//        img_abun.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(this@WeighTwoActivity, AbundanceTwoActivity::class.java)
 //            startActivity(intent)
-            finish()
-        })
-        img_abun.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@WeighTwoActivity, AbundanceTwoActivity::class.java)
-            startActivity(intent)
-
-        })
-        img_health.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@WeighTwoActivity, HealthTwoActivity::class.java)
-            startActivity(intent)
-
-        })
-        img_one_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@WeighTwoActivity, CreativtyAffirmationsActivity::class.java)
-            startActivity(voice)
-        })
-
-        img_two_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_three_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_four_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_five_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_six_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-    }
-    private fun openFragment(fragment: Fragment) {
-        val transaction =supportFragmentManager?.beginTransaction()
-        transaction?.replace(com.example.meditationapp.R.id.container, fragment)
-        transaction?.addToBackStack(null)
-        transaction?.commit()
+//
+//        })
+//        img_health.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(this@WeighTwoActivity, HealthTwoActivity::class.java)
+//            startActivity(intent)
+//
+//        })
+//        img_one_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@WeighTwoActivity, CreativtyAffirmationsActivity::class.java)
+//            startActivity(voice)
+//        })
+//
+//        img_two_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_three_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_four_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_five_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_six_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@WeighTwoActivity, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//    }
+//    private fun openFragment(fragment: Fragment) {
+//        val transaction =supportFragmentManager?.beginTransaction()
+//        transaction?.replace(com.example.meditationapp.R.id.container, fragment)
+//        transaction?.addToBackStack(null)
+//        transaction?.commit()
     }
 }
