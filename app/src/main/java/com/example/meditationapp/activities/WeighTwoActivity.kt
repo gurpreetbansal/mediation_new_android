@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.meditationapp.R
+import com.example.meditationapp.javaActivities.WeightActivityNew
 import kotlinx.android.synthetic.main.tool_bar_two.*
 import kotlinx.android.synthetic.main.weight_two_fragment.*
 
@@ -17,7 +18,7 @@ class WeighTwoActivity : AppCompatActivity() {
         ll_wl_my_recordings.setOnClickListener(View.OnClickListener {
 //            val weightFragment = WeightFragment.newInstance()
 //            openFragment(weightFragment)
-                        val intent = Intent(this@WeighTwoActivity, WeightActivity::class.java)
+                        val intent = Intent(this@WeighTwoActivity, WeightActivityNew::class.java)
             startActivity(intent)
 
         })

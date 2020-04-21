@@ -1,6 +1,7 @@
 package com.example.meditationapp.Api;
 
 import com.example.meditationapp.ModelClasses.ForgetPasswordModel;
+import com.example.meditationapp.ModelClasses.GetAffirmation;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.GetEditProfileResponse;
 import com.example.meditationapp.ModelClasses.GetHomeResponse;
@@ -15,6 +16,7 @@ import com.example.meditationapp.ModelClasses.GetVoiceResponse;
 import com.example.meditationapp.ModelClasses.LoginModelClass;
 import com.example.meditationapp.ModelClasses.LoginSendData;
 import com.example.meditationapp.ModelClasses.LogoutModelClass;
+import com.example.meditationapp.ModelClasses.PostAffirmation;
 import com.example.meditationapp.ModelClasses.SetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.SetCategoryResponse;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
@@ -98,5 +100,13 @@ public interface ApiInterface {
 
     @POST("collections/support")
     Call<GetSupportResponse> sendQuery(@Query("user_id") String userId, @Query("suppert_subject") String subject, @Query("support_message") String message);
+
+    @POST("collections/mySongsList")
+    Call<GetAffirmation> requestAffirmation(@Query("user_id") String userId, @Query("cat_id") String categoryId);
+
+    @Multipart
+    @POST("collections/postMySongs")
+    Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
+                                          @Part("cat_id") RequestBody categoryId, @Part MultipartBody.Part part);
 
 }
