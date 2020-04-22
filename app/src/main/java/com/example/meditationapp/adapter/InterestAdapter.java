@@ -17,6 +17,7 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.InterestedData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.WeighTwoActivity;
+import com.example.meditationapp.javaActivities.AllCatAndRecomendedActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -44,9 +45,17 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.itemHo
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WeighTwoActivity.class);
-//                intent.putExtra("song",interested.get(position).)
+
+                Integer cat = interested.get(position).getId();
+                String cat_id = String.valueOf(cat);
+                Log.e("CAT_ID", cat_id);
+
+                Intent intent = new Intent(context, AllCatAndRecomendedActivity.class);
+                intent.putExtra("cat_id", cat_id);
                 holder.itemView.getContext().startActivity(intent);
+//                Intent intent = new Intent(context, WeighTwoActivity.class);
+////                intent.putExtra("song",interested.get(position).)
+//                holder.itemView.getContext().startActivity(intent);
             }
         });
         Log.e("interested", String.valueOf(interested.size()));

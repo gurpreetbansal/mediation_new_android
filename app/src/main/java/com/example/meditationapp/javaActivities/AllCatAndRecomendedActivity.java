@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -42,7 +43,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
     String mypreference = "mypref", user_id = "user_id";
 
     private LinearLayout titleLL,my_recordings_ll;
-    private CustomBoldtextView dummyText,recomended_txt;
+    private CustomBoldtextView dummyText,recomended_txt,weight_title;
     private ProgressBar weight_progressBar;
 
     @Override
@@ -58,6 +59,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
         weight_progressBar = findViewById(R.id.weight_progressBar);
         my_recordings_ll = findViewById(R.id.ll_wl_my_recordings);
         recomended_txt = findViewById(R.id.recomended_txt);
+        weight_title = findViewById(R.id.weight_title);
 
         titleLL.setVisibility(View.INVISIBLE);
         dummyText.setVisibility(View.INVISIBLE);
@@ -99,7 +101,6 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
                assert resource != null;
                if (resource.getSuccess()){
 
-
                    titleLL.setVisibility(View.VISIBLE);
                    dummyText.setVisibility(View.VISIBLE);
                    my_recordings_ll.setVisibility(View.VISIBLE);
@@ -125,6 +126,8 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<GetCategoryAndRecomendedModelClass> call, Throwable t) {
+                Toast.makeText(AllCatAndRecomendedActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                weight_progressBar.setVisibility(View.GONE);
 
             }
         });

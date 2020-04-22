@@ -130,6 +130,7 @@ public class SoundFragment extends Fragment {
                 if (response.isSuccessful()){
                     resource = response.body();
 
+                    assert resource != null;
                     if (resource.getSuccess()){
 
                         soundScapeModelClass = resource.getData().getSoundScopes();
@@ -160,6 +161,21 @@ public class SoundFragment extends Fragment {
                              Log.e("SOUND_SCAPE_URL :  ", nature);
                              Log.e("NATURE ID : ", nature_id);
                              Log.e("NATURE NAME : ", nature_name);
+
+//                             if (resource.getData().getSoundScopes().get(position).getNatureStatus() == 0){
+//                                 Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+//                                 intent.putExtra("song", nature);
+//                                 intent.putExtra("nature_id", nature_id);
+//                                 intent.putExtra("nature_name", nature_name);
+//                                 startActivity(intent);
+//                             }
+//                             if (resource.getData().getSoundScopes().get(position).getNatureStatus() == 1){
+//                                 Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
+//                                 intent1.putExtra("song", nature);
+//                                 intent1.putExtra("nature_id", nature_id);
+//                                 intent1.putExtra("nature_name", nature_name);
+//                                 startActivity(intent1);
+//                             }
 
                              switch (position){
                                  case 0:
