@@ -16,6 +16,7 @@ import com.example.meditationapp.R;
 import com.example.meditationapp.javaActivities.CategoriesActivities;
 import com.example.meditationapp.javaActivities.HomeActivitynew;
 import com.example.meditationapp.javaActivities.LoginActivityNew;
+import com.example.meditationapp.javaActivities.VoiceSelect_Activity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 
@@ -71,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (pref.getBoolean(voiceSelected, true)) {
 
                         if (pref.getBoolean(categorySelected, true)) {
-                            Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                            Intent intent = new Intent(SplashActivity.this, HomeActivitynew.class);
                             startActivity(intent);
                             finish();
                         } else {

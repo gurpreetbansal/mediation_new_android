@@ -85,7 +85,7 @@
             android:layout_marginRight="@dimen/_40sdp"
             android:background="@drawable/curve_gray_fill"
             android:backgroundTint="@color/dark_gray"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
                 android:id="@+id/txt_year"
@@ -96,6 +96,7 @@
                 android:text="@string/yearly_value"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp" />
+
 
         </LinearLayout>
 

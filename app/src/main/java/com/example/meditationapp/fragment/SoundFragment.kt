@@ -23,49 +23,50 @@ class SoundFragment : Fragment()
  */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var rootView = inflater!!.inflate(R.layout.sound_fragment, container, false)
+
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        fl_drop.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
-            startActivity(voice)
-        })
-        fl_stone_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_tree_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_water_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_flower_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_beat_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_mouth_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_flute_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        fl_beat_two_sound.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_back_tool.visibility=View.INVISIBLE
+//        fl_drop.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_stone_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_tree_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_water_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_flower_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_beat_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_mouth_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_flute_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        fl_beat_two_sound.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_back_tool.visibility=View.INVISIBLE
     }
 
     companion object {

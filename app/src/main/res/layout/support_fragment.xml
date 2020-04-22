@@ -20,6 +20,7 @@
             android:padding="@dimen/_15sdp"
             android:tint="@color/gray_eight"/>
         <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:id="@+id/title_txt_support"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.6"

@@ -1,5 +1,6 @@
 package com.example.meditationapp.Api;
 
+import com.example.meditationapp.ModelClasses.AllCatModelClasses.GetCategoryAndRecomendedModelClass;
 import com.example.meditationapp.ModelClasses.ForgetPasswordModel;
 import com.example.meditationapp.ModelClasses.GetAffirmation;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
@@ -22,7 +23,9 @@ import com.example.meditationapp.ModelClasses.SetCategoryResponse;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.ModelClasses.SignupModelClass;
 import com.example.meditationapp.ModelClasses.SignupSendData;
+import com.example.meditationapp.ModelClasses.SoundModel.GetSoundAndScapeResponse;
 import com.example.meditationapp.ModelClasses.SubscriptionModelClass;
+import com.example.meditationapp.ModelClasses.UserPayModel.GetUserPayModelClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +104,19 @@ public interface ApiInterface {
     @POST("collections/support")
     Call<GetSupportResponse> sendQuery(@Query("user_id") String userId, @Query("suppert_subject") String subject, @Query("support_message") String message);
 
+    @POST("collections/music")
+    Call<GetSoundAndScapeResponse> getMusicList(@Query("user_id") String userId);
+
+    @POST("payment/userPayment")
+    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id,@Query("payment_type") String payment_type,
+                                              @Query("payment_id") String payment_id, @Query("payment_amount") String payment_amount,
+                                              @Query("payment_date") String payment_date, @Query("payment_plan_id") String plan_id,
+                                              @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,
+                                              @Query("short_description") String short_desc, @Query("intent") String intent);
+
+    @POST("collections/affirmationCategoies")
+    Call<GetCategoryAndRecomendedModelClass> getCatAndRecomended(@Query("user_id") String user_Id,
+                                                                 @Query("cat_id") String cat_ID);
     @POST("collections/mySongsList")
     Call<GetAffirmation> requestAffirmation(@Query("user_id") String userId, @Query("cat_id") String categoryId);
 

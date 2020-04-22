@@ -41,16 +41,30 @@
         android:src="@mipmap/bar"
         android:layout_marginTop="-20dp"/>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/accountFragment_progressLL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
+        <ProgressBar
+            android:id="@+id/sound_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </LinearLayout>
+
+    <ScrollView
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="-10dp">
 
         <LinearLayout
+            android:id="@+id/accountFragment_AllDetailsLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical">
 
 

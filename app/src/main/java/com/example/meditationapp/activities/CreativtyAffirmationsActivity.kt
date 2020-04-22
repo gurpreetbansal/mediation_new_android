@@ -10,6 +10,7 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.example.meditationapp.R
 import com.example.meditationapp.adapter.Voice_Selector_Adapter
+import com.example.meditationapp.javaActivities.VoiceSelect_Activity
 import kotlinx.android.synthetic.main.creativity_two_fragment.*
 import kotlinx.android.synthetic.main.tool_bar_four.*
 

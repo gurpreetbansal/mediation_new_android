@@ -2,6 +2,7 @@ package com.example.meditationapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.meditationapp.ModelClasses.CategoryData;
 import com.example.meditationapp.ModelClasses.InterestedData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.WeighTwoActivity;
+import com.example.meditationapp.javaActivities.AllCatAndRecomendedActivity;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.squareup.picasso.Picasso;
 
@@ -46,9 +48,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHo
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WeighTwoActivity.class);
-//                intent.putExtra("song", categoryData);
+//                Intent intent = new Intent(context, WeighTwoActivity.class);
+
+
+                Integer cat = categoryData.get(position).getId();
+                String cat_id = String.valueOf(cat);
+                Log.e("CAT_ID", cat_id);
+
+                Intent intent = new Intent(context, AllCatAndRecomendedActivity.class);
+                intent.putExtra("cat_id", cat_id);
                 holder.itemView.getContext().startActivity(intent);
+
+
+
+
             }
         });
     }

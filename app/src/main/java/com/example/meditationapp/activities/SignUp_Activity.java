@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.meditationapp.R;
+import com.example.meditationapp.javaActivities.VoiceSelect_Activity;
 
 public class SignUp_Activity extends AppCompatActivity {
 LinearLayout ll_facebook;
@@ -38,7 +39,7 @@ TextView txt_login,txt_sign_up;
         ll_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent voice=new Intent(SignUp_Activity.this,VoiceSelect_Activity.class);
+                Intent voice=new Intent(SignUp_Activity.this, VoiceSelect_Activity.class);
                 startActivity(voice);
             }
         });
