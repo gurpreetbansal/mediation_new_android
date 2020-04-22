@@ -149,11 +149,9 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             app:cs_circle_color="@color/white"
-            app:cs_circle_progress_color="@color/weight_loss"
             app:cs_circle_stroke_width="8dp"
             app:cs_circle_style="round"
             app:cs_negative_enabled="false"
-            app:cs_pointer_color="@color/weight_loss_pointer"
             app:cs_pointer_halo_width="1dp"
             app:cs_pointer_stroke_width="24dp" />
 

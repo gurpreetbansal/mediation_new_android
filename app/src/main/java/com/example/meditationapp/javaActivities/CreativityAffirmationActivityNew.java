@@ -3,6 +3,7 @@ package com.example.meditationapp.javaActivities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.ActivityManager;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -81,6 +83,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
         });
 
+
         player_play.setImageResource(R.mipmap.pause);
         Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
         m_intent.putExtra("main_song", song);
@@ -117,6 +120,10 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                 blockGUIUpdate = true;
             }
         });
+
+        circularSeekBar.setPointerColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss_pointer, null));
+//        circularSeekBar.setPointerColor(Color.parseColor("#C0C0C0"));
+        circularSeekBar.setCircleProgressColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss, null));
 
         CreativityAffirmationActivityNew.this.runOnUiThread(new Runnable() {
             @Override
