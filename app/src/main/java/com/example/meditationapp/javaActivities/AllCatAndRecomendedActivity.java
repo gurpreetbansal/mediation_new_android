@@ -119,7 +119,15 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
                    recomendedRV.setAdapter(recomendedAdapter);
 
                }
+               else {
+                   Toast.makeText(AllCatAndRecomendedActivity.this, ""+resource.getMessages(), Toast.LENGTH_SHORT).show();
+                   weight_progressBar.setVisibility(View.GONE);
+               }
 
+           }
+           else {
+               Toast.makeText(AllCatAndRecomendedActivity.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+               weight_progressBar.setVisibility(View.GONE);
            }
 
             }

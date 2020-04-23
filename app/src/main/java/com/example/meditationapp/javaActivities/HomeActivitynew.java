@@ -1,5 +1,6 @@
 package com.example.meditationapp.javaActivities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,16 +11,23 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.app.myapplication.fragment.RecordFragment;
 import com.example.meditationapp.JavaFragment.AccountFragment;
 import com.example.meditationapp.JavaFragment.LibraryFragmentNew;
 import com.example.meditationapp.JavaFragment.SoundFragment;
 import com.example.meditationapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class HomeActivitynew extends BaseActivity {
 
@@ -33,7 +41,6 @@ public class HomeActivitynew extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel= new NotificationChannel("MyNotifications","MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
@@ -41,6 +48,39 @@ public class HomeActivitynew extends BaseActivity {
             manager.createNotificationChannel(channel);
         }
 
+        FirebaseMessaging.getInstance().subscribeToTopic("gernal")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        String msg = "Successfull";
+
+                        if (!task.isSuccessful()){
+                            msg = "Faild";
+                        }
+                        Log.e("Message",msg);
+                        Toast.makeText(HomeActivitynew.this, ""+msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+
+                        if (task.isSuccessful()){
+
+                            String token = task.getResult().getToken();
+                            Log.e("GERNATE TOKEN :  ", token);
+                        }
+                        else {
+                             Log.e("TOKEN IS NOT GERNATED: ",task.getException().getMessage());
+
+                        }
+                    }
+                });
+
+//        TOKEN :- cY5EUC_GSJ6pcYM2fRyHNk:APA91bH--FIucex3FIUgjaGYGvTIXJO-KRb0s9x2ismOLvyOXS6IYSLJBLD5xHnLI83mw_OCtkFbg3qEkXl9fLLlW4cBLPqWmNeWRNs9koMe8h61gk0bCVIeyHbjwxHIHroboz9qusPU
 
         lib = findViewById(R.id.lib);
         sound = findViewById(R.id.sound);
