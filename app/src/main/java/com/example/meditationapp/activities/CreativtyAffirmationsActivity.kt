@@ -71,25 +71,25 @@ class CreativtyAffirmationsActivity : AppCompatActivity() {
 
         })
 
-        img_one.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-
-        img_two.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_three.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_four.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_five.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_six.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
+//        img_one.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//
+//        img_two.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_three.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_four.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_five.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_six.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
 
         img_heart.visibility= View.VISIBLE
 //        img_back_four.setOnClickListener(View.OnClickListener {

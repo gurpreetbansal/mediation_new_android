@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature android:name="android.hardware.camera" />
@@ -27,6 +28,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
         <activity android:name=".javaActivities.AllCatAndRecomendedActivity"></activity>
+        <activity android:name=".javaActivities.WeightActivityNew"></activity>
         <activity android:name=".javaActivities.Test" />
 
         <service

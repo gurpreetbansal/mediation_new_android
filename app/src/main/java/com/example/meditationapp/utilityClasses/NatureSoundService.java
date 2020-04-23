@@ -1,6 +1,7 @@
 package com.example.meditationapp.utilityClasses;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.IOException;
 
@@ -17,6 +19,7 @@ public class NatureSoundService extends Service {
     private static final String TAG = "NatureSoundService";
     MediaPlayer mplayer;
     String song;
+    int volume = 1;
 
     @Nullable
     @Override
@@ -27,36 +30,12 @@ public class NatureSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Toast.makeText(this, "Service startedN...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Service startedN...", Toast.LENGTH_SHORT).show();
         Log.e("playerN", "onCreate() , service started...");
-
     }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        song = intent.getStringExtra("nature_song");
-//        if (song != null) {
-//            try {
-//                if (mplayer != null) {
-//                    mplayer.release();
-//                    mplayer = null;
-//                }
-//                mplayer = new MediaPlayer();
-//                mplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//                mplayer.setDataSource(song);
-//                mplayer.prepareAsync();
-//                mplayer.setLooping(true);
-//                mplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                    @Override
-//                    public void onPrepared(MediaPlayer mp) {
-//                        mplayer.start();
-//                        Log.e("player", "play");
-//                    }
-//                });
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return Service.START_STICKY;
+
         if (intent != null) {
 
             if (intent.getStringExtra("player").equals("Play")) {
@@ -72,6 +51,7 @@ public class NatureSoundService extends Service {
                         mplayer.setDataSource(song);
                         mplayer.prepareAsync();
                         mplayer.setLooping(true);
+                        mplayer.setVolume(volume, volume);
                         mplayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                             @Override
                             public void onPrepared(MediaPlayer mp) {
@@ -101,6 +81,46 @@ public class NatureSoundService extends Service {
                 }
             }
             //
+            if (intent.getStringExtra("player").equals("Vol_low")) {
+                if (mplayer != null) {
+                    if (volume >= 1) {
+                        if (volume <= 10) {
+                            volume = 1;
+                        } else {
+                            volume = volume - 10;
+                        }
+                        Toast.makeText(this, String.valueOf(volume), Toast.LENGTH_SHORT).show();
+                        mplayer.setVolume(volume, volume);
+                        sendInfoBroadcast();
+                    }
+                }
+            }
+            //
+            if (intent.getStringExtra("player").equals("Vol_high")) {
+                if (mplayer != null) {
+                    if (volume <= 99) {
+                        if (volume >= 90) {
+                            volume = 99;
+                        } else {
+                            volume = volume + 10;
+                        }
+                    }
+                    Toast.makeText(this, String.valueOf(volume), Toast.LENGTH_SHORT).show();
+                    mplayer.setVolume(volume, volume);
+                    sendInfoBroadcast();
+                }
+            }
+            //
+            if (intent.getStringExtra("player").equals("Vol_bar")) {
+                if (mplayer != null) {
+                    if (!mplayer.isPlaying()) {
+                        volume = intent.getIntExtra("volume", 50);
+//                        Toast.makeText(this, volume, Toast.LENGTH_SHORT).show();
+                        mplayer.setVolume(volume, volume);
+                        sendInfoBroadcast();
+                    }
+                }
+            }
 
         }
         return Service.START_STICKY;
@@ -115,7 +135,7 @@ public class NatureSoundService extends Service {
     public void onDestroy() {
         stop();
         release();
-//        Toast.makeText(this, "Service stoppedN...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Service stoppedN...", Toast.LENGTH_SHORT).show();
         Log.e("player", "onCreate() , service stopped...");
     }
 
@@ -150,6 +170,15 @@ public class NatureSoundService extends Service {
             mplayer.stop();
             Log.e("player", "stop");
         }
+    }
+
+    private void sendInfoBroadcast() {
+        if (mplayer == null)
+            return;
+
+        Intent updateIntent = new Intent("VOICE_UPDATE_ACTION");
+        updateIntent.putExtra("Volume", volume);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(updateIntent);
     }
 
 }
