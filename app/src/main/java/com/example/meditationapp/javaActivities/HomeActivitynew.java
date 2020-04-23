@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class HomeActivitynew extends BaseActivity {
     public static ImageView img_bottom_lib,img_bottom_sound,img_bottom_record,img_bottom_account;
     private FrameLayout container;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
+    Boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,16 +94,22 @@ public class HomeActivitynew extends BaseActivity {
         img_bottom_account = findViewById(R.id.img_bottom_account);
         container = findViewById(R.id.container);
 
-        img_bottom_lib.setVisibility(View.VISIBLE);
-        img_bottom_sound.setVisibility(View.GONE);
-        img_bottom_record.setVisibility(View.GONE);
-        img_bottom_account.setVisibility(View.GONE);
+        if (!check){
+            paymentData();
+        }
+        else {
+            img_bottom_lib.setVisibility(View.VISIBLE);
+            img_bottom_sound.setVisibility(View.GONE);
+            img_bottom_record.setVisibility(View.GONE);
+            img_bottom_account.setVisibility(View.GONE);
 
-        LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container,libraryFragmentNew);
-        fragmentTransaction.addToBackStack("");
-        fragmentTransaction.commit();
+            LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,libraryFragmentNew);
+            fragmentTransaction.addToBackStack("");
+            fragmentTransaction.commit();
+        }
+
 
         lib.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,5 +194,23 @@ public class HomeActivitynew extends BaseActivity {
             startActivity(intent);
         }
 
+    }
+
+    public void paymentData(){
+
+        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
+        sharedPreferences.getString("payment","");
+        sharedPreferences.getBoolean("truePayment",true);
+
+        img_bottom_lib.setVisibility(View.GONE);
+        img_bottom_sound.setVisibility(View.VISIBLE);
+        img_bottom_record.setVisibility(View.GONE);
+        img_bottom_account.setVisibility(View.GONE);
+
+        SoundFragment soundFragment = new SoundFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container,soundFragment,TAG_FRAGMENT);
+        fragmentTransaction.addToBackStack("");
+        fragmentTransaction.commit();
     }
 }

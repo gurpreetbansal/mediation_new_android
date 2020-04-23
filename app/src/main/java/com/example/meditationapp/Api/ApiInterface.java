@@ -1,6 +1,7 @@
 package com.example.meditationapp.Api;
 
 import com.example.meditationapp.ModelClasses.AllCatModelClasses.GetCategoryAndRecomendedModelClass;
+import com.example.meditationapp.ModelClasses.FavoriteModelClass.GetFavoritesModelClass;
 import com.example.meditationapp.ModelClasses.ForgetPasswordModel;
 import com.example.meditationapp.ModelClasses.GetAffirmation;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
@@ -124,5 +125,8 @@ public interface ApiInterface {
     @POST("collections/postMySongs")
     Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
                                           @Part("cat_id") RequestBody categoryId, @Part MultipartBody.Part part);
+
+    @POST("")
+    Call<GetFavoritesModelClass> getFavorites(@Query("user_id") String user_id);
 
 }

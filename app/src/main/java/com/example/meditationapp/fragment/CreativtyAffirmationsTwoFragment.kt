@@ -136,11 +136,11 @@ if(position==0)
 //            }
 //        })
 
-        img_heart.setOnClickListener(View.OnClickListener {
-             val weightFragment = MyFavoritesFragment.newInstance()
-             openFragment(weightFragment)
-
-        })
+//        img_heart.setOnClickListener(View.OnClickListener {
+//             val weightFragment = MyFavoritesFragment.newInstance()
+//             openFragment(weightFragment)
+//
+//        })
 
         img_back_four.setOnClickListener(View.OnClickListener {
                        // getActivity()!!.finish();
