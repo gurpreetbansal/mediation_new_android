@@ -28,7 +28,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
         <activity android:name=".javaActivities.AllCatAndRecomendedActivity"></activity>
-        <activity android:name=".javaActivities.WeightActivityNew"></activity>
+        <activity android:name=".javaActivities.WeightActivityNew"
+            android:windowSoftInputMode="stateHidden"
+            />
         <activity android:name=".javaActivities.Test" />
 
         <service

@@ -204,7 +204,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                 SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                 userID = pref.getString(user_id, "");
 
-                RequestBody.create(MediaType.parse("text/plain"), "image-type");
+//                RequestBody.create(MediaType.parse("text/plain"), "image-type");
                 RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), userID);
                 RequestBody name = RequestBody.create(MediaType.parse("text/plain"), tv_firstname.getText().toString());
                 RequestBody oldPaswword = RequestBody.create(MediaType.parse("text/plain"), tv_password.getText().toString());

@@ -2,9 +2,9 @@ package com.example.meditationapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.GetAffirmationData;
-import com.example.meditationapp.ModelClasses.PostAffirmationData;
 import com.example.meditationapp.R;
-import com.example.meditationapp.javaActivities.WeightActivityNew;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,6 +21,17 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
 
     Context context;
     List<GetAffirmationData> data;
+
+//    OnViewClickListener onViewClickListener;
+//
+//    public interface OnViewClickListener {
+//        void startRecording();
+//        void stopRecording();
+//    }
+//
+//    public void setOnViewClickListener(OnViewClickListener onViewClickListener){
+//        this.onViewClickListener = onViewClickListener;
+//    }
 
     public AffirmationAdapter(Context context, List<GetAffirmationData> data) {
         this.context = context;
@@ -43,7 +52,32 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
                 .into(holder.ll_first);
 
         holder.affirmation_text.setText(data.get(position).getSongsTitle());
+
+//        holder.ll_first.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+////                        AppLog.logString("Start Recording");
+////                        notifyDataSetChanged();
+//                        if (onViewClickListener != null) {
+//                            onViewClickListener.startRecording();
+//                        }
+//                        return true;
+//                    case MotionEvent.ACTION_UP:
+////                        notifyDataSetChanged();
+////                        AppLog.logString("stop Recording");
+//                        onViewClickListener.stopRecording();
+//                        break;
+//                }
+//
+//                return false;
+//            }
+//        });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -62,5 +96,6 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
             ll_first = itemView.findViewById(R.id.ll_first);
 
         }
+
     }
 }

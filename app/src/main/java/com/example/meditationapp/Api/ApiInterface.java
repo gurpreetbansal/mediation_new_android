@@ -123,6 +123,6 @@ public interface ApiInterface {
     @Multipart
     @POST("collections/postMySongs")
     Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
-                                          @Part("cat_id") RequestBody categoryId, @Part MultipartBody.Part part);
+                                          @Part("cat_id") RequestBody categoryId,@Part("songs_id") RequestBody songId, @Part MultipartBody.Part part);
 
 }
