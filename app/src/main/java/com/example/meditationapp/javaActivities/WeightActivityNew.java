@@ -3,7 +3,6 @@ package com.example.meditationapp.javaActivities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,17 +12,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,14 +27,11 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldEditText;
 import com.example.meditationapp.ModelClasses.GetAffirmation;
 import com.example.meditationapp.ModelClasses.PostAffirmation;
 import com.example.meditationapp.R;
-import com.example.meditationapp.activities.WeightActivity;
 import com.example.meditationapp.adapter.AffirmationAdapter;
 import com.example.meditationapp.adapter.PostAffirmationAdapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -55,15 +46,15 @@ public class WeightActivityNew extends AppCompatActivity {
     ImageView add_affirmation;
     ApiInterface apiInterface;
     GetAffirmation resource;
-    String userID, categoryId;
+    String shared_userID;
     CustomBoldEditText edittext_affirmationtitle;
     PostAffirmation postAffirmation;
-    MultipartBody.Part part;
+    MultipartBody.Part parta;
     String cat_ID, titlea, songUrl;
     String path, songsID;
+    String favourite;
     File file;
     String mypreference = "mypref", user_id = "user_id";
-
 //    private String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "AudioRecording.3gp";
 
     public static final int REQUEST_AUDIO_PERMISSION_CODE = 0;
@@ -82,7 +73,6 @@ public class WeightActivityNew extends AppCompatActivity {
         getrecyclerView.setVisibility(View.VISIBLE);
         postrecyclerView.setVisibility(View.GONE);
 
-        checkPermission();
         try {
             file = createImageFile();
         } catch (IOException e) {
@@ -90,42 +80,39 @@ public class WeightActivityNew extends AppCompatActivity {
         }
 
         SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        userID = pref.getString(user_id, "");
-//        Log.e("CATrert_ID1", userID);
-
+        shared_userID = pref.getString(user_id, "");
         cat_ID = getIntent().getStringExtra("category_id");
-//        Log.e("CATrert_ID1", cat_ID);
 
-        getAffirmation(userID, cat_ID);
+        getAffirmation(shared_userID, cat_ID);
 
         add_affirmation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                getrecyclerView.setVisibility(View.GONE);
-                postrecyclerView.setVisibility(View.VISIBLE);
-
+                parta = null;
                 titlea = edittext_affirmationtitle.getText().toString();
-                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), userID);
+                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), shared_userID);
                 RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titlea);
                 RequestBody categoryId = RequestBody.create(MediaType.parse("text/plain"), cat_ID);
                 RequestBody songsId = RequestBody.create(MediaType.parse("text/plain"), "");
-//                RequestBody.create(MediaType.parse("text/plain"), "image-type");
+                RequestBody fav = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
 
-                addAffirmation(userId, title, categoryId, songsId, part);
+                Log.e("data", shared_userID + "-" + titlea + "-" + cat_ID + "-");
+
+                addAffirmation(userId, title, categoryId, songsId, fav, parta);
+//                addAffirmation(shared_userID, titlea, cat_ID, "0", "0", parta);
             }
         });
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(WeightActivityNew.this, RecyclerView.VERTICAL, true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(WeightActivityNew.this, RecyclerView.VERTICAL, false);
         getrecyclerView.setLayoutManager(layoutManager);
 
-        LinearLayoutManager layout = new LinearLayoutManager(WeightActivityNew.this, RecyclerView.VERTICAL, true);
+        LinearLayoutManager layout = new LinearLayoutManager(WeightActivityNew.this, RecyclerView.VERTICAL, false);
         postrecyclerView.setLayoutManager(layout);
 
     }
 
-    private void getAffirmation(String userID, String categoryId) {
+    private void getAffirmation(final String userID, String categoryId) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
         Call<GetAffirmation> call = apiInterface.requestAffirmation(userID, categoryId);
@@ -138,9 +125,10 @@ public class WeightActivityNew extends AppCompatActivity {
                     if (resource.getSuccess()) {
                         AffirmationAdapter adapter = new AffirmationAdapter(WeightActivityNew.this, resource.getData());
                         getrecyclerView.setAdapter(adapter);
-                        getrecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), getrecyclerView, new RecyclerTouchListener.ClickListener() {
+
+                        adapter.setOnitemClickListener(new AffirmationAdapter.OnitemClickListener() {
                             @Override
-                            public void onClick(View view, int position) {
+                            public void onItemClick(int position) {
                                 if (resource.getData().get(position).getUploadStatus().equals(1)) {
                                     songUrl = resource.getData().get(position).getSongs().toString();
                                     Intent intent = new Intent(WeightActivityNew.this, CreativityAffirmationActivityNew.class);
@@ -152,14 +140,41 @@ public class WeightActivityNew extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onLongClick(View view, int position) {
-                                songsID = resource.getData().get(position).getId().toString();
-                                if (titlea == null) {
+                            public void onLongClick(int position) {
+                                if (resource.getData().get(position).getUploadStatus().equals(1)) {
+                                    Toast.makeText(WeightActivityNew.this, "Affirmation is already recorded", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    songsID = resource.getData().get(position).getId().toString();
+                                    favourite = resource.getData().get(position).getFavriteStatus().toString();
                                     titlea = resource.getData().get(position).getSongsTitle().toString();
+                                    start();
                                 }
-                                start();
                             }
-                        }));
+
+                            @Override
+                            public void onfavourite(int position, boolean b) {
+
+                                parta = null;
+                                if (b) {
+                                    favourite = "1";
+                                } else {
+                                    favourite = "0";
+                                }
+
+                                titlea = resource.getData().get(position).getSongsTitle().toString();
+                                songsID = resource.getData().get(position).getId().toString();
+                                Log.e("pos", String.valueOf(position) + titlea + "-" + songsID);
+
+                                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), shared_userID);
+                                RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titlea);
+                                RequestBody categoryId = RequestBody.create(MediaType.parse("text/plain"), cat_ID);
+                                RequestBody songsId = RequestBody.create(MediaType.parse("text/plain"), songsID);
+                                RequestBody fav = RequestBody.create(MediaType.parse("text/plain"), favourite);
+
+                                addAffirmation(userId, title, categoryId, songsId, fav, parta);
+
+                            }
+                        });
                     } else {
                         Toast.makeText(WeightActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
                     }
@@ -176,13 +191,11 @@ public class WeightActivityNew extends AppCompatActivity {
 
     }
 
-    private void addAffirmation(RequestBody userId, RequestBody title, RequestBody categoryId, RequestBody songsId, MultipartBody.Part part) {
+    private void addAffirmation(RequestBody userId, RequestBody title, RequestBody categoryId, RequestBody songsId, RequestBody fav, MultipartBody.Part part) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
-        getrecyclerView.setVisibility(View.GONE);
-        postrecyclerView.setVisibility(View.VISIBLE);
-
-        Call<PostAffirmation> call = apiInterface.postAffirmation(userId, title, categoryId, songsId, part);
+//        Call<PostAffirmation> call = apiInterface.postAffirmation(userId, title, categoryId, fav, songsId, part);
+        Call<PostAffirmation> call = apiInterface.postAffirmation(userId, title, categoryId, songsId, fav, part);
 
 
         call.enqueue(new Callback<PostAffirmation>() {
@@ -194,11 +207,14 @@ public class WeightActivityNew extends AppCompatActivity {
                     assert postAffirmation != null;
                     if (postAffirmation.getSuccess()) {
                         Toast.makeText(WeightActivityNew.this, postAffirmation.getMessages(), Toast.LENGTH_SHORT).show();
-                        final PostAffirmationAdapter adapter = new PostAffirmationAdapter(WeightActivityNew.this, postAffirmation.getData());
+                        PostAffirmationAdapter adapter = new PostAffirmationAdapter(WeightActivityNew.this, postAffirmation.getData());
                         postrecyclerView.setAdapter(adapter);
-                        postrecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), postrecyclerView, new RecyclerTouchListener.ClickListener() {
+                        getrecyclerView.setVisibility(View.GONE);
+                        postrecyclerView.setVisibility(View.VISIBLE);
+
+                        adapter.setOnitemClickListener(new PostAffirmationAdapter.OnitemClickListener() {
                             @Override
-                            public void onClick(View view, int position) {
+                            public void onItemClick(int position) {
                                 if (postAffirmation.getData().get(position).getUploadStatus().equals(1)) {
                                     songUrl = postAffirmation.getData().get(position).getSongs().toString();
                                     Intent intent = new Intent(WeightActivityNew.this, CreativityAffirmationActivityNew.class);
@@ -210,15 +226,40 @@ public class WeightActivityNew extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onLongClick(View view, int position) {
-                                songsID = postAffirmation.getData().get(position).getId().toString();
-                                if (titlea == null) {
+                            public void onLongClick(int position) {
+                                if (postAffirmation.getData().get(position).getUploadStatus().equals(1)) {
+                                    Toast.makeText(WeightActivityNew.this, "Affirmation is already recorded", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    songsID = postAffirmation.getData().get(position).getId().toString();
+                                    favourite = postAffirmation.getData().get(position).getFavriteStatus().toString();
                                     titlea = postAffirmation.getData().get(position).getSongsTitle().toString();
+                                    start();
                                 }
-                                start();
                             }
-                        }));
 
+                            @Override
+                            public void onfavourite(int position, boolean b) {
+
+                                parta = null;
+                                if (b) {
+                                    favourite = "1";
+                                } else {
+                                    favourite = "0";
+                                }
+                                titlea = postAffirmation.getData().get(position).getSongsTitle().toString();
+                                songsID = postAffirmation.getData().get(position).getId().toString();
+                                Log.e("pos", String.valueOf(position) + titlea + "-" + songsID);
+
+                                RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), shared_userID);
+                                RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titlea);
+                                RequestBody categoryId = RequestBody.create(MediaType.parse("text/plain"), cat_ID);
+                                RequestBody songsId = RequestBody.create(MediaType.parse("text/plain"), songsID);
+                                RequestBody fav = RequestBody.create(MediaType.parse("text/plain"), favourite);
+
+                                addAffirmation(userId, title, categoryId, songsId, fav, parta);
+
+                            }
+                        });
                     } else {
                         Toast.makeText(WeightActivityNew.this, postAffirmation.getMessages(), Toast.LENGTH_SHORT).show();
                     }
@@ -285,18 +326,18 @@ public class WeightActivityNew extends AppCompatActivity {
 
 //            Uri fileuri = Uri.fromFile(file);
 //            String fileExt = MimeTypeMap.getFileExtensionFromUrl(fileuri.toString());
-//            Log.e("ext",fileExt);
+            Log.e("ext", file.getName().toString());
 
-            RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
-            part = MultipartBody.Part.createFormData("songs", file.getName(), fileReqBody);
+            RequestBody fileReqBody = RequestBody.create(MediaType.parse("*/*"), file);
+            parta = MultipartBody.Part.createFormData("songs", file.getName(), fileReqBody);
 
-//            RequestBody.create(MediaType.parse("text/plain"), "audio-type");
-            RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), userID);
+            RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), shared_userID);
             RequestBody title = RequestBody.create(MediaType.parse("text/plain"), titlea);
             RequestBody categoryId = RequestBody.create(MediaType.parse("text/plain"), cat_ID);
             RequestBody songsId = RequestBody.create(MediaType.parse("text/plain"), songsID);
+            RequestBody fav = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(favourite));
 
-            addAffirmation(userId, title, categoryId, songsId, part);
+            addAffirmation(userId, title, categoryId, songsId, fav, parta);
         }
     }
 

@@ -108,7 +108,7 @@ public interface ApiInterface {
     Call<GetSoundAndScapeResponse> getMusicList(@Query("user_id") String userId);
 
     @POST("payment/userPayment")
-    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id,@Query("payment_type") String payment_type,
+    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id, @Query("payment_type") String payment_type,
                                               @Query("payment_id") String payment_id, @Query("payment_amount") String payment_amount,
                                               @Query("payment_date") String payment_date, @Query("payment_plan_id") String plan_id,
                                               @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,
@@ -117,12 +117,19 @@ public interface ApiInterface {
     @POST("collections/affirmationCategoies")
     Call<GetCategoryAndRecomendedModelClass> getCatAndRecomended(@Query("user_id") String user_Id,
                                                                  @Query("cat_id") String cat_ID);
+
     @POST("collections/mySongsList")
     Call<GetAffirmation> requestAffirmation(@Query("user_id") String userId, @Query("cat_id") String categoryId);
 
     @Multipart
     @POST("collections/postMySongs")
     Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
-                                          @Part("cat_id") RequestBody categoryId,@Part("songs_id") RequestBody songId, @Part MultipartBody.Part part);
+                                          @Part("cat_id") RequestBody categoryId, @Part("songs_id") RequestBody songId,
+                                          @Part("favrite") RequestBody favourite, @Part MultipartBody.Part part);
+
+//    @POST("collections/postMySongs")
+//    Call<PostAffirmation> postAffirmation(@Query("user_id") String userId, @Query("songs_title") String songTitle,
+//                                          @Query("cat_id") String categoryId, @Query("songs_id") String songId,
+//                                          @Query("songs") MultipartBody.Part part);
 
 }
