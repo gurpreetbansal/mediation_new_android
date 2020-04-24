@@ -48,7 +48,7 @@
         <activity android:name=".javaActivities.SupportActivity_new" />
         <activity
             android:name=".javaActivities.HomeActivitynew"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -14,8 +14,9 @@ import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.FavoritesModelClass;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.GetFavoritesModelClass;
+import com.example.meditationapp.ModelClasses.FavoriteModelClass.SubFavoritesModelClass;
 import com.example.meditationapp.R;
-import com.example.meditationapp.adapter.FavoritesCategoryAdapter;
+import com.example.meditationapp.adapter.FavoriteAdapter.FavoritesCategoryAdapter;
 
 import java.util.List;
 
@@ -27,10 +28,11 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView favListRV;
     String cat_ID;
-    String userID;
+    String userID = "287";
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
     List<FavoritesModelClass> favoritesModelClasses;
+    List<SubFavoritesModelClass> subFavoritesModelClasses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +41,19 @@ public class FavoritesActivity extends AppCompatActivity {
 
         favListRV = findViewById(R.id.favList_RV);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FavoritesActivity.this,LinearLayoutManager.VERTICAL,false);
-        favListRV.setLayoutManager(linearLayoutManager);
-
         SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        userID = preferences.getString(user_id, "");
+//        userID = preferences.getString(user_id, "");
 
 //        cat_ID = getIntent().getStringExtra("cat_id");
 
+        getCategoryData(userID);
     }
 
     public void getCategoryData(String userID){
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
-        Call<GetFavoritesModelClass> call = apiInterface.getFavorites(user_id);
+        Call<GetFavoritesModelClass> call = apiInterface.getFavorites(userID);
 
         call.enqueue(new Callback<GetFavoritesModelClass>() {
             @Override
@@ -65,21 +65,25 @@ public class FavoritesActivity extends AppCompatActivity {
                     assert resorce != null;
                     if (resorce.getSuccess()){
 
-                        FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this,favoritesModelClasses);
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FavoritesActivity.this);
+                        favListRV.setLayoutManager(linearLayoutManager);
+                        FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this,resorce.getData());
                         favListRV.setAdapter(favoritesCategoryAdapter);
 
-                        favListRV.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), favListRV, new RecyclerTouchListener.ClickListener() {
-                            @Override
-                            public void onClick(View view, int position) {
+                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
 
-                                Toast.makeText(FavoritesActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onLongClick(View view, int position) {
-
-                            }
-                        }));
+//                        favListRV.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), favListRV, new RecyclerTouchListener.ClickListener() {
+//                            @Override
+//                            public void onClick(View view, int position) {
+//
+//                                Toast.makeText(FavoritesActivity.this, ""+position, Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onLongClick(View view, int position) {
+//
+//                            }
+//                        }));
                     }
                     else {
                         Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();

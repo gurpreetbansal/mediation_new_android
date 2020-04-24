@@ -126,7 +126,7 @@ public interface ApiInterface {
     Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
                                           @Part("cat_id") RequestBody categoryId, @Part MultipartBody.Part part);
 
-    @POST("")
+    @POST("collections/myfavoritesongs")
     Call<GetFavoritesModelClass> getFavorites(@Query("user_id") String user_id);
 
 }

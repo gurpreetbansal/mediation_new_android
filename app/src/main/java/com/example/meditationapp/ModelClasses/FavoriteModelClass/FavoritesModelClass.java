@@ -42,7 +42,9 @@ public class FavoritesModelClass {
     private String updatedAt;
     @SerializedName("0")
     @Expose
-    private List<SubFavoritesModelClass> subFavoritesData = null;
+    private List<SubFavoritesModelClass> subFavoritesModelClasses = null;
+
+    private boolean isSelected = false;
 
     public Integer getId() {
         return id;
@@ -132,11 +134,21 @@ public class FavoritesModelClass {
         this.updatedAt = updatedAt;
     }
 
-    public List<SubFavoritesModelClass> getsubFavoritesData() {
-        return subFavoritesData;
+    public List<SubFavoritesModelClass> getSubFavoritesModelClasses() {
+        return subFavoritesModelClasses;
     }
 
-    public void set0(List<SubFavoritesModelClass> _subFavoritesData0) {
-        this.subFavoritesData = subFavoritesData;
+    public void setSubFavoritesModelClasses(List<SubFavoritesModelClass> subFavoritesModelClasses) {
+        this.subFavoritesModelClasses = subFavoritesModelClasses;
     }
+    public boolean setSelected(boolean selected) {
+        isSelected = selected;
+        return selected;
+    }
+
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
 }

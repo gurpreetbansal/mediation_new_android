@@ -33,6 +33,7 @@ import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.CategoryAdapter;
 import com.example.meditationapp.adapter.InterestAdapter;
 import com.example.meditationapp.adapter.NatureAdapter;
+import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
@@ -101,7 +102,7 @@ public class LibraryFragmentNew extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent =new Intent(getActivity(), My_FavoritesActivity.class);
+                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
                 startActivity(intent);
             }
         });

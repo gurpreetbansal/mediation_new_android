@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/backFavView_RL"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10sdp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/recyclerListCat_back_FavImg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_65sdp"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:background="@drawable/categories_back_selected"
-        android:layout_marginTop="@dimen/_15sdp"
-        >
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/recyclerListCat_back_FavImg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_margin="@dimen/_2sdp"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginEnd="@dimen/_3sdp"
-            android:src="@mipmap/weight_loss_bg_three"
-            android:layout_gravity="center"
-            android:focusable="true" />
+    <!--    <androidx.appcompat.widget.AppCompatImageView-->
+    <!--        android:id="@+id/interested_recyclerimage"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:adjustViewBounds="true"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@mipmap/weight_loss_bg" />-->
 
-        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
-            android:id="@+id/recyclerListCat_FavTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/recyclerListCat_back_FavImg"
-            android:layout_alignParentStart="@+id/recyclerListCat_back_FavImg"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:gravity="center|start|bottom"
-            android:padding="@dimen/_5sdp"
-            android:text="@string/weight_loss"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp" />
+    <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+        android:id="@+id/recyclerListCat_FavTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:text="@string/weight_loss"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerListCat_back_FavImg"
+        app:layout_constraintStart_toStartOf="@+id/recyclerListCat_back_FavImg" />
 
-    </RelativeLayout>
 
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_RV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
