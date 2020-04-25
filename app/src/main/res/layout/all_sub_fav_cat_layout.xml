@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_1sdp">
 
 
         <LinearLayout
@@ -24,17 +25,12 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/categories_back_selected">
 
                 <ImageView
                     android:id="@+id/recyclerListCat_playIV"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_60sdp"
-                    android:layout_margin="@dimen/_2sdp"
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_marginEnd="@dimen/_3sdp"
                     android:src="@mipmap/my_favorite_play_bg"
                     android:layout_gravity="center"
                     android:focusable="true" />
@@ -46,9 +42,8 @@
                     android:layout_alignTop="@+id/recyclerListCat_playIV"
                     android:layout_alignBottom="@+id/recyclerListCat_playIV"
                     android:layout_alignParentStart="@+id/recyclerListCat_playIV"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
                     android:gravity="center|start"
-                    android:padding="@dimen/_5sdp"
                     android:text="@string/weight_loss"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_15sdp" />

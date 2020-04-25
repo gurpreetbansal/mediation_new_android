@@ -36,7 +36,8 @@ public class HomeActivitynew extends BaseActivity {
     public static ImageView img_bottom_lib,img_bottom_sound,img_bottom_record,img_bottom_account;
     private FrameLayout container;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
-    Boolean check = true;
+    Boolean check;
+    boolean checkValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,10 +95,14 @@ public class HomeActivitynew extends BaseActivity {
         img_bottom_account = findViewById(R.id.img_bottom_account);
         container = findViewById(R.id.container);
 
-        if (!check){
-            paymentData();
-        }
-        else {
+        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
+        sharedPreferences.getString("payment","");
+        check =   sharedPreferences.getBoolean("truePayment",true);
+
+        if (check){
+
+           check = false;
+
             img_bottom_lib.setVisibility(View.VISIBLE);
             img_bottom_sound.setVisibility(View.GONE);
             img_bottom_record.setVisibility(View.GONE);
@@ -108,6 +113,13 @@ public class HomeActivitynew extends BaseActivity {
             fragmentTransaction.replace(R.id.container,libraryFragmentNew);
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.commit();
+
+
+        }
+        else {
+           check = true;
+            paymentData();
+
         }
 
 
@@ -200,7 +212,7 @@ public class HomeActivitynew extends BaseActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
         sharedPreferences.getString("payment","");
-        sharedPreferences.getBoolean("truePayment",true);
+        sharedPreferences.getBoolean("truePayment",false);
 
         img_bottom_lib.setVisibility(View.GONE);
         img_bottom_sound.setVisibility(View.VISIBLE);

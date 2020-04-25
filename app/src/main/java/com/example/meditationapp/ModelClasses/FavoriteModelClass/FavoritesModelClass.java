@@ -40,7 +40,10 @@ public class FavoritesModelClass {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("0")
+    @SerializedName("count")
+    @Expose
+    private Integer count;
+    @SerializedName("subCategory")
     @Expose
     private List<SubFavoritesModelClass> subFavoritesModelClasses = null;
 
@@ -132,6 +135,14 @@ public class FavoritesModelClass {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public List<SubFavoritesModelClass> getSubFavoritesModelClasses() {

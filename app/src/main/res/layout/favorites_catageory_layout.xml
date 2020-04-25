@@ -8,7 +8,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -52,5 +52,5 @@
         android:id="@+id/list_RV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+       android:visibility="gone"/>
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
@@ -28,11 +29,13 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView favListRV;
     String cat_ID;
-    String userID = "287";
+//    String userID = "287";
+    String userID;
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
     List<FavoritesModelClass> favoritesModelClasses;
     List<SubFavoritesModelClass> subFavoritesModelClasses;
+    ImageView img_back_two;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,17 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.my_favorites_fragment);
 
         favListRV = findViewById(R.id.favList_RV);
+        img_back_two = findViewById(R.id.img_back_two);
 
         SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-//        userID = preferences.getString(user_id, "");
+        userID = preferences.getString(user_id, "");
+
+        img_back_two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 //        cat_ID = getIntent().getStringExtra("cat_id");
 

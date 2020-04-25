@@ -24,6 +24,10 @@ public class SubCategoryAdapter  extends RecyclerView.Adapter<SubCategoryAdapter
     Context context;
     List<SubFavoritesModelClass> subFavoritesModelClasses;
 
+//    public SubCategoryAdapter(Context context, List<SubFavoritesModelClass> subFavoritesModelClasses) {
+//        this.context=context;
+//        this.subFavoritesModelClasses = subFavoritesModelClasses;
+//    }
     public SubCategoryAdapter(Context context, List<SubFavoritesModelClass> subFavoritesModelClasses) {
         this.context=context;
         this.subFavoritesModelClasses = subFavoritesModelClasses;
@@ -42,7 +46,7 @@ public class SubCategoryAdapter  extends RecyclerView.Adapter<SubCategoryAdapter
         final SubFavoritesModelClass subFavoritesModelClass = subFavoritesModelClasses.get(position);
         holder.cat_textView.setText(subFavoritesModelClass.getSongsTitle());
 //        Picasso.get().load(subFavoritesModelClass.getFavriteStatus()).into(holder.hurtIV);
-        Picasso.get().load(subFavoritesModelClass.getSongs()).into(holder.songIV);
+//        Picasso.get().load(subFavoritesModelClass.getSongsTitle()).into(holder.songIV);
 
     }
 

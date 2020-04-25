@@ -33,6 +33,7 @@ import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
+import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
@@ -96,7 +97,7 @@ public class SoundFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent =new Intent(getActivity(), My_FavoritesActivity.class);
+                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
                 startActivity(intent);
             }
         });

@@ -70,19 +70,6 @@ public class FavoritesCategoryAdapter extends RecyclerView.Adapter<FavoritesCate
                     holder.categoryList.setVisibility(View.GONE);
                 }
 
-
-
-//                if (check.equals(true)){
-////                    holder.categoryList.setVisibility(View.GONE);
-//                    Toast.makeText(context, "YES", Toast.LENGTH_SHORT).show();
-//                }
-//                else if (check.equals(false)){
-//                    Toast.makeText(context, "NO", Toast.LENGTH_SHORT).show();
-////                    holder.categoryList.setVisibility(View.VISIBLE);
-//
-//                }
-
-
             }
 
 
