@@ -70,20 +70,8 @@ public class FavoritesActivity extends AppCompatActivity {
                         FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this,resorce.getData());
                         favListRV.setAdapter(favoritesCategoryAdapter);
 
-                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
 
-//                        favListRV.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), favListRV, new RecyclerTouchListener.ClickListener() {
-//                            @Override
-//                            public void onClick(View view, int position) {
-//
-//                                Toast.makeText(FavoritesActivity.this, ""+position, Toast.LENGTH_SHORT).show();
-//                            }
-//
-//                            @Override
-//                            public void onLongClick(View view, int position) {
-//
-//                            }
-//                        }));
                     }
                     else {
                         Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();

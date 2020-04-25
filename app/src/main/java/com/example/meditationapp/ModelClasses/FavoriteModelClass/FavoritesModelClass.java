@@ -44,7 +44,7 @@ public class FavoritesModelClass {
     @Expose
     private List<SubFavoritesModelClass> subFavoritesModelClasses = null;
 
-    private boolean isSelected = false;
+    private boolean isSelected = true;
 
     public Integer getId() {
         return id;

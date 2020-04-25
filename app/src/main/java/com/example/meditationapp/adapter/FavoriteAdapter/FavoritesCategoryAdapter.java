@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +26,7 @@ public class FavoritesCategoryAdapter extends RecyclerView.Adapter<FavoritesCate
     Context context;
     List<FavoritesModelClass> favoritesModelClasses;
     List<SubFavoritesModelClass> subFavoritesModelClasses;
-    boolean check = true;
+    Boolean check;
 
 
     public FavoritesCategoryAdapter(Context context, List<FavoritesModelClass> data) {
@@ -48,23 +49,38 @@ public class FavoritesCategoryAdapter extends RecyclerView.Adapter<FavoritesCate
         holder.cat_textView.setText(favoritesModelClass.getName());
         Picasso.get().load(favoritesModelClass.getImage()).into(holder.backImageView);
 
+        check = favoritesModelClass.isSelected();
+
         holder.backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               Boolean check = favoritesModelClass.isSelected();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
+                holder.categoryList.setLayoutManager(linearLayoutManager);
+                SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(context,favoritesModelClasses.get(position).getSubFavoritesModelClasses());
+                holder.categoryList.setAdapter(subCategoryAdapter);
+                holder.categoryList.setNestedScrollingEnabled(false);
 
-                if (check.equals(true)){
+                if (check){
+                    check = false;
+                    holder.categoryList.setVisibility(View.VISIBLE);
+                }
+                else {
+                    check = true;
                     holder.categoryList.setVisibility(View.GONE);
                 }
-                else if (check.equals(false)){
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
-                    holder.categoryList.setLayoutManager(linearLayoutManager);
-                    SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(context,favoritesModelClasses.get(position).getSubFavoritesModelClasses());
-                    holder.categoryList.setAdapter(subCategoryAdapter);
-                    holder.categoryList.setNestedScrollingEnabled(false);
 
-                }
+
+
+//                if (check.equals(true)){
+////                    holder.categoryList.setVisibility(View.GONE);
+//                    Toast.makeText(context, "YES", Toast.LENGTH_SHORT).show();
+//                }
+//                else if (check.equals(false)){
+//                    Toast.makeText(context, "NO", Toast.LENGTH_SHORT).show();
+////                    holder.categoryList.setVisibility(View.VISIBLE);
+//
+//                }
 
 
             }
@@ -95,7 +111,6 @@ public class FavoritesCategoryAdapter extends RecyclerView.Adapter<FavoritesCate
             categoryList = itemView.findViewById(R.id.list_RV);
             backImageView=itemView.findViewById(R.id.recyclerListCat_back_FavImg);
             cat_textView=itemView.findViewById(R.id.recyclerListCat_FavTextView);
-
 
         }
     }

@@ -168,7 +168,7 @@ public class CategoriesActivities extends BaseActivity {
 
                     final GetCategoriesModelClass getCategoriesModelClass = response.body();
 //                    Log.e("GET CONTENT +++++++", getCategoriesModelClass.getMessages());
-                    Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getMessages(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getMessages(), Toast.LENGTH_SHORT).show();
 
                     if (getCategoriesModelClass.getSuccess()) {
 
