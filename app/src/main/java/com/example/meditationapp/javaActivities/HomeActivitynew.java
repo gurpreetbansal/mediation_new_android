@@ -37,7 +37,6 @@ public class HomeActivitynew extends BaseActivity {
     private FrameLayout container;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
     Boolean check;
-    boolean checkValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +96,27 @@ public class HomeActivitynew extends BaseActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
         sharedPreferences.getString("payment","");
-        check =   sharedPreferences.getBoolean("truePayment",true);
+        check =  sharedPreferences.getBoolean("truePayment",true);
 
         if (check){
 
-           check = false;
+            check = false;
 
+//            img_bottom_lib.setVisibility(View.GONE);
+//            img_bottom_sound.setVisibility(View.VISIBLE);
+//            img_bottom_record.setVisibility(View.GONE);
+//            img_bottom_account.setVisibility(View.GONE);
+//
+//            SoundFragment soundFragment = new SoundFragment();
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.container,soundFragment,TAG_FRAGMENT);
+//            fragmentTransaction.addToBackStack("");
+//            fragmentTransaction.commit();
+
+
+        }
+        else {
+           check = true;
             img_bottom_lib.setVisibility(View.VISIBLE);
             img_bottom_sound.setVisibility(View.GONE);
             img_bottom_record.setVisibility(View.GONE);
@@ -114,12 +128,7 @@ public class HomeActivitynew extends BaseActivity {
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.commit();
 
-
-        }
-        else {
-           check = true;
-            paymentData();
-
+//            paymentData();
         }
 
 
@@ -212,7 +221,7 @@ public class HomeActivitynew extends BaseActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
         sharedPreferences.getString("payment","");
-        sharedPreferences.getBoolean("truePayment",false);
+        sharedPreferences.getBoolean("truePayment",true);
 
         img_bottom_lib.setVisibility(View.GONE);
         img_bottom_sound.setVisibility(View.VISIBLE);

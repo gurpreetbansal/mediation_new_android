@@ -3,7 +3,7 @@ package com.example.meditationapp.ModelClasses.SoundModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GetSoundAndScapeResponse {
+public class  GetSoundAndScapeResponse {
 
     @SerializedName("code")
     @Expose
