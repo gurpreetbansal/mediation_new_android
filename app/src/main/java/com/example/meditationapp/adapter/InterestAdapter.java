@@ -50,12 +50,17 @@ public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.itemHo
                 String cat_id = String.valueOf(cat);
                 Log.e("CAT_ID", cat_id);
 
-                Intent intent = new Intent(context, AllCatAndRecomendedActivity.class);
+                Intent intent = new Intent(context, AllCatAndRecomendedActivity .class);
                 intent.putExtra("cat_id", cat_id);
-                holder.itemView.getContext().startActivity(intent);
-//                Intent intent = new Intent(context, WeighTwoActivity.class);
-////                intent.putExtra("song",interested.get(position).)
+
+//                Integer cat = interested.get(position).getId();
+//                String cat_id = String.valueOf(cat);
+//                Log.e("CAT_ID", cat_id);
+//
+//                Intent intent = new Intent(context, AllCatAndRecomendedActivity.class);
+//                intent.putExtra("cat_id", cat_id);
 //                holder.itemView.getContext().startActivity(intent);
+
             }
         });
         Log.e("interested", String.valueOf(interested.size()));

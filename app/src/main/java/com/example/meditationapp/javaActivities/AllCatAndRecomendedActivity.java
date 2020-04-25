@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -33,7 +35,7 @@ import retrofit2.Response;
 
 public class AllCatAndRecomendedActivity extends BaseActivity {
 
-    private RecyclerView categoryRV,recomendedRV;
+    private RecyclerView categoryRV, recomendedRV;
     ApiInterface apiInterface;
     List<CategoryDataModelClass> categoryDataModelClasses;
     List<RecomandedModelClass> recomandedModelClasses;
@@ -68,27 +70,35 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
         categoryRV.setVisibility(View.INVISIBLE);
         recomendedRV.setVisibility(View.INVISIBLE);
 
-
-
-        SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
-        userID = preferences.getString(user_id, "");
+        SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        userID = pref.getString(user_id, "");
 
         cat_ID = getIntent().getStringExtra("cat_id");
+        Log.e("CATrert_ID", cat_ID);
+
+        my_recordings_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AllCatAndRecomendedActivity.this, WeightActivityNew.class);
+                intent.putExtra("category_id", cat_ID);
+                startActivity(intent);
+            }
+        });
 
         GridLayoutManager grid_sound = new GridLayoutManager(AllCatAndRecomendedActivity.this, 3, RecyclerView.VERTICAL, false);
         categoryRV.setLayoutManager(grid_sound);
 
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(AllCatAndRecomendedActivity.this,LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AllCatAndRecomendedActivity.this, LinearLayoutManager.HORIZONTAL, false);
         recomendedRV.setLayoutManager(linearLayoutManager);
 
-        getData(userID,cat_ID);
+        getData(userID, cat_ID);
 
     }
 
-    public void getData(String userID, String cat_ID){
+    public void getData(String userID, String cat_ID) {
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
-        Call<GetCategoryAndRecomendedModelClass> call = apiInterface.getCatAndRecomended(userID,cat_ID);
+        Call<GetCategoryAndRecomendedModelClass> call = apiInterface.getCatAndRecomended(userID, cat_ID);
 
         call.enqueue(new Callback<GetCategoryAndRecomendedModelClass>() {
             @Override
@@ -96,27 +106,28 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
 
            if (response.isSuccessful()){
 
-               GetCategoryAndRecomendedModelClass resource = response.body();
+                    GetCategoryAndRecomendedModelClass resource = response.body();
 
-               assert resource != null;
-               if (resource.getSuccess()){
+                    assert resource != null;
+                    if (resource.getSuccess()) {
 
-                   titleLL.setVisibility(View.VISIBLE);
-                   dummyText.setVisibility(View.VISIBLE);
-                   my_recordings_ll.setVisibility(View.VISIBLE);
-                   recomended_txt.setVisibility(View.VISIBLE);
-                   categoryRV.setVisibility(View.VISIBLE);
-                   recomendedRV.setVisibility(View.VISIBLE);
-                   weight_progressBar.setVisibility(View.GONE);
+                        titleLL.setVisibility(View.VISIBLE);
+                        dummyText.setVisibility(View.VISIBLE);
+                        my_recordings_ll.setVisibility(View.VISIBLE);
+                        recomended_txt.setVisibility(View.VISIBLE);
+                        categoryRV.setVisibility(View.VISIBLE);
+                        recomendedRV.setVisibility(View.VISIBLE);
+                        weight_progressBar.setVisibility(View.GONE);
 
-                   categoryDataModelClasses = resource.getData().getAffirmation();
-                   recomandedModelClasses = resource.getData().getRecomended();
+                        categoryDataModelClasses = resource.getData().getAffirmation();
+                        recomandedModelClasses = resource.getData().getRecomended();
 
-                   AllCategoryAdapter allCategoryAdapter = new AllCategoryAdapter(AllCatAndRecomendedActivity.this,resource.getData().getAffirmation());
-                   categoryRV.setAdapter(allCategoryAdapter);
 
-                   final RecomendedAdapter recomendedAdapter = new RecomendedAdapter(AllCatAndRecomendedActivity.this,resource.getData().getRecomended());
-                   recomendedRV.setAdapter(recomendedAdapter);
+                        AllCategoryAdapter allCategoryAdapter = new AllCategoryAdapter(AllCatAndRecomendedActivity.this, resource.getData().getAffirmation());
+                        categoryRV.setAdapter(allCategoryAdapter);
+
+                        final RecomendedAdapter recomendedAdapter = new RecomendedAdapter(AllCatAndRecomendedActivity.this, resource.getData().getRecomended());
+                        recomendedRV.setAdapter(recomendedAdapter);
 
                }
                else {

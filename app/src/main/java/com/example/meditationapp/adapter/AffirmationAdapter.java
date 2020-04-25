@@ -2,9 +2,10 @@ package com.example.meditationapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -23,6 +24,20 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
 
     Context context;
     List<GetAffirmationData> data;
+    OnitemClickListener onitemClickListener;
+
+    public interface OnitemClickListener {
+        void onItemClick(int position);
+
+        void onLongClick(int position);
+
+        void onfavourite(int position, boolean b);
+
+    }
+
+    public void setOnitemClickListener(OnitemClickListener clickListener) {
+        onitemClickListener = clickListener;
+    }
 
     public AffirmationAdapter(Context context, List<GetAffirmationData> data) {
         this.context = context;
@@ -33,7 +48,7 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
     @Override
     public itemView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.affirmationitem, parent, false);
-        return new itemView(view);
+        return new itemView(view, onitemClickListener);
     }
 
     @Override
@@ -41,25 +56,90 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
         Picasso.get()
                 .load(R.mipmap.weight_loss_bg_row)
                 .into(holder.ll_first);
-
         holder.affirmation_text.setText(data.get(position).getSongsTitle());
+
+        if (data.get(position).getFavriteStatus().equals(0)){
+            holder.grey_heart.setVisibility(View.VISIBLE);
+            holder.pink_heart.setVisibility(View.GONE);
+        }else {
+            holder.grey_heart.setVisibility(View.GONE);
+            holder.pink_heart.setVisibility(View.VISIBLE);
+        }
     }
+
 
     @Override
     public int getItemCount() {
         return data.size();
     }
 
-    public class itemView extends RecyclerView.ViewHolder {
+    public static class itemView extends RecyclerView.ViewHolder {
 
         CustomBoldtextView affirmation_text;
         AppCompatImageView ll_first;
+        ImageView grey_heart, pink_heart;
 
-        public itemView(@NonNull View itemView) {
+        public itemView(@NonNull View itemView, final OnitemClickListener listener) {
             super(itemView);
 
             affirmation_text = itemView.findViewById(R.id.affirmation_text);
             ll_first = itemView.findViewById(R.id.ll_first);
+            pink_heart = itemView.findViewById(R.id.pink_heart);
+            grey_heart = itemView.findViewById(R.id.grey_heart);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onLongClick(position);
+                        }
+                    }
+                    return false;
+                }
+            });
+
+            pink_heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            pink_heart.setVisibility(View.GONE);
+                            grey_heart.setVisibility(View.VISIBLE);
+                            listener.onfavourite(position, false);
+                        }
+                    }
+                }
+            });
+
+            grey_heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            pink_heart.setVisibility(View.VISIBLE);
+                            grey_heart.setVisibility(View.GONE);
+                            listener.onfavourite(position, true);
+                        }
+                    }
+                }
+            });
+
 
         }
     }

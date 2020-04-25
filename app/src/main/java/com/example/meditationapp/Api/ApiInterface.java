@@ -118,15 +118,22 @@ public interface ApiInterface {
     @POST("collections/affirmationCategoies")
     Call<GetCategoryAndRecomendedModelClass> getCatAndRecomended(@Query("user_id") String user_Id,
                                                                  @Query("cat_id") String cat_ID);
+
     @POST("collections/mySongsList")
     Call<GetAffirmation> requestAffirmation(@Query("user_id") String userId, @Query("cat_id") String categoryId);
 
     @Multipart
     @POST("collections/postMySongs")
     Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
-                                          @Part("cat_id") RequestBody categoryId, @Part MultipartBody.Part part);
+                                          @Part("cat_id") RequestBody categoryId, @Part("songs_id") RequestBody songId,
+                                          @Part("favrite") RequestBody favourite, @Part MultipartBody.Part part);
 
     @POST("collections/myfavoritesongs")
     Call<GetFavoritesModelClass> getFavorites(@Query("user_id") String user_id);
+
+//    @POST("collections/postMySongs")
+//    Call<PostAffirmation> postAffirmation(@Query("user_id") String userId, @Query("songs_title") String songTitle,
+//                                          @Query("cat_id") String categoryId, @Query("songs_id") String songId,
+//                                          @Query("songs") MultipartBody.Part part);
 
 }

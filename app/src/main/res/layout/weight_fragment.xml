@@ -73,6 +73,7 @@
                     android:orientation="vertical">
 
                     <com.example.meditationapp.Custom_Widgets.CustomBoldEditText
+                        android:id="@+id/edittext_affirmationtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|left"
@@ -95,9 +96,18 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/affirmation_recyclerView"
+                android:id="@+id/getaffirmation_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="visible"
+                android:nestedScrollingEnabled="false"
+                android:paddingBottom="@dimen/_10sdp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/postaffirmation_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
                 android:nestedScrollingEnabled="false"
                 android:paddingBottom="@dimen/_10sdp" />
 

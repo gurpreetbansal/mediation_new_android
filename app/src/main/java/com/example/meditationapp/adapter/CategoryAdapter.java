@@ -50,7 +50,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHo
             public void onClick(View v) {
 //                Intent intent = new Intent(context, WeighTwoActivity.class);
 
-
                 Integer cat = categoryData.get(position).getId();
                 String cat_id = String.valueOf(cat);
                 Log.e("CAT_ID", cat_id);
@@ -58,8 +57,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHo
                 Intent intent = new Intent(context, AllCatAndRecomendedActivity.class);
                 intent.putExtra("cat_id", cat_id);
                 holder.itemView.getContext().startActivity(intent);
-
-
 
 
             }

@@ -43,11 +43,11 @@ import retrofit2.Response;
 public class AccountFragment extends Fragment {
 
     private CircleImageView userProfileIV;
-    private CustomBoldtextView userNameTV, txt_upgrade, txt_email;
+    private CustomBoldtextView userNameTV,txt_upgrade,txt_email;
     private LinearLayout ll_setting;
     CallbackManager callbackManager;
     LoginManager loginManager;
-    //    String  mypreference = "mypref",user_name="name", img="profile_photo",email="email";
+//    String  mypreference = "mypref",user_name="name", img="profile_photo",email="email";
     String userID;
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
@@ -63,12 +63,12 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.account_three_fragment, container, false);
+        View view= inflater.inflate(R.layout.account_three_fragment, container, false);
 
-        userProfileIV = view.findViewById(R.id.accountFragment_userProfileIV);
-        userNameTV = view.findViewById(R.id.accountFragment_userNameTV);
-        ll_setting = view.findViewById(R.id.ll_setting);
-        txt_email = view.findViewById(R.id.accountThree_txt_email);
+        userProfileIV=view.findViewById(R.id.accountFragment_userProfileIV);
+        userNameTV=view.findViewById(R.id.accountFragment_userNameTV);
+        ll_setting=view.findViewById(R.id.ll_setting);
+        txt_email=view.findViewById(R.id.accountThree_txt_email);
 
         SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = pref.getString(user_id, "");
@@ -88,7 +88,7 @@ public class AccountFragment extends Fragment {
 
                 Fragment someFragment = new PromoFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, someFragment); // give your fragment container id in first parameter
+                transaction.replace(R.id.container, someFragment ); // give your fragment container id in first parameter
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
 
@@ -99,7 +99,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivity(new Intent(getActivity(),SettingActivity.class));
 
             }
         });

@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -50,6 +51,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
     //    private GuiReceiver receiver;
+
     private Handler handler = new Handler();
 
     @Override
@@ -204,6 +206,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                     stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
                 } else {
                     Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
+
                     n_intent.putExtra("nature_song", "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
                     n_intent.putExtra("player", "Play");
                     startService(n_intent);
