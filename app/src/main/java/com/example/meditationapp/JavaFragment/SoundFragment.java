@@ -33,6 +33,7 @@ import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
+import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
@@ -96,7 +97,7 @@ public class SoundFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent =new Intent(getActivity(), My_FavoritesActivity.class);
+                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
                 startActivity(intent);
             }
         });
@@ -130,6 +131,7 @@ public class SoundFragment extends Fragment {
                 if (response.isSuccessful()){
                     resource = response.body();
 
+                    assert resource != null;
                     if (resource.getSuccess()){
 
                         soundScapeModelClass = resource.getData().getSoundScopes();
@@ -160,6 +162,21 @@ public class SoundFragment extends Fragment {
                              Log.e("SOUND_SCAPE_URL :  ", nature);
                              Log.e("NATURE ID : ", nature_id);
                              Log.e("NATURE NAME : ", nature_name);
+
+//                             if (resource.getData().getSoundScopes().get(position).getNatureStatus() == 0){
+//                                 Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+//                                 intent.putExtra("song", nature);
+//                                 intent.putExtra("nature_id", nature_id);
+//                                 intent.putExtra("nature_name", nature_name);
+//                                 startActivity(intent);
+//                             }
+//                             if (resource.getData().getSoundScopes().get(position).getNatureStatus() == 1){
+//                                 Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
+//                                 intent1.putExtra("song", nature);
+//                                 intent1.putExtra("nature_id", nature_id);
+//                                 intent1.putExtra("nature_name", nature_name);
+//                                 startActivity(intent1);
+//                             }
 
                              switch (position){
                                  case 0:

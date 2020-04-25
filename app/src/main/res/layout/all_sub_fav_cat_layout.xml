@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_1sdp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/hurt_IV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:padding="@dimen/_5sdp"
+                android:src="@mipmap/shaed_heart_pink"/>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:background="@drawable/categories_back_selected">
+
+                <ImageView
+                    android:id="@+id/recyclerListCat_playIV"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_60sdp"
+                    android:src="@mipmap/my_favorite_play_bg"
+                    android:layout_gravity="center"
+                    android:focusable="true" />
+
+                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                    android:id="@+id/recyclerListCat_playTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/recyclerListCat_playIV"
+                    android:layout_alignBottom="@+id/recyclerListCat_playIV"
+                    android:layout_alignParentStart="@+id/recyclerListCat_playIV"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:gravity="center|start"
+                    android:text="@string/weight_loss"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp" />
+
+            </RelativeLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0.5"-->
+<!--                android:background="@mipmap/my_favorite_play_bg">-->
+<!--                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/weight_loss"-->
+<!--                    android:textAllCaps="true"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/_10sdp"-->
+<!--                    android:layout_gravity="center|left"-->
+<!--                    android:gravity="center|left"-->
+<!--                    android:layout_marginLeft="@dimen/_20sdp"/>-->
+<!--            </LinearLayout>-->
+        </LinearLayout>
+
+
+</RelativeLayout>

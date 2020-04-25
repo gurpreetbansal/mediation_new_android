@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
@@ -39,12 +42,12 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
     List<CategoryDataModelClass> categoryDataModelClasses;
     List<RecomandedModelClass> recomandedModelClasses;
     String cat_ID;
-
+    ImageView img_back_two;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
 
-    private LinearLayout titleLL, my_recordings_ll;
-    private CustomBoldtextView dummyText, recomended_txt;
+    private LinearLayout titleLL,my_recordings_ll;
+    private CustomBoldtextView dummyText,recomended_txt,weight_title;
     private ProgressBar weight_progressBar;
 
     @Override
@@ -52,14 +55,16 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weight_two_fragment);
 
-        categoryRV = findViewById(R.id.allCat_listRV);
-        recomendedRV = findViewById(R.id.recomended_RV);
+       categoryRV = findViewById(R.id.allCat_listRV);
+       recomendedRV = findViewById(R.id.recomended_RV);
 
-        titleLL = findViewById(R.id.title_weight_ll);
-        dummyText = findViewById(R.id.titleBelow_txt);
+       titleLL = findViewById(R.id.title_weight_ll);
+       dummyText = findViewById(R.id.titleBelow_txt);
         weight_progressBar = findViewById(R.id.weight_progressBar);
         my_recordings_ll = findViewById(R.id.ll_wl_my_recordings);
         recomended_txt = findViewById(R.id.recomended_txt);
+        weight_title = findViewById(R.id.weight_title);
+        img_back_two = findViewById(R.id.img_back_two);
 
         titleLL.setVisibility(View.INVISIBLE);
         dummyText.setVisibility(View.INVISIBLE);
@@ -74,6 +79,12 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
         cat_ID = getIntent().getStringExtra("cat_id");
         Log.e("CATrert_ID", cat_ID);
 
+        img_back_two.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         my_recordings_ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +113,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
             @Override
             public void onResponse(Call<GetCategoryAndRecomendedModelClass> call, Response<GetCategoryAndRecomendedModelClass> response) {
 
-                if (response.isSuccessful()) {
+           if (response.isSuccessful()){
 
                     GetCategoryAndRecomendedModelClass resource = response.body();
 
@@ -127,14 +138,24 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
                         final RecomendedAdapter recomendedAdapter = new RecomendedAdapter(AllCatAndRecomendedActivity.this, resource.getData().getRecomended());
                         recomendedRV.setAdapter(recomendedAdapter);
 
-                    }
+               }
+               else {
+                   Toast.makeText(AllCatAndRecomendedActivity.this, ""+resource.getMessages(), Toast.LENGTH_SHORT).show();
+                   weight_progressBar.setVisibility(View.GONE);
+               }
 
-                }
+           }
+           else {
+               Toast.makeText(AllCatAndRecomendedActivity.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+               weight_progressBar.setVisibility(View.GONE);
+           }
 
             }
 
             @Override
             public void onFailure(Call<GetCategoryAndRecomendedModelClass> call, Throwable t) {
+                Toast.makeText(AllCatAndRecomendedActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                weight_progressBar.setVisibility(View.GONE);
 
             }
         });

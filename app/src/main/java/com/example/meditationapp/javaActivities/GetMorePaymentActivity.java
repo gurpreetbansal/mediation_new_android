@@ -161,7 +161,14 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 //                     fragmentTransaction.addToBackStack("");
 //                     fragmentTransaction.commit();
                         onBackPressed();
-                     Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("payment","");
+                        editor.putBoolean("truePayment",false);
+                        editor.apply();
+
+//                     Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
 
                     }
                     else {
@@ -233,5 +240,18 @@ public class GetMorePaymentActivity extends AppCompatActivity {
                 Toast.makeText(this, "Invalid", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public void refreshActivity() {
+        Intent i = new Intent(GetMorePaymentActivity.this, HomeActivitynew.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        refreshActivity();
+        super.onBackPressed();
     }
 }

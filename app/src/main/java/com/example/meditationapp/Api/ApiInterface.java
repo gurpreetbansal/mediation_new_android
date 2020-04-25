@@ -1,6 +1,7 @@
 package com.example.meditationapp.Api;
 
 import com.example.meditationapp.ModelClasses.AllCatModelClasses.GetCategoryAndRecomendedModelClass;
+import com.example.meditationapp.ModelClasses.FavoriteModelClass.GetFavoritesModelClass;
 import com.example.meditationapp.ModelClasses.ForgetPasswordModel;
 import com.example.meditationapp.ModelClasses.GetAffirmation;
 import com.example.meditationapp.ModelClasses.GetCategoriesModelClass;
@@ -108,7 +109,7 @@ public interface ApiInterface {
     Call<GetSoundAndScapeResponse> getMusicList(@Query("user_id") String userId);
 
     @POST("payment/userPayment")
-    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id, @Query("payment_type") String payment_type,
+    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id,@Query("payment_type") String payment_type,
                                               @Query("payment_id") String payment_id, @Query("payment_amount") String payment_amount,
                                               @Query("payment_date") String payment_date, @Query("payment_plan_id") String plan_id,
                                               @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,
@@ -126,6 +127,9 @@ public interface ApiInterface {
     Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
                                           @Part("cat_id") RequestBody categoryId, @Part("songs_id") RequestBody songId,
                                           @Part("favrite") RequestBody favourite, @Part MultipartBody.Part part);
+
+    @POST("collections/myfavoritesongs")
+    Call<GetFavoritesModelClass> getFavorites(@Query("user_id") String user_id);
 
 //    @POST("collections/postMySongs")
 //    Call<PostAffirmation> postAffirmation(@Query("user_id") String userId, @Query("songs_title") String songTitle,
