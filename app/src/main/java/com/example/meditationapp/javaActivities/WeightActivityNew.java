@@ -12,7 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,6 +34,8 @@ import com.example.meditationapp.adapter.PostAffirmationAdapter;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -328,7 +332,7 @@ public class WeightActivityNew extends AppCompatActivity {
 //            String fileExt = MimeTypeMap.getFileExtensionFromUrl(fileuri.toString());
             Log.e("ext", file.getName().toString());
 
-            RequestBody fileReqBody = RequestBody.create(MediaType.parse("*/*"), file);
+            RequestBody fileReqBody = RequestBody.create(MediaType.parse("audio/*"), file);
             parta = MultipartBody.Part.createFormData("songs", file.getName(), fileReqBody);
 
             RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), shared_userID);
@@ -357,8 +361,10 @@ public class WeightActivityNew extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an sound file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_MUSIC);
-        File sound = new File(storageDir, "sound.mp3");
+        String soundFileName = "MP3" + timeStamp + "_";
+        File sound = new File(storageDir, soundFileName + ".mp3");
         // Save a file: path for use with ACTION_VIEW intents
         path = sound.getAbsolutePath();
         return sound;
