@@ -94,29 +94,19 @@ public class HomeActivitynew extends BaseActivity {
         img_bottom_account = findViewById(R.id.img_bottom_account);
         container = findViewById(R.id.container);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
-        sharedPreferences.getString("payment","");
-        check =  sharedPreferences.getBoolean("truePayment",true);
+        SharedPreferences sharedPreferences = getSharedPreferences("myPref",0);
+//        sharedPreferences.getString("pref","");
+       check =  sharedPreferences.getBoolean("Payment",true);
 
         if (check){
 
-            check = false;
+            check = true;
 
-//            img_bottom_lib.setVisibility(View.GONE);
-//            img_bottom_sound.setVisibility(View.VISIBLE);
-//            img_bottom_record.setVisibility(View.GONE);
-//            img_bottom_account.setVisibility(View.GONE);
-//
-//            SoundFragment soundFragment = new SoundFragment();
-//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.container,soundFragment,TAG_FRAGMENT);
-//            fragmentTransaction.addToBackStack("");
-//            fragmentTransaction.commit();
+            SharedPreferences sharedPreferences1 = getSharedPreferences("myPref",0);
+            SharedPreferences.Editor editor = sharedPreferences1.edit();
+            editor.putBoolean("Payment",true);
+            editor.apply();
 
-
-        }
-        else {
-           check = true;
             img_bottom_lib.setVisibility(View.VISIBLE);
             img_bottom_sound.setVisibility(View.GONE);
             img_bottom_record.setVisibility(View.GONE);
@@ -127,6 +117,24 @@ public class HomeActivitynew extends BaseActivity {
             fragmentTransaction.replace(R.id.container,libraryFragmentNew);
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.commit();
+
+
+        }
+        else {
+
+            check = false;
+//            sharedPreferences.getBoolean("Payment",false);
+            img_bottom_lib.setVisibility(View.GONE);
+            img_bottom_sound.setVisibility(View.VISIBLE);
+            img_bottom_record.setVisibility(View.GONE);
+            img_bottom_account.setVisibility(View.GONE);
+
+            SoundFragment soundFragment = new SoundFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,soundFragment);
+            fragmentTransaction.addToBackStack("");
+            fragmentTransaction.commit();
+
 
 //            paymentData();
         }

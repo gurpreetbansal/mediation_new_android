@@ -160,28 +160,14 @@ public class SoundFragment extends Fragment {
                              Log.e("NATURE ID : ", nature_id);
                              Log.e("NATURE NAME : ", nature_name);
 
-//                             if (resource.getData().getSoundScopes().get(position).getNatureStatus() == 0){
-//                                 Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-//                                 intent.putExtra("song", nature);
-//                                 intent.putExtra("nature_id", nature_id);
-//                                 intent.putExtra("nature_name", nature_name);
-//                                 startActivity(intent);
-//                             }
-//                             if (resource.getData().getSoundScopes().get(position).getNatureStatus() == 1){
-//                                 Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
-//                                 intent1.putExtra("song", nature);
-//                                 intent1.putExtra("nature_id", nature_id);
-//                                 intent1.putExtra("nature_name", nature_name);
-//                                 startActivity(intent1);
-//                             }
 
                  if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
 
-                     Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
-                     intent1.putExtra("song", nature);
-                     intent1.putExtra("nature_id", nature_id);
-                     intent1.putExtra("nature_name", nature_name);
-                     startActivity(intent1);
+                     Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                     intent.putExtra("song", nature);
+                     intent.putExtra("nature_id", nature_id);
+                     intent.putExtra("nature_name", nature_name);
+                     startActivity(intent);
                  }
                  else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
 
@@ -191,58 +177,6 @@ public class SoundFragment extends Fragment {
                      intent.putExtra("nature_name", nature_name);
                      startActivity(intent);
                  }
-
-//                             switch (position){
-//                                 case 0:
-//                                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-//                                     intent.putExtra("song", nature);
-//                                     intent.putExtra("nature_id", nature_id);
-//                                     intent.putExtra("nature_name", nature_name);
-//                                     startActivity(intent);
-//                                     break;
-//                                 case 1:
-//                                     Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
-//                                     intent1.putExtra("song", nature);
-//                                     intent1.putExtra("nature_id", nature_id);
-//                                     intent1.putExtra("nature_name", nature_name);
-//                                     startActivity(intent1);
-//                                     break;
-//                                 case 2:
-//                                     Intent intent2 = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-//                                     intent2.putExtra("song", nature);
-//                                     intent2.putExtra("nature_id", nature_id);
-//                                     intent2.putExtra("nature_name", nature_name);
-//                                     startActivity(intent2);
-//                                     break;
-//                                 case 3:
-//                                     Intent intent3 = new Intent(getActivity(), GetMorePaymentActivity.class);
-//                                     intent3.putExtra("song", nature);
-//                                     intent3.putExtra("nature_id", nature_id);
-//                                     intent3.putExtra("nature_name", nature_name);
-//                                     startActivity(intent3);
-//                                     break;
-//                                 case 4:
-//                                     Intent intent4 = new Intent(getActivity(), GetMorePaymentActivity.class);
-//                                     intent4.putExtra("song", nature);
-//                                     intent4.putExtra("nature_id", nature_id);
-//                                     intent4.putExtra("nature_name", nature_name);
-//                                     startActivity(intent4);
-//                                     break;
-//                                 case 5:
-//                                     Intent intent5 = new Intent(getActivity(), GetMorePaymentActivity.class);
-//                                     intent5.putExtra("song", nature);
-//                                     intent5.putExtra("nature_id", nature_id);
-//                                     intent5.putExtra("nature_name", nature_name);
-//                                     startActivity(intent5);
-//                                     break;
-//                                 case 6:
-//                                     Intent intent6 = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-//                                     intent6.putExtra("song", nature);
-//                                     intent6.putExtra("nature_id", nature_id);
-//                                     intent6.putExtra("nature_name", nature_name);
-//                                     startActivity(intent6);
-//                                     break;
-//                             }
 
                          }
 
@@ -264,10 +198,25 @@ public class SoundFragment extends Fragment {
                                 Log.e("NATURE NAME : ", nature_name);
                                 Log.e("MUSIC_SOUND_URL :  ", natureMusic);
 
+
+                                if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+
+                                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                                    intent.putExtra("song", natureMusic);
+                                    intent.putExtra("nature_id", nature_id);
+                                    intent.putExtra("nature_name", nature_name);
+                                    startActivity(intent);
+                                }
+                                else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+
+                                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                    intent.putExtra("song", natureMusic);
+                                    intent.putExtra("nature_id", nature_id);
+                                    intent.putExtra("nature_name", nature_name);
+                                    startActivity(intent);
+                                }
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                intent.putExtra("song", natureMusic);
-                                intent.putExtra("nature_id", nature_id);
-                                intent.putExtra("nature_name", nature_name);
+
                                 startActivity(intent);
 
 
@@ -285,10 +234,13 @@ public class SoundFragment extends Fragment {
                     }
                     else {
                         Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
-
                         progressBar.setVisibility(View.GONE);
                     }
 
+                }
+                else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 

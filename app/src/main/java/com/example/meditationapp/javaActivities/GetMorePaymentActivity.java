@@ -162,10 +162,10 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 //                     fragmentTransaction.commit();
                         onBackPressed();
 
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("myPref",0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("payment","");
-                        editor.putBoolean("truePayment",false);
+//                        editor.putString("pref","");
+                        editor.putBoolean("Payment",false);
                         editor.apply();
 
 //                     Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();

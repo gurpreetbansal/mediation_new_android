@@ -139,6 +139,11 @@ public class AccountFragment extends Fragment {
                         allInfoLL.setVisibility(View.VISIBLE);
                     }
                 }
+                else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    progressLL.setVisibility(View.GONE);
+                    allInfoLL.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
