@@ -45,11 +45,12 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     static AppCompatImageView player_play, player_backward, player_forward, player_vol_low, player_vol_high;
     CustomBoldtextView player_timer;
     String song;
-    int total_duration, current_time, volume;
+    int total_duration, current_time, volume, default_volume;
     Boolean playing;
     CircularSeekBar circularSeekBar;
     SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
+    AudioManager audioManager;
     //    private GuiReceiver receiver;
 
     private Handler handler = new Handler();
@@ -77,6 +78,9 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_vol_high = findViewById(R.id.player_vol_high);
 
         song = getIntent().getStringExtra("song");
+        if (song==null){
+            song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
+        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +140,14 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                 handler.postDelayed(this, 1000);
             }
         });
+
+        audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            volume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+            default_volume = volume;
+        }
+        player_vol_bar.setProgress(volume);
+        player_vol_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
 
         player_vol_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -206,7 +218,6 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                     stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
                 } else {
                     Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
-
                     n_intent.putExtra("nature_song", "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
                     n_intent.putExtra("player", "Play");
                     startService(n_intent);
@@ -322,6 +333,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         super.onDestroy();
         stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
         stopService(new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class));
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, default_volume, 0);
 //        if (MReceiver != null) {
 //            unregisterReceiver(MReceiver);
 //        }
@@ -377,7 +389,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 //            Log.e("duration", String.valueOf(intent.getIntExtra("TOTAL_TIME_VALUE_EXTRA", 200)));
             if (player_vol_bar != null) {
                 player_vol_bar.setProgress(volume);
-                player_vol_bar.setMax(100);
+                player_vol_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
             }
         }
     };
