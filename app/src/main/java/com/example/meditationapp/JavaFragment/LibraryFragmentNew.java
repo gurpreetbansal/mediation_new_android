@@ -151,6 +151,8 @@ public class LibraryFragmentNew extends Fragment {
                         progressBar.setVisibility(View.GONE);
                     }
                 }else {
+
+
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
@@ -159,7 +161,6 @@ public class LibraryFragmentNew extends Fragment {
             @Override
             public void onFailure(Call<GetHomeResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
                 progressBar.setVisibility(View.GONE);
             }
         });

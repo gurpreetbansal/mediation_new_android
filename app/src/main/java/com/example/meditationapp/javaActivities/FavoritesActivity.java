@@ -29,7 +29,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
     private RecyclerView favListRV;
     String cat_ID;
-//    String userID = "287";
+    //    String userID = "287";
     String userID;
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
@@ -60,7 +60,7 @@ public class FavoritesActivity extends AppCompatActivity {
         getCategoryData(userID);
     }
 
-    public void getCategoryData(String userID){
+    public void getCategoryData(String userID) {
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
@@ -70,33 +70,31 @@ public class FavoritesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetFavoritesModelClass> call, Response<GetFavoritesModelClass> response) {
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 
                     GetFavoritesModelClass resorce = response.body();
                     assert resorce != null;
-                    if (resorce.getSuccess()){
+                    if (resorce.getSuccess()) {
 
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FavoritesActivity.this);
                         favListRV.setLayoutManager(linearLayoutManager);
-                        FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this,resorce.getData());
+                        FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this, resorce.getData());
                         favListRV.setAdapter(favoritesCategoryAdapter);
 
 //                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
 
+                    } else {
+                        Toast.makeText(FavoritesActivity.this, "" + resorce.getMessages(), Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    Toast.makeText(FavoritesActivity.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(FavoritesActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<GetFavoritesModelClass> call, Throwable t) {
-                Toast.makeText(FavoritesActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(FavoritesActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });

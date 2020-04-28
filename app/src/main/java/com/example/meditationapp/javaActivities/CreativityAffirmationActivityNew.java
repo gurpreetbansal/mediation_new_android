@@ -45,11 +45,12 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     static AppCompatImageView player_play, player_backward, player_forward, player_vol_low, player_vol_high;
     CustomBoldtextView player_timer;
     String song;
-    int total_duration, current_time, volume;
+    int total_duration, current_time, volume, default_volume;
     Boolean playing;
     CircularSeekBar circularSeekBar;
     SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
+    AudioManager audioManager;
     //    private GuiReceiver receiver;
 
     private Handler handler = new Handler();
@@ -136,6 +137,14 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                 handler.postDelayed(this, 1000);
             }
         });
+
+        audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            volume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+            default_volume = volume;
+        }
+        player_vol_bar.setProgress(volume);
+        player_vol_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
 
         player_vol_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -322,6 +331,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         super.onDestroy();
         stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
         stopService(new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class));
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, default_volume, 0);
 //        if (MReceiver != null) {
 //            unregisterReceiver(MReceiver);
 //        }
@@ -377,7 +387,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 //            Log.e("duration", String.valueOf(intent.getIntExtra("TOTAL_TIME_VALUE_EXTRA", 200)));
             if (player_vol_bar != null) {
                 player_vol_bar.setProgress(volume);
-                player_vol_bar.setMax(100);
+                player_vol_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
             }
         }
     };
