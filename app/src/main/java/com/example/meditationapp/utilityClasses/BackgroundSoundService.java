@@ -48,32 +48,35 @@ public class BackgroundSoundService extends Service {
 //                durationTimer = intent.getIntExtra("duration", 0);
 //                time = milliSecondsToTimer(durationTimer);
                 if (song != null) {
-                    try {
-                        if (mediaPlayer != null) {
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setDataSource(song);
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mp) {
-                                mediaPlayer.start();
-                                Log.e("current", String.valueOf(mediaPlayer.getCurrentPosition()));
-                                sendInfoBroadcast();
-                                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-                                    @Override
-                                    public void onCompletion(MediaPlayer mp) {
-                                        CreativityAffirmationActivityNew.pause();
-                                    }
-                                });
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
+//                    try {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.release();
+                        mediaPlayer = null;
                     }
+                    mediaPlayer = new MediaPlayer();
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer = MediaPlayer.create(this, R.raw.a);
+                    sendInfoBroadcast();
+                    mediaPlayer.start();
+//                        mediaPlayer.setDataSource(song);
+//                        mediaPlayer.prepareAsync();
+//                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                            @Override
+//                            public void onPrepared(MediaPlayer mp) {
+//                                mediaPlayer.start();
+//                                Log.e("current", String.valueOf(mediaPlayer.getCurrentPosition()));
+//                                sendInfoBroadcast();
+                    mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            CreativityAffirmationActivityNew.pause();
+                        }
+                    });
+//                            }
+//                        });
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
 //
