@@ -78,6 +78,9 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_vol_high = findViewById(R.id.player_vol_high);
 
         song = getIntent().getStringExtra("song");
+        if (song==null){
+            song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
+        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,7 +218,6 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                     stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
                 } else {
                     Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
-
                     n_intent.putExtra("nature_song", "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
                     n_intent.putExtra("player", "Play");
                     startService(n_intent);

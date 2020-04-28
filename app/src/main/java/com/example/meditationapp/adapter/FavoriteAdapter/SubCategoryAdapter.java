@@ -1,6 +1,7 @@
 package com.example.meditationapp.adapter.FavoriteAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.FavoritesModelClass;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.SubFavoritesModelClass;
 import com.example.meditationapp.R;
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +47,14 @@ public class SubCategoryAdapter  extends RecyclerView.Adapter<SubCategoryAdapter
 
         final SubFavoritesModelClass subFavoritesModelClass = subFavoritesModelClasses.get(position);
         holder.cat_textView.setText(subFavoritesModelClass.getSongsTitle());
+        holder.cat_textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CreativityAffirmationActivityNew.class);
+//                intent.putExtra("demo","https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
 //        Picasso.get().load(subFavoritesModelClass.getFavriteStatus()).into(holder.hurtIV);
 //        Picasso.get().load(subFavoritesModelClass.getSongsTitle()).into(holder.songIV);
 

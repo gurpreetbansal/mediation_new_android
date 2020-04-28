@@ -9,27 +9,36 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.meditationapp.R
 import com.example.meditationapp.activities.*
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew
 import kotlinx.android.synthetic.main.my_recording_fragment.*
 import kotlinx.android.synthetic.main.tool_bar_three.*
 
 
-class RecordFragment : Fragment()
-{
+class RecordFragment : Fragment() {
 
     /* override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
          inflater.inflate(R.layout.fragment_cart, container, false)
  */
     val am: ArrayList<String> = ArrayList()
     private var button1IsVisible = true
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         var rootView = inflater!!.inflate(R.layout.my_recording_fragment, container, false)
 
         return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recording_playall.setOnClickListener(View.OnClickListener {
+            val intent = Intent(activity, CreativityAffirmationActivityNew::class.java)
+//            intent.putExtra("demo", "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3")
+            startActivity(intent)
+        })
 
         ll_weight_recording.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, WeightActivity::class.java)
@@ -63,18 +72,19 @@ class RecordFragment : Fragment()
                 getFragmentManager()!!.popBackStack();
             }
 
-           // val weightFragment = AthleticFragment.newInstance()
-           // openFragment(weightFragment)
+            // val weightFragment = AthleticFragment.newInstance()
+            // openFragment(weightFragment)
             // Toast.makeText(context,"CLICKED",Toast.LENGTH_LONG).show()
         })
-       // img_tool_bar_three_back
+        // img_tool_bar_three_back
     }
 
     companion object {
         fun newInstance(): RecordFragment = RecordFragment()
     }
+
     private fun openFragment(fragment: Fragment) {
-        val transaction =activity?.supportFragmentManager?.beginTransaction()
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.container, fragment)
         transaction?.addToBackStack(null)
         transaction?.commit()

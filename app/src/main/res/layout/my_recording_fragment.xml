@@ -72,6 +72,7 @@
                 android:layout_marginTop="@dimen/_20sdp"/>
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+                android:id="@+id/recording_playall"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:text="@string/play_all"

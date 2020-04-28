@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
+import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.FavoritesModelClass;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.GetFavoritesModelClass;
 import com.example.meditationapp.ModelClasses.FavoriteModelClass.SubFavoritesModelClass;
@@ -32,6 +34,7 @@ public class FavoritesActivity extends AppCompatActivity {
     //    String userID = "287";
     String userID;
     String mypreference = "mypref", user_id = "user_id";
+    CustomBoldtextView favourite_playall;
     ApiInterface apiInterface;
     List<FavoritesModelClass> favoritesModelClasses;
     List<SubFavoritesModelClass> subFavoritesModelClasses;
@@ -44,6 +47,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         favListRV = findViewById(R.id.favList_RV);
         img_back_two = findViewById(R.id.img_back_two);
+        favourite_playall = findViewById(R.id.favourite_playall);
 
         SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
@@ -52,6 +56,15 @@ public class FavoritesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        favourite_playall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FavoritesActivity.this,CreativityAffirmationActivityNew.class);
+//                intent.putExtra("demo","https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
+                startActivity(intent);
             }
         });
 
