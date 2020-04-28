@@ -113,7 +113,7 @@ public interface ApiInterface {
                                               @Query("payment_id") String payment_id, @Query("payment_amount") String payment_amount,
                                               @Query("payment_date") String payment_date, @Query("payment_plan_id") String plan_id,
                                               @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,
-                                              @Query("short_description") String short_desc, @Query("intent") String intent);
+                                              @Query("short_description") String short_desc, @Query("intent") String intent, @Query("package_type") Integer package_type);
 
     @POST("collections/affirmationCategoies")
     Call<GetCategoryAndRecomendedModelClass> getCatAndRecomended(@Query("user_id") String user_Id,

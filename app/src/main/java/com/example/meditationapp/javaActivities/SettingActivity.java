@@ -138,4 +138,16 @@ public class SettingActivity extends BaseActivity implements GoogleApiClient.OnC
 
     }
 
+    @Override
+    public void onBackPressed() {
+        refreshActivity();
+        super.onBackPressed();
+    }
+
+    private void refreshActivity() {
+        Intent i = new Intent(SettingActivity.this, HomeActivitynew.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+        finish();
+    }
 }

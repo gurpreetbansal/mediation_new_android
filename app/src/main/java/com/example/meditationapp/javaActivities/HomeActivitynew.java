@@ -36,7 +36,7 @@ public class HomeActivitynew extends BaseActivity {
     public static ImageView img_bottom_lib,img_bottom_sound,img_bottom_record,img_bottom_account;
     private FrameLayout container;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
-    Boolean check;
+    boolean check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +96,32 @@ public class HomeActivitynew extends BaseActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("myPref",0);
 //        sharedPreferences.getString("pref","");
-       check =  sharedPreferences.getBoolean("Payment",true);
+        check = sharedPreferences.getBoolean("Payment",true);
 
         if (check){
 
-            check = true;
-
+//            check = false;
             SharedPreferences sharedPreferences1 = getSharedPreferences("myPref",0);
             SharedPreferences.Editor editor = sharedPreferences1.edit();
             editor.putBoolean("Payment",true);
             editor.apply();
+
+            img_bottom_lib.setVisibility(View.GONE);
+            img_bottom_sound.setVisibility(View.VISIBLE);
+            img_bottom_record.setVisibility(View.GONE);
+            img_bottom_account.setVisibility(View.GONE);
+
+            SoundFragment soundFragment = new SoundFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,soundFragment);
+            fragmentTransaction.addToBackStack("");
+            fragmentTransaction.commit();
+
+        }
+        else {
+
+//            check = true;
+//            sharedPreferences.getBoolean("Payment",false);
 
             img_bottom_lib.setVisibility(View.VISIBLE);
             img_bottom_sound.setVisibility(View.GONE);
@@ -118,22 +134,6 @@ public class HomeActivitynew extends BaseActivity {
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.commit();
 
-
-        }
-        else {
-
-            check = false;
-//            sharedPreferences.getBoolean("Payment",false);
-            img_bottom_lib.setVisibility(View.GONE);
-            img_bottom_sound.setVisibility(View.VISIBLE);
-            img_bottom_record.setVisibility(View.GONE);
-            img_bottom_account.setVisibility(View.GONE);
-
-            SoundFragment soundFragment = new SoundFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container,soundFragment);
-            fragmentTransaction.addToBackStack("");
-            fragmentTransaction.commit();
 
 
 //            paymentData();
