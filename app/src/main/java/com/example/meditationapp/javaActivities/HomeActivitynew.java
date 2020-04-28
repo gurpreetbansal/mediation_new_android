@@ -98,30 +98,46 @@ public class HomeActivitynew extends BaseActivity {
 //        sharedPreferences.getString("pref","");
         check = sharedPreferences.getBoolean("Payment",true);
 
-        if (check){
-
-//            check = false;
-            SharedPreferences sharedPreferences1 = getSharedPreferences("myPref",0);
-            SharedPreferences.Editor editor = sharedPreferences1.edit();
-            editor.putBoolean("Payment",true);
-            editor.apply();
-
-            img_bottom_lib.setVisibility(View.GONE);
-            img_bottom_sound.setVisibility(View.VISIBLE);
-            img_bottom_record.setVisibility(View.GONE);
-            img_bottom_account.setVisibility(View.GONE);
-
-            SoundFragment soundFragment = new SoundFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container,soundFragment);
-            fragmentTransaction.addToBackStack("");
-            fragmentTransaction.commit();
-
-        }
-        else {
-
-//            check = true;
-//            sharedPreferences.getBoolean("Payment",false);
+//        if (check){
+//
+////            check = false;
+//            SharedPreferences sharedPreferences1 = getSharedPreferences("myPref",0);
+//            SharedPreferences.Editor editor = sharedPreferences1.edit();
+//            editor.putBoolean("Payment",true);
+//            editor.apply();
+//
+//            img_bottom_lib.setVisibility(View.GONE);
+//            img_bottom_sound.setVisibility(View.VISIBLE);
+//            img_bottom_record.setVisibility(View.GONE);
+//            img_bottom_account.setVisibility(View.GONE);
+//
+//            SoundFragment soundFragment = new SoundFragment();
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.container,soundFragment);
+//            fragmentTransaction.addToBackStack("");
+//            fragmentTransaction.commit();
+//
+//        }
+//        else {
+//
+////            check = true;
+////            sharedPreferences.getBoolean("Payment",false);
+//
+//            img_bottom_lib.setVisibility(View.VISIBLE);
+//            img_bottom_sound.setVisibility(View.GONE);
+//            img_bottom_record.setVisibility(View.GONE);
+//            img_bottom_account.setVisibility(View.GONE);
+//
+//            LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.container,libraryFragmentNew);
+//            fragmentTransaction.addToBackStack("");
+//            fragmentTransaction.commit();
+//
+//
+//
+////            paymentData();
+//        }
 
             img_bottom_lib.setVisibility(View.VISIBLE);
             img_bottom_sound.setVisibility(View.GONE);
@@ -133,11 +149,6 @@ public class HomeActivitynew extends BaseActivity {
             fragmentTransaction.replace(R.id.container,libraryFragmentNew);
             fragmentTransaction.addToBackStack("");
             fragmentTransaction.commit();
-
-
-
-//            paymentData();
-        }
 
 
         lib.setOnClickListener(new View.OnClickListener() {
