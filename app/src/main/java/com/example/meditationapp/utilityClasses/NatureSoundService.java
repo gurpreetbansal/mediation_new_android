@@ -31,7 +31,7 @@ public class NatureSoundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(this, "Service startedN...", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Service startedN...", Toast.LENGTH_SHORT).show();
         Log.e("playerN", "onCreate() , service started...");
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
     }
@@ -97,7 +97,7 @@ public class NatureSoundService extends Service {
                     } else {
                         volume = volume - 1;
                     }
-                    Toast.makeText(this, String.valueOf(volume), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, String.valueOf(volume), Toast.LENGTH_SHORT).show();
 //                        mplayer.setVolume(volume, volume);
                     if (audioManager != null) {
                         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, volume, 0);
@@ -117,7 +117,7 @@ public class NatureSoundService extends Service {
                         volume = volume + 1;
                     }
 //                    }
-                    Toast.makeText(this, String.valueOf(volume), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, String.valueOf(volume), Toast.LENGTH_SHORT).show();
 //                    mplayer.setVolume(volume, volume);
                     if (audioManager != null) {
                         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, volume, 0);
@@ -151,7 +151,7 @@ public class NatureSoundService extends Service {
     public void onDestroy() {
         stop();
         release();
-        Toast.makeText(this, "Service stoppedN...", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Service stoppedN...", Toast.LENGTH_SHORT).show();
         Log.e("player", "onCreate() , service stopped...");
     }
 
