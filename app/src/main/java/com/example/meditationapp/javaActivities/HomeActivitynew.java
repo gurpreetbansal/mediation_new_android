@@ -238,10 +238,6 @@ public class HomeActivitynew extends BaseActivity {
 
     public void paymentData(){
 
-        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
-        sharedPreferences.getString("payment","");
-        sharedPreferences.getBoolean("truePayment",true);
-
         img_bottom_lib.setVisibility(View.GONE);
         img_bottom_sound.setVisibility(View.VISIBLE);
         img_bottom_record.setVisibility(View.GONE);
