@@ -2,9 +2,12 @@ package com.example.meditationapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -17,12 +20,14 @@ import com.example.meditationapp.ModelClasses.CategoryData;
 import com.example.meditationapp.ModelClasses.InterestedData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.WeighTwoActivity;
+import com.example.meditationapp.javaActivities.AllCatAndRecomendedActivity;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHolder> implements Filterable {
 
     Context context;
     List<CategoryData> categoryData;
@@ -46,12 +51,59 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHo
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WeighTwoActivity.class);
-//                intent.putExtra("song", categoryData);
+//                Intent intent = new Intent(context, WeighTwoActivity.class);
+
+                Integer cat = categoryData.get(position).getId();
+                String cat_id = String.valueOf(cat);
+                Log.e("CAT_ID", cat_id);
+
+                Intent intent = new Intent(context, AllCatAndRecomendedActivity.class);
+                intent.putExtra("cat_id", cat_id);
                 holder.itemView.getContext().startActivity(intent);
+
+
             }
         });
     }
+    //filter method
+    @Override
+    public Filter getFilter() {
+
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    categoryData = categoryData;
+
+                } else {
+                    List filteredList = new ArrayList<>();
+                    for (CategoryData row : categoryData) {
+
+
+                        //change this to filter according to your case
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    categoryData = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = categoryData;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                categoryData = (ArrayList) filterResults.values;
+                notifyDataSetChanged();
+
+            }
+        };
+    }
+
 
     @Override
     public int getItemCount() {
@@ -70,4 +122,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.itemHo
             name = itemView.findViewById(R.id.interested_recyclername);
         }
     }
-}
+
+
+
+    }

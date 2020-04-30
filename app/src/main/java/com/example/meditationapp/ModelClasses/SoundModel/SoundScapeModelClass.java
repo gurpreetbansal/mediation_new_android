@@ -14,6 +14,12 @@ public class SoundScapeModelClass {
     @SerializedName("nature_image")
     @Expose
     private String natureImage;
+    @SerializedName("price")
+    @Expose
+    private Integer price;
+    @SerializedName("lock_images")
+    @Expose
+    private String lockImages;
     @SerializedName("nature_sound")
     @Expose
     private String natureSound;
@@ -29,12 +35,15 @@ public class SoundScapeModelClass {
     @SerializedName("nature_status")
     @Expose
     private Integer natureStatus;
-    @SerializedName("songs")
-    @Expose
-    private String songs;
     @SerializedName("images")
     @Expose
     private String images;
+    @SerializedName("lockUnlockStatus")
+    @Expose
+    private Integer lockUnlockStatus;
+    @SerializedName("songs")
+    @Expose
+    private String songs;
 
     public Integer getNatureId() {
         return natureId;
@@ -58,6 +67,22 @@ public class SoundScapeModelClass {
 
     public void setNatureImage(String natureImage) {
         this.natureImage = natureImage;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getLockImages() {
+        return lockImages;
+    }
+
+    public void setLockImages(String lockImages) {
+        this.lockImages = lockImages;
     }
 
     public String getNatureSound() {
@@ -100,19 +125,27 @@ public class SoundScapeModelClass {
         this.natureStatus = natureStatus;
     }
 
-    public String getSongs() {
-        return songs;
-    }
-
-    public void setSongs(String songs) {
-        this.songs = songs;
-    }
-
     public String getImages() {
         return images;
     }
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public Integer getLockUnlockStatus() {
+        return lockUnlockStatus;
+    }
+
+    public void setLockUnlockStatus(Integer lockUnlockStatus) {
+        this.lockUnlockStatus = lockUnlockStatus;
+    }
+
+    public String getSongs() {
+        return songs;
+    }
+
+    public void setSongs(String songs) {
+        this.songs = songs;
     }
 }

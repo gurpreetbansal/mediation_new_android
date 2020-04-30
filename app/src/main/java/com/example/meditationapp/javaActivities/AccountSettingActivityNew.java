@@ -204,7 +204,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                 SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                 userID = pref.getString(user_id, "");
 
-                RequestBody.create(MediaType.parse("text/plain"), "image-type");
+//                RequestBody.create(MediaType.parse("text/plain"), "image-type");
                 RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), userID);
                 RequestBody name = RequestBody.create(MediaType.parse("text/plain"), tv_firstname.getText().toString());
                 RequestBody oldPaswword = RequestBody.create(MediaType.parse("text/plain"), tv_password.getText().toString());
@@ -327,16 +327,16 @@ public class AccountSettingActivityNew extends BaseActivity {
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(cameraIntent, CAMERA_REQUEST);
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == MY_GALLERY_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "gallery permission granted", Toast.LENGTH_LONG).show();
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, GALLERY_REQUEST);
+//                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(pickPhoto, GALLERY_REQUEST);
             } else {
                 Toast.makeText(this, "gallery permission denied", Toast.LENGTH_LONG).show();
             }
@@ -350,25 +350,9 @@ public class AccountSettingActivityNew extends BaseActivity {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case 0:
-//                    if (data != null) {
-                    if (path!=null){
-//                        imageView.setImageBitmap(BitmapFactory.decodeFile(path));
-                        //
+                    if (path != null) {
                         file = new File(path);
                         imageView.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
-                        //
-                        //
-//                        imageView.setImageBitmap((Bitmap) data.getExtras().get("data"));
-                        //
-//                        if(data.getData()==null){
-//                            imageView.setImageBitmap((Bitmap) data.getExtras().get("data"));
-//                        }else{
-//                            try {
-//                                imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
                     }
                     break;
                 case 1:
@@ -377,17 +361,17 @@ public class AccountSettingActivityNew extends BaseActivity {
                         imageView.setImageURI(imageData);
 
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
                         Cursor cursor = getContentResolver().query(imageData, filePathColumn, null, null, null);
                         assert cursor != null;
                         cursor.moveToFirst();
 
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         mediaPath = cursor.getString(columnIndex);
-//                        imageView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                         cursor.close();
 
                         path = mediaPath;
+
+                        file = new File(mediaPath);
                     }
                     break;
             }
@@ -482,4 +466,5 @@ public class AccountSettingActivityNew extends BaseActivity {
         });
         builder.show();
     }
+
 }

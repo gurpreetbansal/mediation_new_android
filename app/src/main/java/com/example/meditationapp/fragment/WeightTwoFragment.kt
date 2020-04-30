@@ -27,78 +27,78 @@ class WeightTwoFragment : Fragment()
         return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
-        super.onViewCreated(view, savedInstanceState)
-
-
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+//    {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//
+////        ll_wl_my_recordings.setOnClickListener(View.OnClickListener {
+////            val weightFragment = AffirmationsFragment.newInstance()
+////            openFragment(weightFragment)
+////        })
+////        ll_wl_my_recordings.setOnClickListener(View.OnClickListener {
+////            val weightFragment = MyRecordingFragment.newInstance()
+////            openFragment(weightFragment)
+////        })
+//
 //        ll_wl_my_recordings.setOnClickListener(View.OnClickListener {
-//            val weightFragment = AffirmationsFragment.newInstance()
+//            val weightFragment = WeightFragment.newInstance()
 //            openFragment(weightFragment)
 //        })
-//        ll_wl_my_recordings.setOnClickListener(View.OnClickListener {
-//            val weightFragment = MyRecordingFragment.newInstance()
+//
+//        img_back_two.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(context, HomeActivity::class.java)
+//            // val intent = Intent(this, VideocallingActivity::class.java)
+//            startActivity(intent)
+//        })
+//        img_abun.setOnClickListener(View.OnClickListener {
+//            val weightFragment = AbundanceTwoFragment.newInstance()
 //            openFragment(weightFragment)
 //        })
-
-        ll_wl_my_recordings.setOnClickListener(View.OnClickListener {
-            val weightFragment = WeightFragment.newInstance()
-            openFragment(weightFragment)
-        })
-
-        img_back_two.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, HomeActivity::class.java)
-            // val intent = Intent(this, VideocallingActivity::class.java)
-            startActivity(intent)
-        })
-        img_abun.setOnClickListener(View.OnClickListener {
-            val weightFragment = AbundanceTwoFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        img_health.setOnClickListener(View.OnClickListener {
-            val weightFragment = HealthTwoFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        img_one_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
-            startActivity(voice)
-        })
-
-        img_two_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_three_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_four_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_five_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
-        img_six_weight.setOnClickListener(View.OnClickListener {
-            val voice = Intent(context, GetMore_Activity::class.java)
-            startActivity(voice)
-        })
+//        img_health.setOnClickListener(View.OnClickListener {
+//            val weightFragment = HealthTwoFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
+//        img_one_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, CreativtyAffirmationsActivity::class.java)
+//            startActivity(voice)
+//        })
+//
+//        img_two_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_three_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_four_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_five_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
+//        img_six_weight.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(context, GetMore_Activity::class.java)
+//            startActivity(voice)
+//        })
 
 
 
 
 
 
-    }
+//    }
 
-    companion object {
-        fun newInstance(): WeightTwoFragment = WeightTwoFragment()
-    }
-    private fun openFragment(fragment: Fragment) {
-        val transaction =activity?.supportFragmentManager?.beginTransaction()
-        transaction?.replace(R.id.container, fragment)
-        transaction?.addToBackStack(null)
-        transaction?.commit()
-    }
+//    companion object {
+//        fun newInstance(): WeightTwoFragment = WeightTwoFragment()
+//    }
+//    private fun openFragment(fragment: Fragment) {
+//        val transaction =activity?.supportFragmentManager?.beginTransaction()
+//        transaction?.replace(R.id.container, fragment)
+//        transaction?.addToBackStack(null)
+//        transaction?.commit()
+//    }
 }

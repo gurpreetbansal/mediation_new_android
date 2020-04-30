@@ -1,41 +1,62 @@
 package com.example.meditationapp.JavaFragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.app.myapplication.fragment.RecordFragment;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
+import com.example.meditationapp.Custom_Widgets.CustomBoldEditText;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
+import com.example.meditationapp.Custom_Widgets.CustomRegularEditText;
+import com.example.meditationapp.ModelClasses.CategoryData;
 import com.example.meditationapp.ModelClasses.GetHomeResponse;
 import com.example.meditationapp.ModelClasses.HomeData;
 import com.example.meditationapp.ModelClasses.InterestedData;
+import com.example.meditationapp.ModelClasses.RandomData;
 import com.example.meditationapp.R;
+import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.CategoryAdapter;
 import com.example.meditationapp.adapter.InterestAdapter;
 import com.example.meditationapp.adapter.NatureAdapter;
+import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LibraryFragmentNew extends Fragment {
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_account;
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_lib;
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_record;
+import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_sound;
 
-    CustomBoldtextView ll_weight_lib;
+public class LibraryFragmentNew extends Fragment  {
+
+    CustomBoldtextView ll_weight_lib,txt_home_my_recording,txt_home_my_favourite;
     LinearLayout ll_weight_lib_two;
     RecyclerView interestRecyclerView, natureRecyclerView,categoryRecyclerView;
     String userID;
@@ -43,6 +64,10 @@ public class LibraryFragmentNew extends Fragment {
     ApiInterface apiInterface;
     GetHomeResponse resource;
     RelativeLayout progressBar;
+    ImageView bigMainImage;
+    CustomBoldEditText search_lib_ET;
+    CategoryAdapter categoryAdapter;
+    RandomData randomData;
 
     public LibraryFragmentNew() {
         // Required empty public constructor
@@ -57,11 +82,41 @@ public class LibraryFragmentNew extends Fragment {
         userID = preferences.getString(user_id, "");
 
         progressBar = view.findViewById(R.id.lib_frag__prog_rl);
-        ll_weight_lib = view.findViewById(R.id.ll_weight_lib);
-        ll_weight_lib_two = view.findViewById(R.id.ll_weight_lib_two);
+//        ll_weight_lib = view.findViewById(R.id.ll_weight_lib);
+//        ll_weight_lib_two = view.findViewById(R.id.ll_weight_lib_two);
+        bigMainImage = view.findViewById(R.id.weight_lib_two_image);
         interestRecyclerView = view.findViewById(R.id.lib_interestRecyclerView);
         natureRecyclerView = view.findViewById(R.id.lib_natureRecyclerView);
         categoryRecyclerView = view.findViewById(R.id.lib_categoryRecyclerView);
+        txt_home_my_recording = view.findViewById(R.id.txt_home_my_recording);
+        txt_home_my_favourite = view.findViewById(R.id.txt_home_my_favourite);
+        search_lib_ET = view.findViewById(R.id.search_lib_ET);
+
+        txt_home_my_recording.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                img_bottom_lib.setVisibility(View.GONE);
+                img_bottom_sound.setVisibility(View.GONE);
+                img_bottom_record.setVisibility(View.VISIBLE);
+                img_bottom_account.setVisibility(View.GONE);
+
+                RecordFragment recordFragment = new RecordFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container,recordFragment);
+                fragmentTransaction.addToBackStack("");
+                fragmentTransaction.commit();
+            }
+        });
+
+        txt_home_my_favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
+                startActivity(intent);
+            }
+        });
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -76,7 +131,37 @@ public class LibraryFragmentNew extends Fragment {
 
         getHomeData(userID, "2");
 
+        search_lib_ET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
         return view;
+    }
+
+    private void filter(String text){
+
+        List<CategoryData> categoryData = new ArrayList<>();
+
+        for (CategoryData  data : categoryData ){
+
+            if (data.getName().toLowerCase().contains(text.toLowerCase())){
+                categoryData.add(data);
+            }
+        }
+
     }
 
     public void getHomeData(String userID, String typeId) {
@@ -89,6 +174,9 @@ public class LibraryFragmentNew extends Fragment {
                     resource = response.body();
                     assert resource != null;
                     if (resource.getSuccess()) {
+
+                        Picasso.get().load(resource.getData().getRandom().getImage()).into(bigMainImage);
+
                         InterestAdapter interestAdapter = new InterestAdapter(getActivity(),resource.getData().getInterested());
                         interestRecyclerView.setAdapter(interestAdapter);
                         Log.e("interest",String.valueOf(resource.getData().getInterested().size()));
@@ -104,7 +192,9 @@ public class LibraryFragmentNew extends Fragment {
                         progressBar.setVisibility(View.GONE);
                     }
                 }else {
-                    Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
+
+
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
             }
@@ -112,7 +202,6 @@ public class LibraryFragmentNew extends Fragment {
             @Override
             public void onFailure(Call<GetHomeResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
                 progressBar.setVisibility(View.GONE);
             }
         });

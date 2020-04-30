@@ -13,20 +13,23 @@ import kotlinx.android.synthetic.main.abun_fragment.*
 import kotlinx.android.synthetic.main.tool_bar_two.*
 
 
-class AbundanceFragment : Fragment()
-{
+class AbundanceFragment : Fragment() {
     val group: ArrayList<String> = ArrayList()
+
     /* override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
          inflater.inflate(R.layout.fragment_cart, container, false)
  */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         //   var rootView = inflater!!.inflate(R.layout.fragment_home, container, false)
         var rootView = inflater!!.inflate(R.layout.abun_fragment, container, false)
         return rootView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
@@ -45,8 +48,9 @@ class AbundanceFragment : Fragment()
     companion object {
         fun newInstance(): AbundanceFragment = AbundanceFragment()
     }
+
     private fun openFragment(fragment: Fragment) {
-        val transaction =activity?.supportFragmentManager?.beginTransaction()
+        val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.container, fragment)
         transaction?.addToBackStack(null)
         transaction?.commit()

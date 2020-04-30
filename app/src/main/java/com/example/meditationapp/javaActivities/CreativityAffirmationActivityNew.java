@@ -3,6 +3,7 @@ package com.example.meditationapp.javaActivities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.ActivityManager;
@@ -11,14 +12,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.R;
@@ -38,14 +42,17 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     LinearLayout ll_options, img_vol_bar;
     ConstraintLayout ll_options_cl;
     ImageView musicbtn, back_btn;
-    static AppCompatImageView player_play, player_backward, player_forward;
+    static AppCompatImageView player_play, player_backward, player_forward, player_vol_low, player_vol_high;
     CustomBoldtextView player_timer;
     String song;
-    int total_duration, current_time;
+    int total_duration, current_time, volume, default_volume;
     Boolean playing;
     CircularSeekBar circularSeekBar;
+    SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
+    AudioManager audioManager;
     //    private GuiReceiver receiver;
+
     private Handler handler = new Handler();
 
     @Override
@@ -58,16 +65,22 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
         ll_options = findViewById(R.id.ll_options);
         musicbtn = findViewById(R.id.img_music);
-        img_vol_bar = findViewById(R.id.img_vol_bar);
+        player_vol_bar = findViewById(R.id.player_vol_bar);
         player_play = findViewById(R.id.player_play);
         player_timer = findViewById(R.id.player_timer);
         back_btn = findViewById(R.id.img_back_four);
         ll_options_cl = findViewById(R.id.ll_options_cl);
         circularSeekBar = findViewById(R.id.seekbar);
+        img_vol_bar = findViewById(R.id.player_vol);
         player_backward = findViewById(R.id.player_backward);
         player_forward = findViewById(R.id.player_forward);
+        player_vol_low = findViewById(R.id.player_vol_low);
+        player_vol_high = findViewById(R.id.player_vol_high);
 
         song = getIntent().getStringExtra("song");
+        if (song==null){
+            song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
+        }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +88,15 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+
+        player_play.setImageResource(R.mipmap.pause);
+        Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
+        m_intent.putExtra("main_song", song);
+        m_intent.putExtra("player", "Play");
+        startService(m_intent);
+        playing = true;
+        Log.e("switch", "a");
 
         circularSeekBar.setMax(total_duration);
 
@@ -105,6 +127,10 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
         });
 
+        circularSeekBar.setPointerColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss_pointer, null));
+//        circularSeekBar.setPointerColor(Color.parseColor("#C0C0C0"));
+        circularSeekBar.setCircleProgressColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss, null));
+
         CreativityAffirmationActivityNew.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -115,13 +141,57 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
         });
 
-        player_play.setImageResource(R.mipmap.pause);
-        Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
-        m_intent.putExtra("main_song", song);
-        m_intent.putExtra("player", "Play");
-        startService(m_intent);
-        playing = true;
-        Log.e("switch", "a");
+        audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            volume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM);
+            default_volume = volume;
+        }
+        player_vol_bar.setProgress(volume);
+        player_vol_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
+
+        player_vol_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
+                n_intent.putExtra("player", "Vol_bar");
+                n_intent.putExtra("volume", progress);
+                startService(n_intent);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        player_vol_low.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
+                n_intent.putExtra("player", "Vol_low");
+                startService(n_intent);
+
+            }
+        });
+
+        player_vol_high.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
+                n_intent.putExtra("player", "Vol_high");
+                startService(n_intent);
+
+            }
+        });
 
         musicbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,11 +317,15 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         Log.e("reume", "resume______");
 
         LocalBroadcastManager.getInstance(CreativityAffirmationActivityNew.this).registerReceiver(
-                Newreceiver, new IntentFilter("GUI_UPDATE_ACTION"));
+                MReceiver, new IntentFilter("GUI_UPDATE_ACTION"));
 
-        Intent intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
-        intent.putExtra("player", "ACTION_SEND_INFO");
-        startService(intent);
+        Intent mintent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
+        mintent.putExtra("player", "ACTION_SEND_INFO");
+        startService(mintent);
+
+        LocalBroadcastManager.getInstance(CreativityAffirmationActivityNew.this).registerReceiver(
+                NReceiver, new IntentFilter("VOICE_UPDATE_ACTION"));
+
     }
 
     @Override
@@ -259,16 +333,17 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         super.onDestroy();
         stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
         stopService(new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class));
-//        if (Newreceiver != null) {
-//            unregisterReceiver(Newreceiver);
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, default_volume, 0);
+//        if (MReceiver != null) {
+//            unregisterReceiver(MReceiver);
 //        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        if (Newreceiver != null) {
-//            unregisterReceiver(Newreceiver);
+//        if (MReceiver != null) {
+//            unregisterReceiver(MReceiver);
 //        }
     }
 
@@ -287,7 +362,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     }
     //
 
-    private BroadcastReceiver Newreceiver = new BroadcastReceiver() {
+    private BroadcastReceiver MReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             current_time = intent.getIntExtra("ACTUAL_TIME_VALUE_EXTRA", 0);
@@ -302,6 +377,19 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
             if (player_timer != null) {
                 player_timer.setText(time);
+            }
+        }
+    };
+
+    private BroadcastReceiver NReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            volume = intent.getIntExtra("Volume", 50);
+//            Log.e("time", String.valueOf(intent.getIntExtra("ACTUAL_TIME_VALUE_EXTRA", 200)));
+//            Log.e("duration", String.valueOf(intent.getIntExtra("TOTAL_TIME_VALUE_EXTRA", 200)));
+            if (player_vol_bar != null) {
+                player_vol_bar.setProgress(volume);
+                player_vol_bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM));
             }
         }
     };

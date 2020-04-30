@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -52,7 +53,6 @@ public class AccountFragment extends Fragment {
     ApiInterface apiInterface;
     GetProfileResponse resource;
     private LinearLayout progressLL,allInfoLL;
-
 
 
     public AccountFragment() {
@@ -99,7 +99,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivity(new Intent(getActivity(),SettingActivity.class));
 
             }
         });
@@ -138,6 +138,11 @@ public class AccountFragment extends Fragment {
                         progressLL.setVisibility(View.GONE);
                         allInfoLL.setVisibility(View.VISIBLE);
                     }
+                }
+                else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    progressLL.setVisibility(View.GONE);
+                    allInfoLL.setVisibility(View.VISIBLE);
                 }
             }
 

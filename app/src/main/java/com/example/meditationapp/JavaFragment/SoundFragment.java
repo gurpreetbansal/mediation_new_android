@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,9 +29,11 @@ import com.example.meditationapp.ModelClasses.SoundModel.SoundScapeModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
 import com.example.meditationapp.activities.GetMore_Activity;
+import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
+import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
 import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
@@ -58,6 +61,8 @@ public class SoundFragment extends Fragment {
     private List<SoundScapeModelClass> soundScapeModelClass;
     private List<MusicModelClass> musicModelClasses;
 
+    private ImageView img_back_tool,hurt_img;
+
     public SoundFragment() {
         // Required empty public constructor
     }
@@ -77,6 +82,25 @@ public class SoundFragment extends Fragment {
         ll_sound_search=view.findViewById(R.id.ll_sound_search);
         soundScape_text=view.findViewById(R.id.soundScape_text);
         music_text=view.findViewById(R.id.music_text);
+        hurt_img = view.findViewById(R.id.hurt_img);
+        img_back_tool = view.findViewById(R.id.img_back_tool);
+       hurt_img.setVisibility(View.VISIBLE);
+
+        img_back_tool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        hurt_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
+                startActivity(intent);
+            }
+        });
 
         progressBar.setVisibility(View.VISIBLE);
         ll_sound_search.setVisibility(View.INVISIBLE);
@@ -102,11 +126,12 @@ public class SoundFragment extends Fragment {
 
         call.enqueue(new Callback<GetSoundAndScapeResponse>() {
             @Override
-            public void onResponse(Call<GetSoundAndScapeResponse> call, Response<GetSoundAndScapeResponse> response) {
+            public void onResponse(Call<GetSoundAndScapeResponse> call, final Response<GetSoundAndScapeResponse> response) {
 
                 if (response.isSuccessful()){
                     resource = response.body();
 
+                    assert resource != null;
                     if (resource.getSuccess()){
 
                         soundScapeModelClass = resource.getData().getSoundScopes();
@@ -123,9 +148,6 @@ public class SoundFragment extends Fragment {
                         final MusicAdapter musicAdapter = new MusicAdapter(getActivity(),resource.getData().getMusic());
                         musicRV.setAdapter(musicAdapter);
 
-
-
-
                      soundScapeRV.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), soundScapeRV, new RecyclerTouchListener.ClickListener() {
                          @Override
                          public void onClick(View view, int position) {
@@ -138,57 +160,23 @@ public class SoundFragment extends Fragment {
                              Log.e("NATURE ID : ", nature_id);
                              Log.e("NATURE NAME : ", nature_name);
 
-                             switch (position){
-                                 case 0:
-                                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-                                     intent.putExtra("song", nature);
-                                     intent.putExtra("nature_id", nature_id);
-                                     intent.putExtra("nature_name", nature_name);
-                                     startActivity(intent);
-                                     break;
-                                 case 1:
-                                     Intent intent1 = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                     intent1.putExtra("song", nature);
-                                     intent1.putExtra("nature_id", nature_id);
-                                     intent1.putExtra("nature_name", nature_name);
-                                     startActivity(intent1);
-                                     break;
-                                 case 2:
-                                     Intent intent2 = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-                                     intent2.putExtra("song", nature);
-                                     intent2.putExtra("nature_id", nature_id);
-                                     intent2.putExtra("nature_name", nature_name);
-                                     startActivity(intent2);
-                                     break;
-                                 case 3:
-                                     Intent intent3 = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                     intent3.putExtra("song", nature);
-                                     intent3.putExtra("nature_id", nature_id);
-                                     intent3.putExtra("nature_name", nature_name);
-                                     startActivity(intent3);
-                                     break;
-                                 case 4:
-                                     Intent intent4 = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                     intent4.putExtra("song", nature);
-                                     intent4.putExtra("nature_id", nature_id);
-                                     intent4.putExtra("nature_name", nature_name);
-                                     startActivity(intent4);
-                                     break;
-                                 case 5:
-                                     Intent intent5 = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                     intent5.putExtra("song", nature);
-                                     intent5.putExtra("nature_id", nature_id);
-                                     intent5.putExtra("nature_name", nature_name);
-                                     startActivity(intent5);
-                                     break;
-                                 case 6:
-                                     Intent intent6 = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-                                     intent6.putExtra("song", nature);
-                                     intent6.putExtra("nature_id", nature_id);
-                                     intent6.putExtra("nature_name", nature_name);
-                                     startActivity(intent6);
-                                     break;
-                             }
+
+                 if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+
+                     Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                     intent.putExtra("song", nature);
+                     intent.putExtra("nature_id", nature_id);
+                     intent.putExtra("nature_name", nature_name);
+                     startActivity(intent);
+                 }
+                 else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+
+                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                     intent.putExtra("song", nature);
+                     intent.putExtra("nature_id", nature_id);
+                     intent.putExtra("nature_name", nature_name);
+                     startActivity(intent);
+                 }
 
                          }
 
@@ -210,10 +198,25 @@ public class SoundFragment extends Fragment {
                                 Log.e("NATURE NAME : ", nature_name);
                                 Log.e("MUSIC_SOUND_URL :  ", natureMusic);
 
+
+                                if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+
+                                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                                    intent.putExtra("song", natureMusic);
+                                    intent.putExtra("nature_id", nature_id);
+                                    intent.putExtra("nature_name", nature_name);
+                                    startActivity(intent);
+                                }
+                                else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+
+                                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                    intent.putExtra("song", natureMusic);
+                                    intent.putExtra("nature_id", nature_id);
+                                    intent.putExtra("nature_name", nature_name);
+                                    startActivity(intent);
+                                }
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                intent.putExtra("song", natureMusic);
-                                intent.putExtra("nature_id", nature_id);
-                                intent.putExtra("nature_name", nature_name);
+
                                 startActivity(intent);
 
 
@@ -231,10 +234,13 @@ public class SoundFragment extends Fragment {
                     }
                     else {
                         Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
-
                         progressBar.setVisibility(View.GONE);
                     }
 
+                }
+                else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
 

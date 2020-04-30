@@ -168,7 +168,7 @@ public class CategoriesActivities extends BaseActivity {
 
                     final GetCategoriesModelClass getCategoriesModelClass = response.body();
 //                    Log.e("GET CONTENT +++++++", getCategoriesModelClass.getMessages());
-                    Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getMessages(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(CategoriesActivities.this, "" + getCategoriesModelClass.getMessages(), Toast.LENGTH_SHORT).show();
 
                     if (getCategoriesModelClass.getSuccess()) {
 
@@ -250,7 +250,7 @@ public class CategoriesActivities extends BaseActivity {
                         Log.e("list", data.toString());
                         Log.e("list", setCategoryResponse.getCategoryId().toString());
 
-                        Intent cat = new Intent(CategoriesActivities.this, HomeActivity.class);
+                        Intent cat = new Intent(CategoriesActivities.this, HomeActivitynew.class);
                         startActivity(cat);
                         finishAffinity();
                         Toast.makeText(CategoriesActivities.this, "" + setCategoriesModelClasses.getMessages(), Toast.LENGTH_SHORT).show();

@@ -18,15 +18,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.meditationapp.ModelClasses.GetSocialLoginResponse;
-import com.example.meditationapp.activities.VoiceSelect_Activity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookRequestError;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
-import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginBehavior;
@@ -277,7 +274,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
                     if (resource.getData().getUserType().equals("0")) {
                         startActivity(new Intent(LoginActivityNew.this, VoiceSelect_Activity.class));
                     } else if (resource.getData().getUserType().equals("1")) {
-                        startActivity(new Intent(LoginActivityNew.this, HomeActivity.class));
+                        startActivity(new Intent(LoginActivityNew.this, HomeActivitynew.class));
                     }
                     Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
                     hideDialog();

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature android:name="android.hardware.camera" />
@@ -26,6 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
+        <activity android:name=".javaActivities.FavoritesActivity"></activity>
+        <activity android:name=".javaActivities.AllCatAndRecomendedActivity" />
+        <activity android:name=".javaActivities.WeightActivityNew"
+            android:windowSoftInputMode="stateHidden"
+            />
         <activity android:name=".javaActivities.Test" />
 
         <service
@@ -42,7 +48,9 @@
         <activity android:name=".javaActivities.HelpCenterNew" />
         <activity android:name=".javaActivities.GetMorePaymentActivity" />
         <activity android:name=".javaActivities.SupportActivity_new" />
-        <activity android:name=".javaActivities.HomeActivitynew" />
+        <activity
+            android:name=".javaActivities.HomeActivitynew"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -202,7 +210,7 @@
             android:name=".activities.CongratulationActivity"
             android:screenOrientation="portrait" /> <!-- <activity android:name=".activities.HomeActivity" /> -->
         <activity
-            android:name=".activities.VoiceSelect_Activity"
+            android:name=".javaActivities.VoiceSelect_Activity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SplashActivity"
@@ -234,6 +242,12 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <service android:name=".javaActivities.MessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

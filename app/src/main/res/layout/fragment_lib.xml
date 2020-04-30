@@ -84,6 +84,7 @@
             android:orientation="horizontal">
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldEditText
+                android:id="@+id/search_lib_ET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -108,48 +109,55 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ll_weight_lib_two"
+            <ImageView
+                android:id="@+id/weight_lib_two_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
-                android:background="@mipmap/weight_loss_bg_two"
                 android:orientation="vertical">
+            </ImageView>
 
-                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
-                    android:id="@+id/ll_weight_lib"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:text="@string/weight_loss"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_30sdp" />
+<!--            <LinearLayout-->
+<!--                android:id="@+id/ll_weight_lib_two"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_200sdp"-->
+<!--                android:background="@mipmap/weight_loss_bg_two"-->
+<!--                android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_98sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:background="@mipmap/this_week_top_bg"
-                    android:gravity="center"
-                    android:orientation="vertical">
+<!--                <com.example.meditationapp.Custom_Widgets.CustomBoldtextView-->
+<!--                    android:id="@+id/ll_weight_lib"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/_10sdp"-->
+<!--                    android:layout_marginTop="@dimen/_10sdp"-->
+<!--                    android:text="@string/weight_loss"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="@dimen/_30sdp" />-->
 
-                    <com.example.meditationapp.Custom_Widgets.CustomRegularTextView
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="@dimen/_30sdp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginLeft="@dimen/_20sdp"-->
+<!--                    android:layout_marginTop="@dimen/_98sdp"-->
+<!--                    android:layout_marginRight="@dimen/_20sdp"-->
+<!--                    android:background="@mipmap/this_week_top_bg"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="vertical">-->
 
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:gravity="center|left"
-                        android:text="@string/this_week"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_15sdp" />
-                </LinearLayout>
+<!--                    <com.example.meditationapp.Custom_Widgets.CustomRegularTextView-->
+
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="@dimen/_20sdp"-->
+<!--                        android:gravity="center|left"-->
+<!--                        android:text="@string/this_week"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="@dimen/_15sdp" />-->
+<!--                </LinearLayout>-->
 
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
 
