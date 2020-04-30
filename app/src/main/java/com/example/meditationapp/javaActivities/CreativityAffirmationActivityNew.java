@@ -130,6 +130,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         circularSeekBar.setPointerColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss_pointer, null));
 //        circularSeekBar.setPointerColor(Color.parseColor("#C0C0C0"));
         circularSeekBar.setCircleProgressColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss, null));
+        circularSeekBar.setPointerHaloColor(ResourcesCompat.getColor(getResources(),R.color.white,null));
 
         CreativityAffirmationActivityNew.this.runOnUiThread(new Runnable() {
             @Override
