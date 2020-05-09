@@ -38,7 +38,6 @@ import me.tankery.lib.circularseekbar.CircularSeekBar;
 
 public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
-
     LinearLayout ll_options, img_vol_bar;
     ConstraintLayout ll_options_cl;
     ImageView musicbtn, back_btn;
