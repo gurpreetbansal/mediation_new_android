@@ -78,7 +78,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_vol_high = findViewById(R.id.player_vol_high);
 
         song = getIntent().getStringExtra("song");
-        if (song==null){
+        if (song == null) {
             song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
         }
 
@@ -130,7 +130,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         circularSeekBar.setPointerColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss_pointer, null));
 //        circularSeekBar.setPointerColor(Color.parseColor("#C0C0C0"));
         circularSeekBar.setCircleProgressColor(ResourcesCompat.getColor(getResources(), R.color.weight_loss, null));
-        circularSeekBar.setPointerHaloColor(ResourcesCompat.getColor(getResources(),R.color.white,null));
+        circularSeekBar.setPointerHaloColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
 
         CreativityAffirmationActivityNew.this.runOnUiThread(new Runnable() {
             @Override
