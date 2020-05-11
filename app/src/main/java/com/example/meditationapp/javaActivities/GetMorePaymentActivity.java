@@ -2,7 +2,6 @@ package com.example.meditationapp.javaActivities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,25 +10,19 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
-import com.example.meditationapp.JavaFragment.SoundFragment;
 import com.example.meditationapp.ModelClasses.UserPayModel.GetUserPayModelClass;
 import com.example.meditationapp.ModelClasses.UserPayModel.UserPayModelClass;
 import com.example.meditationapp.R;
-import com.google.gson.JsonObject;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,10 +33,11 @@ import retrofit2.Response;
 
 public class GetMorePaymentActivity extends AppCompatActivity {
 
-    private static final int PAY_PAL_REQUEST_CODE = 121;
-    private static final int PAY_PAL_REQUEST_CODE1 = 131;
+    private static final int MONTHLY_PAY_PAL_REQUEST_CODE = 121;
+    private static final int YEARLY_PAY_PAL_REQUEST_CODE = 131;
     private CustomBoldtextView txt_terms_get,txt_year,txt_month;
-
+   int monthly_package_type = 1;
+   int yearly_package_type = 2;
     String song,song_id,song_name;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
@@ -52,6 +46,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
     GetUserPayModelClass getUserPayModelClass;
     List<UserPayModelClass> userPayModelClasses;
     String payment_status;
+    boolean check;
 
     private static PayPalConfiguration configuration = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
@@ -99,7 +94,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
 
-              yearProcessPayment();
+              yearlyProcessPayment();
           }
       });
 
@@ -111,18 +106,6 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         });
 
 
-
-    }
-
-    private void yearProcessPayment() {
-
-        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal("150"),"USD",
-                "Meditation",PayPalPayment.PAYMENT_INTENT_SALE);
-
-        Intent intent = new Intent(GetMorePaymentActivity.this, PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
-        startActivityForResult(intent,PAY_PAL_REQUEST_CODE);
     }
 
     private void monthlyProcessPayment(){
@@ -134,18 +117,31 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         Intent intent = new Intent(GetMorePaymentActivity.this, PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
-        startActivityForResult(intent,PAY_PAL_REQUEST_CODE1);
+        intent.putExtra("value",1);
+        startActivityForResult(intent,MONTHLY_PAY_PAL_REQUEST_CODE);
 
 
     }
 
+    private void yearlyProcessPayment() {
+
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal("150"),"USD",
+                "Meditation",PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intent = new Intent(GetMorePaymentActivity.this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
+        intent.putExtra("value",2);
+        startActivityForResult(intent,YEARLY_PAY_PAL_REQUEST_CODE);
+    }
+
     public void payPalLogin(final String userID, String payment_type, String payment_id, String payment_amount, String payment_date,
                             String payment_plan_id, String payment_plan_name, String currency_code, String short_desp,
-                            final String intent){
+                            final String intent, Integer package_type){
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<GetUserPayModelClass> call = apiInterface.getUserPayData(userID,payment_type,payment_id,payment_amount,payment_date,
-                payment_plan_id,payment_plan_name,currency_code,short_desp,intent);
+                payment_plan_id,payment_plan_name,currency_code,short_desp,intent,package_type);
 
         call.enqueue(new Callback<GetUserPayModelClass>() {
             @Override
@@ -160,12 +156,12 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 //                     fragmentTransaction.replace(R.id.container,soundFragment);
 //                     fragmentTransaction.addToBackStack("");
 //                     fragmentTransaction.commit();
-                        onBackPressed();
 
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPref",MODE_PRIVATE);
+                        refreshActivity();
+                        SharedPreferences sharedPreferences = getSharedPreferences("myPref",0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("payment","");
-                        editor.putBoolean("truePayment",false);
+//                        editor.putString("pref","");
+                        editor.putBoolean("Payment",false);
                         editor.apply();
 
 //                     Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
@@ -191,19 +187,25 @@ public class GetMorePaymentActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PAY_PAL_REQUEST_CODE || requestCode == PAY_PAL_REQUEST_CODE1){
+        if (requestCode == MONTHLY_PAY_PAL_REQUEST_CODE || requestCode == YEARLY_PAY_PAL_REQUEST_CODE) {
 
-            if (resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
 
                 String result = data.getStringExtra("response");
-                Log.e("RESULT  "," " + result);
+
+
+
+                Log.e("RESULT  ", " " + result);
 
                 PaymentConfirmation confirm =
                         data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null) {
                     try {
+
+                        int value = getIntent().getExtras().getInt("value");
+
                         String full_details = confirm.toJSONObject().toString(4);
-                        Log.e("DETAILS :  ",""+full_details);
+                        Log.e("DETAILS :  ", "" + full_details);
 
                         String paymentId = confirm.toJSONObject().getJSONObject("response").getString("id");
                         String payment_date = confirm.toJSONObject().getJSONObject("response").getString("create_time");
@@ -217,29 +219,38 @@ public class GetMorePaymentActivity extends AppCompatActivity {
                         String payment_client = confirm.getPayment().toJSONObject().toString();
 
                         Log.e("PAYMENT_ID", "" + paymentId);
-                        Log.e("PAYMENT_DATE",""+payment_date);
-                        Log.e("PAYMENT_INTENT",""+intent);
-                        Log.e("PAYMENT_STATE",""+state);
-                        Log.e("PAYMENT_AMOUNT",""+amount);
-                        Log.e("PAYMENT_CURRENCY_CODE",""+currency_code);
-                        Log.e("PAYMENT_SHORT_DESP",""+short_desp);
-                        Log.e("PAYMENT_CLIENT : ",""+payment_client);
+                        Log.e("PAYMENT_DATE", "" + payment_date);
+                        Log.e("PAYMENT_INTENT", "" + intent);
+                        Log.e("PAYMENT_STATE", "" + state);
+                        Log.e("PAYMENT_AMOUNT", "" + amount);
+                        Log.e("PAYMENT_CURRENCY_CODE", "" + currency_code);
+                        Log.e("PAYMENT_SHORT_DESP", "" + short_desp);
+                        Log.e("PAYMENT_CLIENT : ", "" + payment_client);
 
-//                        Toast.makeText(this, "Successfully PayPal Payment", Toast.LENGTH_SHORT).show();
-                    payPalLogin(userID,PAYMENT_TYPE,paymentId,amount,payment_date,song_id,song_name,currency_code,short_desp,intent);
+                  Intent intent1 = getIntent();
+                 int type = intent1.getIntExtra("value",2);
+
+                if (type == 1)
+                {
+                    payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
+
+                }
+                if (type == 2){
+                    payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
+
+                }
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-            }
-            else if (resultCode == Activity.RESULT_CANCELED){
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
-            }
-            else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID){
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Toast.makeText(this, "Invalid", Toast.LENGTH_SHORT).show();
             }
         }
+
     }
 
     public void refreshActivity() {
@@ -251,7 +262,6 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        refreshActivity();
         super.onBackPressed();
     }
 }

@@ -38,7 +38,7 @@ public class FavoritesActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     List<FavoritesModelClass> favoritesModelClasses;
     List<SubFavoritesModelClass> subFavoritesModelClasses;
-    ImageView img_back_two;
+    ImageView img_tool_bar_three_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +46,13 @@ public class FavoritesActivity extends AppCompatActivity {
         setContentView(R.layout.my_favorites_fragment);
 
         favListRV = findViewById(R.id.favList_RV);
-        img_back_two = findViewById(R.id.img_back_two);
+        img_tool_bar_three_back = findViewById(R.id.img_tool_bar_three_back);
         favourite_playall = findViewById(R.id.favourite_playall);
 
         SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
 
-        img_back_two.setOnClickListener(new View.OnClickListener() {
+        img_tool_bar_three_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();

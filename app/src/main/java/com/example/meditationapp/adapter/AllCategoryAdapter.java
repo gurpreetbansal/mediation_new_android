@@ -39,7 +39,7 @@ public class AllCategoryAdapter extends RecyclerView.Adapter<AllCategoryAdapter.
 
         final CategoryDataModelClass categoryDataModelClass = categoryDataModelClasses.get(position);
 
-        Picasso.get().load(categoryDataModelClass.getBanner()).into(holder.backImageView);
+        Picasso.get().load(categoryDataModelClass.getImage()).into(holder.backImageView);
 
         holder.backImageView.setOnClickListener(new View.OnClickListener() {
             @Override

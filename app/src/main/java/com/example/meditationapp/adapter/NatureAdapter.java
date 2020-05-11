@@ -17,6 +17,7 @@ import com.example.meditationapp.ModelClasses.NatureData;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
+import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.Test;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +45,25 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+//                if (nature.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+//
+//                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+//                    intent.putExtra("song", natureMusic);
+//                    intent.putExtra("nature_id", nature_id);
+//                    intent.putExtra("nature_name", nature_name);
+//                    startActivity(intent);
+//                }
+//                else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+//
+//                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+//                    intent.putExtra("song", natureMusic);
+//                    intent.putExtra("nature_id", nature_id);
+//                    intent.putExtra("nature_name", nature_name);
+//                    startActivity(intent);
+//                }
+
                 Intent intent = new Intent(context, CreativityAffirmationActivityNew.class);
                 intent.putExtra("song", nature.get(position).getSongs());
                 holder.itemView.getContext().startActivity(intent);
