@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.VoiceSelect_Activity">
+    tools:context=".javaActivities.VoiceSelect_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -94,13 +94,15 @@
                     android:orientation="horizontal"
                     android:weightSum="1">
 
+
                     <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
                         android:id="@+id/voice_select_time"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/_60sdp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center|left"
                         android:layout_weight="0.2"
                         android:gravity="center|left"
+                        android:clickable="true"
                         android:includeFontPadding="false"
                         android:padding="@dimen/_2sdp"
                         android:text="05:00"
@@ -109,7 +111,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_15sdp"
-                        android:layout_weight="0.5"></LinearLayout>
+                        android:layout_weight="0.5"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/toggleButton_off"

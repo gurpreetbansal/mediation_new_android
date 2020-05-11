@@ -3,10 +3,12 @@ package com.example.meditationapp.javaActivities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
@@ -26,6 +28,7 @@ public class SupportActivity_new extends AppCompatActivity {
     CustomBoldEditText description;
     CustomRegularTextView submit;
     ApiInterface apiInterface;
+    ImageView img_back_support;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
 
@@ -45,6 +48,16 @@ public class SupportActivity_new extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitQuery(userID, title.getText().toString(), description.getText().toString());
+            }
+        });
+
+        img_back_support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(SupportActivity_new.this,SettingActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

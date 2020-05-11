@@ -1,4 +1,4 @@
-package com.example.meditationapp.javaActivities;
+package com.example.meditationapp.JavaFragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.GetProfileResponse;
 import com.example.meditationapp.R;
+import com.example.meditationapp.javaActivities.SettingActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -50,7 +52,7 @@ public class AccountFragment extends Fragment {
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
     GetProfileResponse resource;
-
+    private LinearLayout progressLL,allInfoLL;
 
 
     public AccountFragment() {
@@ -75,6 +77,10 @@ public class AccountFragment extends Fragment {
 
 
         txt_upgrade=view.findViewById(R.id.txt_upgrade);
+        progressLL= view.findViewById(R.id.accountFragment_progressLL);
+        allInfoLL = view.findViewById(R.id.accountFragment_AllDetailsLL);
+
+        progressLL.setVisibility(View.VISIBLE);
 
         txt_upgrade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +108,7 @@ public class AccountFragment extends Fragment {
 
     }
 
-    public void retrofitGetProfileData(String userID) {
+    public void retrofitGetProfileData(final String userID) {
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
         Call<GetProfileResponse> call = apiInterface.getProfile(userID);
@@ -115,6 +121,10 @@ public class AccountFragment extends Fragment {
                     assert resource != null;
                     Log.e("success", resource.getMessages());
                     if (resource.getSuccess()) {
+
+                        progressLL.setVisibility(View.GONE);
+                        allInfoLL.setVisibility(View.VISIBLE);
+
                         userNameTV.setText(resource.getData().getFirstName());
                         txt_email.setText(resource.getData().getEmail());
                         if (!resource.getData().getProfile().equals("")) {
@@ -125,7 +135,14 @@ public class AccountFragment extends Fragment {
                         }
                     } else {
                         Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
+                        progressLL.setVisibility(View.GONE);
+                        allInfoLL.setVisibility(View.VISIBLE);
                     }
+                }
+                else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    progressLL.setVisibility(View.GONE);
+                    allInfoLL.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -133,6 +150,8 @@ public class AccountFragment extends Fragment {
             public void onFailure(Call<GetProfileResponse> call, Throwable t) {
                 Log.e("Failure Response++++", t.getMessage());
                 Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_SHORT).show();
+                progressLL.setVisibility(View.GONE);
+                allInfoLL.setVisibility(View.VISIBLE);
             }
         });
 

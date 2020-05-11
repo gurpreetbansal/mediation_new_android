@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_45sdp"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/grey_heart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:padding="@dimen/_5sdp"
+        android:src="@mipmap/gray_heart"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/pink_heart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:padding="@dimen/_5sdp"
+        android:src="@mipmap/shaed_heart_pink"
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ll_first"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/weight_loss_bg_row" />
+
+        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
+            android:id="@+id/affirmation_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|left|bottom"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_weight="0.85"
+            android:gravity="center|left|bottom"
+            android:text="@string/happy_at_work"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_first"
+            app:layout_constraintStart_toStartOf="@+id/ll_first" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/ll_first"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_marginLeft="@dimen/_3sdp"-->
+    <!--        android:layout_marginRight="@dimen/_20sdp"-->
+    <!--        android:layout_weight="0.9"-->
+    <!--        android:background="@mipmap/weight_loss_bg_row"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:weightSum="1">-->
+
+    <!--        <com.example.meditationapp.Custom_Widgets.CustomBoldtextView-->
+    <!--            android:id="@+id/affirmation_text"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center|left|bottom"-->
+    <!--            android:layout_marginLeft="@dimen/_20sdp"-->
+    <!--            android:layout_marginBottom="@dimen/_5sdp"-->
+    <!--            android:layout_weight="0.85"-->
+    <!--            android:gravity="center|left|bottom"-->
+    <!--            android:text="@string/happy_at_work"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="@dimen/_10sdp" />-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="0.1"-->
+    <!--            android:src="@mipmap/green_dot" />-->
+    <!--    </LinearLayout>-->
+
+</LinearLayout>

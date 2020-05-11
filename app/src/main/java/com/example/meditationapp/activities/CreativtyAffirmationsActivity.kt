@@ -10,6 +10,7 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.example.meditationapp.R
 import com.example.meditationapp.adapter.Voice_Selector_Adapter
+import com.example.meditationapp.javaActivities.VoiceSelect_Activity
 import kotlinx.android.synthetic.main.creativity_two_fragment.*
 import kotlinx.android.synthetic.main.tool_bar_four.*
 
@@ -70,25 +71,25 @@ class CreativtyAffirmationsActivity : AppCompatActivity() {
 
         })
 
-        img_one.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-
-        img_two.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_three.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_four.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_five.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
-        img_six.setOnClickListener(View.OnClickListener {
-            img_vol_bar.visibility= View.VISIBLE
-        })
+//        img_one.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//
+//        img_two.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_three.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_four.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_five.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
+//        img_six.setOnClickListener(View.OnClickListener {
+//            img_vol_bar.visibility= View.VISIBLE
+//        })
 
         img_heart.visibility= View.VISIBLE
 //        img_back_four.setOnClickListener(View.OnClickListener {

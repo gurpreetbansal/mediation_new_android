@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.meditationapp.R
+import com.example.meditationapp.javaActivities.TermsAndConditionActivity
 import kotlinx.android.synthetic.main.getmore_activity.*
 
 class GetMore_Activity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class GetMore_Activity : AppCompatActivity() {
         setContentView(R.layout.getmore_activity)
 
         txt_terms_get.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@GetMore_Activity, Terms_And_Conditions_Acxtivity::class.java)
+            val voice = Intent(this@GetMore_Activity, TermsAndConditionActivity::class.java)
             startActivity(voice)
         })
 

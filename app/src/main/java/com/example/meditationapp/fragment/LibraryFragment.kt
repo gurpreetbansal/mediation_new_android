@@ -29,14 +29,14 @@ class LibraryFragment : Fragment()
         super.onViewCreated(view, savedInstanceState)
       //txt_home_my_recording"
         //txt_home_my_favourite
-        ll_weight_lib.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, WeighTwoActivity::class.java)
-            startActivity(voice)
-        })
-        ll_weight_lib_two.setOnClickListener(View.OnClickListener {
-            val voice = Intent(activity, WeighTwoActivity::class.java)
-            startActivity(voice)
-        })
+//        ll_weight_lib.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, WeighTwoActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_weight_lib_two.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(activity, WeighTwoActivity::class.java)
+//            startActivity(voice)
+//        })
 //        ll_home_search.setOnClickListener(View.OnClickListener {
 //            val weightFragment = SearchFragment.newInstance()
 //            openFragment(weightFragment)

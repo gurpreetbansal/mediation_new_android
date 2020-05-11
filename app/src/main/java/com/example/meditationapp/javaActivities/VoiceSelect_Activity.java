@@ -1,4 +1,4 @@
-package com.example.meditationapp.activities;
+package com.example.meditationapp.javaActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -6,17 +6,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.XmlResourceParser;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +29,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bruce.pickerview.LoopScrollListener;
+import com.bruce.pickerview.LoopView;
+import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
@@ -34,14 +42,14 @@ import com.example.meditationapp.ModelClasses.GetVoiceResponse;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.VoiceAdapter;
-import com.example.meditationapp.javaActivities.CategoriesActivities;
-import com.example.meditationapp.javaActivities.LogoutActivity;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import io.blackbox_vision.wheelview.view.DatePickerPopUpWindow;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,7 +63,8 @@ public class VoiceSelect_Activity extends AppCompatActivity {
     GetVoiceResponse resource;
     RecyclerView recyclerView;
     List<GetVoiceData> voiceData;
-    CustomBoldtextView time, img_next;
+    CustomBoldtextView time;
+    CustomBoldtextView img_next;
     Integer[] id_unselected = {R.mipmap.alice_bg_two, R.mipmap.signup_fb_bg, R.mipmap.blue_curve_bg};
     Integer[] id_selected = {R.mipmap.alice_bg, R.mipmap.signup_fb_bg_two, R.mipmap.blue_curve_bg_two};
     int mHour, mMinute;
@@ -66,6 +75,8 @@ public class VoiceSelect_Activity extends AppCompatActivity {
     String voice_id = "", mypreference = "mypref", user_id = "user_id", userID, status = "0";
     List<String> voiceId = new ArrayList<>();
     RelativeLayout progress_bar;
+    private static long back_pressed;
+//    private LoopView loopView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +97,9 @@ public class VoiceSelect_Activity extends AppCompatActivity {
         toggle_on = findViewById(R.id.toggleButton_on);
         toggle_off = findViewById(R.id.toggleButton_off);
         progress_bar = findViewById(R.id.voice_select_prog);
+//        loopView=findViewById(R.id.loop_view);
+
+
 
         progress_bar.setVisibility(View.VISIBLE);
 
@@ -99,6 +113,8 @@ public class VoiceSelect_Activity extends AppCompatActivity {
         retrofitGetVoice();
 
         img_back_tool = (ImageView) findViewById(R.id.img_back_tool);
+
+        img_back_tool.setVisibility(View.INVISIBLE);
 
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,20 +156,81 @@ public class VoiceSelect_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Launch Time Picker Dialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(VoiceSelect_Activity.this,
-                        new TimePickerDialog.OnTimeSetListener() {
+//                TimePickerDialog timePickerDialog = new TimePickerDialog(VoiceSelect_Activity.this,
+//                        new TimePickerDialog.OnTimeSetListener() {
+//
+//                            @Override
+//                            public void onTimeSet(TimePicker view, int hourOfDay,
+//                                                  int minute) {
+//
+//                                time.setText(hourOfDay + ":" + minute);
+//                            }
+//                        }, mHour, mMinute, false);
+//                timePickerDialog.show();
 
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
 
-                                time.setText(hourOfDay + ":" + minute);
+                View dialogView = getLayoutInflater().inflate(R.layout.time_picker_dialog, null);
+                final BottomSheetDialog dialog = new BottomSheetDialog(VoiceSelect_Activity.this);
+                dialog.setContentView(dialogView);
+                dialog.show();
+//
+//                final Dialog dialog = new Dialog(VoiceSelect_Activity.this);
+//
+//                dialog.setContentView(R.layout.time_picker_dialog);
+//
+                final TimePicker timePicker = (TimePicker) dialog.findViewById(R.id.time_picker);
+                TextView cancel_txt = (TextView) dialog.findViewById(R.id.timePicker_txt_cancel);
+                TextView done_txt = (TextView) dialog.findViewById(R.id.timePicker_txt_done);
+
+//                Window window = dialog.getWindow();
+//                window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                window.setGravity(Gravity.BOTTOM);
+
+                assert cancel_txt != null;
+                cancel_txt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                assert timePicker != null;
+                timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+
+//                        Toast.makeText(VoiceSelect_Activity.this, "Time:"+i+ ":"+ i1, Toast.LENGTH_SHORT).show();
+//                       time.setText(""+i + ":"+ i1 + "AM");
+
+                        if(i>=0 && i<12){
+                            time.setText(""+i + ":"+ i1 + " AM");
+                        } else {
+                            if(i == 12){
+                                time.setText(""+i + ":"+ i1 + " PM");
+                            } else{
+                                i = i -12;
+                                time.setText(""+i + ":"+ i1 + " PM");
                             }
-                        }, mHour, mMinute, false);
-                timePickerDialog.show();
+                        }
+                    }
+                });
+                assert done_txt != null;
+                done_txt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialog.dismiss();
+                    }
+                });
+
+
+
+                dialog.show();
 
             }
         });
+
 
         toggle_off.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +250,7 @@ public class VoiceSelect_Activity extends AppCompatActivity {
             }
         });
     }
+
 
 
     public void retrofitGetVoice() {
@@ -303,5 +381,13 @@ public class VoiceSelect_Activity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
     }
 }

@@ -75,7 +75,7 @@ public class AccountSettingActivityNew extends BaseActivity {
     CustomBoldEditText tv_firstname, tv_password, tv_new_password, tv_confirm_password;
     String path, mediaPath;
     MultipartBody.Part part;
-    File file;
+    File file, createdfile;
     //    File savedFile = null;
     Uri uri;
     //    Dialog dialog;
@@ -191,7 +191,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                     return;
                 }
                 if (path != null) {
-                    file = new File(path);
+//                    file = new File(path);
                     RequestBody fileReqBody = RequestBody.create(MediaType.parse("*image/*"), file);
                     part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
                 } else {
@@ -204,7 +204,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                 SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
                 userID = pref.getString(user_id, "");
 
-                RequestBody.create(MediaType.parse("text/plain"), "image-type");
+//                RequestBody.create(MediaType.parse("text/plain"), "image-type");
                 RequestBody userId = RequestBody.create(MediaType.parse("text/plain"), userID);
                 RequestBody name = RequestBody.create(MediaType.parse("text/plain"), tv_firstname.getText().toString());
                 RequestBody oldPaswword = RequestBody.create(MediaType.parse("text/plain"), tv_password.getText().toString());
@@ -327,16 +327,16 @@ public class AccountSettingActivityNew extends BaseActivity {
         if (requestCode == MY_CAMERA_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(cameraIntent, CAMERA_REQUEST);
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         } else if (requestCode == MY_GALLERY_PERMISSION_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, GALLERY_REQUEST);
+                Toast.makeText(this, "gallery permission granted", Toast.LENGTH_LONG).show();
+//                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(pickPhoto, GALLERY_REQUEST);
             } else {
                 Toast.makeText(this, "gallery permission denied", Toast.LENGTH_LONG).show();
             }
@@ -350,8 +350,9 @@ public class AccountSettingActivityNew extends BaseActivity {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case 0:
-                    if (data != null) {
-                        imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                    if (path != null) {
+                        file = new File(path);
+                        imageView.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
                     }
                     break;
                 case 1:
@@ -360,17 +361,17 @@ public class AccountSettingActivityNew extends BaseActivity {
                         imageView.setImageURI(imageData);
 
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
                         Cursor cursor = getContentResolver().query(imageData, filePathColumn, null, null, null);
                         assert cursor != null;
                         cursor.moveToFirst();
 
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         mediaPath = cursor.getString(columnIndex);
-//                        imageView.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                         cursor.close();
 
                         path = mediaPath;
+
+                        file = new File(mediaPath);
                     }
                     break;
             }
@@ -413,7 +414,7 @@ public class AccountSettingActivityNew extends BaseActivity {
                             if (cameraIntent.resolveActivity(getPackageManager()) != null) {
                                 // Create the File where the photo should go
                                 try {
-                                    File file = null;
+                                    createdfile = null;
                                     file = createImageFile();
                                     // Continue only if the File was successfully created
                                     Uri photoURI = FileProvider.getUriForFile(AccountSettingActivityNew.this,
@@ -465,4 +466,5 @@ public class AccountSettingActivityNew extends BaseActivity {
         });
         builder.show();
     }
+
 }

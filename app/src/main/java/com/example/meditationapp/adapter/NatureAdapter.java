@@ -1,6 +1,7 @@
 package com.example.meditationapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditationapp.ModelClasses.NatureData;
 import com.example.meditationapp.R;
+import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
+import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
+import com.example.meditationapp.javaActivities.Test;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,9 +40,36 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull itemHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final itemHolder holder, final int position) {
         Picasso.get().load(nature.get(position).getImages()).into(holder.image);
-        Log.e("nature", String.valueOf(nature.size()));
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+//                if (nature.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+//
+//                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+//                    intent.putExtra("song", natureMusic);
+//                    intent.putExtra("nature_id", nature_id);
+//                    intent.putExtra("nature_name", nature_name);
+//                    startActivity(intent);
+//                }
+//                else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+//
+//                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+//                    intent.putExtra("song", natureMusic);
+//                    intent.putExtra("nature_id", nature_id);
+//                    intent.putExtra("nature_name", nature_name);
+//                    startActivity(intent);
+//                }
+
+                Intent intent = new Intent(context, CreativityAffirmationActivityNew.class);
+                intent.putExtra("song", nature.get(position).getSongs());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
+        Log.e("songs",nature.get(position).getSongs());
     }
 
     @Override
