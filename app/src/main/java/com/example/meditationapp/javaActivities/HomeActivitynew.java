@@ -26,14 +26,15 @@ import com.example.meditationapp.JavaFragment.SoundFragment;
 import com.example.meditationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class HomeActivitynew extends BaseActivity {
 
-    private LinearLayout lib,sound,record,account;
-    public static ImageView img_bottom_lib,img_bottom_sound,img_bottom_record,img_bottom_account;
+    private LinearLayout lib, sound, record, account;
+    public static ImageView img_bottom_lib, img_bottom_sound, img_bottom_record, img_bottom_account;
     private FrameLayout container;
     private final static String TAG_FRAGMENT = "TAG_FRAGMENT";
     boolean check;
@@ -43,12 +44,14 @@ public class HomeActivitynew extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_activity);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel= new NotificationChannel("MyNotifications","MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("MyNotifications", "MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
             NotificationManager manager = getSystemService(NotificationManager.class);
             assert manager != null;
             manager.createNotificationChannel(channel);
         }
+
+//        FirebaseApp.initializeApp(this);
 
         FirebaseMessaging.getInstance().subscribeToTopic("gernal")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -57,11 +60,11 @@ public class HomeActivitynew extends BaseActivity {
 
                         String msg = "Successfull";
 
-                        if (!task.isSuccessful()){
+                        if (!task.isSuccessful()) {
                             msg = "Faild";
                         }
-                        Log.e("Message",msg);
-                        Toast.makeText(HomeActivitynew.this, ""+msg, Toast.LENGTH_SHORT).show();
+                        Log.e("Message", msg);
+                        Toast.makeText(HomeActivitynew.this, "" + msg, Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -70,13 +73,12 @@ public class HomeActivitynew extends BaseActivity {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
 
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
                             String token = task.getResult().getToken();
                             Log.e("GERNATE TOKEN :  ", token);
-                        }
-                        else {
-                             Log.e("TOKEN IS NOT GERNATED: ",task.getException().getMessage());
+                        } else {
+                            Log.e("TOKEN IS NOT GERNATED: ", task.getException().getMessage());
 
                         }
                     }
@@ -94,9 +96,9 @@ public class HomeActivitynew extends BaseActivity {
         img_bottom_account = findViewById(R.id.img_bottom_account);
         container = findViewById(R.id.container);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("myPref",0);
+        SharedPreferences sharedPreferences = getSharedPreferences("myPref", 0);
 //        sharedPreferences.getString("pref","");
-        check = sharedPreferences.getBoolean("Payment",true);
+        check = sharedPreferences.getBoolean("Payment", true);
 
 //        if (check){
 //
@@ -139,16 +141,16 @@ public class HomeActivitynew extends BaseActivity {
 ////            paymentData();
 //        }
 
-            img_bottom_lib.setVisibility(View.VISIBLE);
-            img_bottom_sound.setVisibility(View.GONE);
-            img_bottom_record.setVisibility(View.GONE);
-            img_bottom_account.setVisibility(View.GONE);
+        img_bottom_lib.setVisibility(View.VISIBLE);
+        img_bottom_sound.setVisibility(View.GONE);
+        img_bottom_record.setVisibility(View.GONE);
+        img_bottom_account.setVisibility(View.GONE);
 
-            LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container,libraryFragmentNew);
-            fragmentTransaction.addToBackStack("");
-            fragmentTransaction.commit();
+        LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, libraryFragmentNew);
+        fragmentTransaction.addToBackStack("");
+        fragmentTransaction.commit();
 
 
         lib.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +164,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 LibraryFragmentNew libraryFragmentNew = new LibraryFragmentNew();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,libraryFragmentNew,TAG_FRAGMENT);
+                fragmentTransaction.replace(R.id.container, libraryFragmentNew, TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -180,7 +182,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 SoundFragment soundFragment = new SoundFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,soundFragment,TAG_FRAGMENT);
+                fragmentTransaction.replace(R.id.container, soundFragment, TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -198,7 +200,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 RecordFragment recordFragment = new RecordFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,recordFragment,TAG_FRAGMENT);
+                fragmentTransaction.replace(R.id.container, recordFragment, TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -216,7 +218,7 @@ public class HomeActivitynew extends BaseActivity {
 
                 AccountFragment accountFragment = new AccountFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,accountFragment,TAG_FRAGMENT);
+                fragmentTransaction.replace(R.id.container, accountFragment, TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
 
@@ -230,13 +232,13 @@ public class HomeActivitynew extends BaseActivity {
         if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
         } else {
-            Intent intent =new Intent(HomeActivitynew.this,LogoutActivity.class);
+            Intent intent = new Intent(HomeActivitynew.this, LogoutActivity.class);
             startActivity(intent);
         }
 
     }
 
-    public void paymentData(){
+    public void paymentData() {
 
         img_bottom_lib.setVisibility(View.GONE);
         img_bottom_sound.setVisibility(View.VISIBLE);
@@ -245,7 +247,7 @@ public class HomeActivitynew extends BaseActivity {
 
         SoundFragment soundFragment = new SoundFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container,soundFragment,TAG_FRAGMENT);
+        fragmentTransaction.replace(R.id.container, soundFragment, TAG_FRAGMENT);
         fragmentTransaction.addToBackStack("");
         fragmentTransaction.commit();
     }
