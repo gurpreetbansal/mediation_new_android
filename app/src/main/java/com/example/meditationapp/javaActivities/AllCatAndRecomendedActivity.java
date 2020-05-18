@@ -132,7 +132,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
                         recomandedModelClasses = resource.getData().getRecomended();
 
 
-                        AllCategoryAdapter allCategoryAdapter = new AllCategoryAdapter(AllCatAndRecomendedActivity.this, resource.getData().getAffirmation());
+                        AllCategoryAdapter allCategoryAdapter = new AllCategoryAdapter(AllCatAndRecomendedActivity.this, resource.getData().getSession());
                         categoryRV.setAdapter(allCategoryAdapter);
 
                         final RecomendedAdapter recomendedAdapter = new RecomendedAdapter(AllCatAndRecomendedActivity.this, resource.getData().getRecomended());

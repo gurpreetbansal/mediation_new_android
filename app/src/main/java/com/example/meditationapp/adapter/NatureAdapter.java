@@ -41,7 +41,7 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
 
     @Override
     public void onBindViewHolder(@NonNull final itemHolder holder, final int position) {
-        Picasso.get().load(nature.get(position).getImages()).into(holder.image);
+//        Picasso.get().load(nature.get(position).getImages()).into(holder.image);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

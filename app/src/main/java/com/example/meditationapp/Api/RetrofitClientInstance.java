@@ -9,7 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://clientstagingdev.com/meditation/api/";
+    private static final String BASE_URL = "http://meditation.customer-devreview.com/api/";
+//    https://clientstagingdev.com/meditation/api/
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

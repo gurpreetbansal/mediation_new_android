@@ -7,10 +7,10 @@ public class CategoryDataModelClass {
 
     @SerializedName("id")
     @Expose
-    private Object id;
+    private Integer id;
     @SerializedName("cat_id")
     @Expose
-    private Object catId;
+    private Integer catId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -38,41 +38,20 @@ public class CategoryDataModelClass {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-    @SerializedName("affirmation_songs")
-    @Expose
-    private Object affirmationSongs;
-    @SerializedName("affirmation_images")
-    @Expose
-    private Object affirmationImages;
-    @SerializedName("affirmation_duration")
-    @Expose
-    private Object affirmationDuration;
-    @SerializedName("affirmation_title")
-    @Expose
-    private Object affirmationTitle;
-    @SerializedName("affirmation_discription")
-    @Expose
-    private Object affirmationDiscription;
-    @SerializedName("affirmation_favrites")
-    @Expose
-    private Object affirmationFavrites;
-    @SerializedName("paymentStatus")
-    @Expose
-    private Integer paymentStatus;
 
-    public Object getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Object id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Object getCatId() {
+    public Integer getCatId() {
         return catId;
     }
 
-    public void setCatId(Object catId) {
+    public void setCatId(Integer catId) {
         this.catId = catId;
     }
 
@@ -146,62 +125,6 @@ public class CategoryDataModelClass {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Object getAffirmationSongs() {
-        return affirmationSongs;
-    }
-
-    public void setAffirmationSongs(Object affirmationSongs) {
-        this.affirmationSongs = affirmationSongs;
-    }
-
-    public Object getAffirmationImages() {
-        return affirmationImages;
-    }
-
-    public void setAffirmationImages(Object affirmationImages) {
-        this.affirmationImages = affirmationImages;
-    }
-
-    public Object getAffirmationDuration() {
-        return affirmationDuration;
-    }
-
-    public void setAffirmationDuration(Object affirmationDuration) {
-        this.affirmationDuration = affirmationDuration;
-    }
-
-    public Object getAffirmationTitle() {
-        return affirmationTitle;
-    }
-
-    public void setAffirmationTitle(Object affirmationTitle) {
-        this.affirmationTitle = affirmationTitle;
-    }
-
-    public Object getAffirmationDiscription() {
-        return affirmationDiscription;
-    }
-
-    public void setAffirmationDiscription(Object affirmationDiscription) {
-        this.affirmationDiscription = affirmationDiscription;
-    }
-
-    public Object getAffirmationFavrites() {
-        return affirmationFavrites;
-    }
-
-    public void setAffirmationFavrites(Object affirmationFavrites) {
-        this.affirmationFavrites = affirmationFavrites;
-    }
-
-    public Integer getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(Integer paymentStatus) {
-        this.paymentStatus = paymentStatus;
     }
 
 }
