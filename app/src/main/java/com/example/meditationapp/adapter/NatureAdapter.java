@@ -41,11 +41,10 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
 
     @Override
     public void onBindViewHolder(@NonNull final itemHolder holder, final int position) {
-//        Picasso.get().load(nature.get(position).getImages()).into(holder.image);
+        Picasso.get().load(nature.get(position).getImages()).into(holder.image);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
 //                if (nature.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
 //
@@ -69,7 +68,7 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
                 holder.itemView.getContext().startActivity(intent);
             }
         });
-        Log.e("songs",nature.get(position).getSongs());
+        Log.e("songs", nature.get(position).getSongs());
     }
 
     @Override

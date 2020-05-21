@@ -7,7 +7,7 @@ import java.util.List;
 
 public class BothDataSoundAndScapes {
 
-    @SerializedName("SoundScopes")
+    @SerializedName("nature")
     @Expose
     private List<SoundScapeModelClass> soundScopes = null;
     @SerializedName("Music")

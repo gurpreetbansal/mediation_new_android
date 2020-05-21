@@ -35,15 +35,15 @@ public class SoundScapeModelClass {
     @SerializedName("nature_status")
     @Expose
     private Integer natureStatus;
-    @SerializedName("images")
-    @Expose
-    private String images;
-    @SerializedName("lockUnlockStatus")
-    @Expose
-    private Integer lockUnlockStatus;
-    @SerializedName("songs")
-    @Expose
-    private String songs;
+//    @SerializedName("images")
+//    @Expose
+//    private String images;
+//    @SerializedName("lockUnlockStatus")
+//    @Expose
+//    private Integer lockUnlockStatus;
+//    @SerializedName("songs")
+//    @Expose
+//    private String songs;
 
     public Integer getNatureId() {
         return natureId;
@@ -125,27 +125,27 @@ public class SoundScapeModelClass {
         this.natureStatus = natureStatus;
     }
 
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
-
-    public Integer getLockUnlockStatus() {
-        return lockUnlockStatus;
-    }
-
-    public void setLockUnlockStatus(Integer lockUnlockStatus) {
-        this.lockUnlockStatus = lockUnlockStatus;
-    }
-
-    public String getSongs() {
-        return songs;
-    }
-
-    public void setSongs(String songs) {
-        this.songs = songs;
-    }
+//    public String getImages() {
+//        return images;
+//    }
+//
+//    public void setImages(String images) {
+//        this.images = images;
+//    }
+//
+//    public Integer getLockUnlockStatus() {
+//        return lockUnlockStatus;
+//    }
+//
+//    public void setLockUnlockStatus(Integer lockUnlockStatus) {
+//        this.lockUnlockStatus = lockUnlockStatus;
+//    }
+//
+//    public String getSongs() {
+//        return songs;
+//    }
+//
+//    public void setSongs(String songs) {
+//        this.songs = songs;
+//    }
 }

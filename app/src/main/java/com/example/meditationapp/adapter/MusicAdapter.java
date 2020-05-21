@@ -41,7 +41,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 
         final MusicModelClass musicModelClass = musicModelClasses.get(position);
 
-        Picasso.get().load(musicModelClass.getImages()).into(holder.backImageView);
+        Picasso.get().load(musicModelClass.getNatureImage()).into(holder.backImageView);
 
         holder.backImageView.setOnClickListener(new View.OnClickListener() {
             @Override

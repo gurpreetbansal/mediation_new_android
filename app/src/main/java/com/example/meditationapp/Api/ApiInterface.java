@@ -109,7 +109,7 @@ public interface ApiInterface {
     Call<GetSoundAndScapeResponse> getMusicList(@Query("user_id") String userId);
 
     @POST("payment/userPayment")
-    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id,@Query("payment_type") String payment_type,
+    Call<GetUserPayModelClass> getUserPayData(@Query("users_id") String user_id, @Query("payment_type") String payment_type,
                                               @Query("payment_id") String payment_id, @Query("payment_amount") String payment_amount,
                                               @Query("payment_date") String payment_date, @Query("payment_plan_id") String plan_id,
                                               @Query("payment_plan_name") String plan_name, @Query("currency_code") String currency_code,

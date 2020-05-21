@@ -152,7 +152,7 @@ public class SoundFragment extends Fragment {
                          @Override
                          public void onClick(View view, int position) {
 
-                             String nature = soundScapeModelClass.get(position).getSongs();
+                             String nature = soundScapeModelClass.get(position).getNatureSound();
                              int id = soundScapeModelClass.get(position).getNatureId();
                              String nature_id = String.valueOf(id);
                              String nature_name = soundScapeModelClass.get(position).getNatureName();
@@ -161,22 +161,22 @@ public class SoundFragment extends Fragment {
                              Log.e("NATURE NAME : ", nature_name);
 
 
-                 if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
-
-                     Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                     intent.putExtra("song", nature);
-                     intent.putExtra("nature_id", nature_id);
-                     intent.putExtra("nature_name", nature_name);
-                     startActivity(intent);
-                 }
-                 else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
-
-                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-                     intent.putExtra("song", nature);
-                     intent.putExtra("nature_id", nature_id);
-                     intent.putExtra("nature_name", nature_name);
-                     startActivity(intent);
-                 }
+//                 if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+//
+//                     Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+//                     intent.putExtra("song", nature);
+//                     intent.putExtra("nature_id", nature_id);
+//                     intent.putExtra("nature_name", nature_name);
+//                     startActivity(intent);
+//                 }
+//                 else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+//
+//                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+//                     intent.putExtra("song", nature);
+//                     intent.putExtra("nature_id", nature_id);
+//                     intent.putExtra("nature_name", nature_name);
+//                     startActivity(intent);
+//                 }
 
                          }
 
@@ -190,7 +190,7 @@ public class SoundFragment extends Fragment {
                             @Override
                             public void onClick(View view, int position) {
 
-                                String natureMusic = musicModelClasses.get(position).getSongs();
+                                String natureMusic = musicModelClasses.get(position).getNatureSound();
                                 int id = musicModelClasses.get(position).getNatureId();
                                 String nature_id = String.valueOf(id);
                                 String nature_name = musicModelClasses.get(position).getNatureName();
@@ -199,22 +199,22 @@ public class SoundFragment extends Fragment {
                                 Log.e("MUSIC_SOUND_URL :  ", natureMusic);
 
 
-                                if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
-
-                                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                    intent.putExtra("song", natureMusic);
-                                    intent.putExtra("nature_id", nature_id);
-                                    intent.putExtra("nature_name", nature_name);
-                                    startActivity(intent);
-                                }
-                                else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
-
-                                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
-                                    intent.putExtra("song", natureMusic);
-                                    intent.putExtra("nature_id", nature_id);
-                                    intent.putExtra("nature_name", nature_name);
-                                    startActivity(intent);
-                                }
+//                                if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
+//
+//                                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+//                                    intent.putExtra("song", natureMusic);
+//                                    intent.putExtra("nature_id", nature_id);
+//                                    intent.putExtra("nature_name", nature_name);
+//                                    startActivity(intent);
+//                                }
+//                                else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)){
+//
+//                                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+//                                    intent.putExtra("song", natureMusic);
+//                                    intent.putExtra("nature_id", nature_id);
+//                                    intent.putExtra("nature_name", nature_name);
+//                                    startActivity(intent);
+//                                }
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
 
                                 startActivity(intent);
