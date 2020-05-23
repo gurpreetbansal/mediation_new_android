@@ -18,6 +18,7 @@ import com.example.meditationapp.ModelClasses.GetVoiceResponse;
 import com.example.meditationapp.ModelClasses.LoginModelClass;
 import com.example.meditationapp.ModelClasses.LoginSendData;
 import com.example.meditationapp.ModelClasses.LogoutModelClass;
+import com.example.meditationapp.ModelClasses.MusicPlayerResponse;
 import com.example.meditationapp.ModelClasses.PostAffirmation;
 import com.example.meditationapp.ModelClasses.SetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.SetCategoryResponse;
@@ -130,6 +131,9 @@ public interface ApiInterface {
 
     @POST("collections/myfavoritesongs")
     Call<GetFavoritesModelClass> getFavorites(@Query("user_id") String user_id);
+
+    @POST("collections/musicPlayer")
+    Call<MusicPlayerResponse> getMusicResponse(@Query("user_id") String user_id);
 
 //    @POST("collections/postMySongs")
 //    Call<PostAffirmation> postAffirmation(@Query("user_id") String userId, @Query("songs_title") String songTitle,

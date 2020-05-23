@@ -5,8 +5,11 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActivityManager;
+import android.app.MediaRouteButton;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,10 +26,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
+import com.example.meditationapp.Api.ApiInterface;
+import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
+import com.example.meditationapp.ModelClasses.MusicPlayerResponse;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.MainActivity;
+import com.example.meditationapp.adapter.PlayerNatureAdapter;
 import com.example.meditationapp.utilityClasses.BackgroundSoundService;
 import com.example.meditationapp.utilityClasses.NatureSoundService;
 import com.squareup.picasso.Picasso;
@@ -38,22 +46,27 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
-    LinearLayout ll_options, img_vol_bar;
-    ConstraintLayout ll_options_cl;
+    public static LinearLayout ll_options, img_vol_bar;
     ImageView musicbtn, back_btn;
     static AppCompatImageView player_play, player_backward, player_forward, player_vol_low, player_vol_high;
     CustomBoldtextView player_timer;
-    String song;
+    String song,userID;
     int total_duration, current_time, volume, default_volume;
     Boolean playing;
     CircularSeekBar circularSeekBar;
     SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
     AudioManager audioManager;
+    RecyclerView nature_recycler;
     ArrayList<String> playallList;
+    ApiInterface apiInterface;
+    String mypreference = "mypref", user_id = "user_id";
     //    private GuiReceiver receiver;
 
     private Handler handler = new Handler();
@@ -65,6 +78,8 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
 //        SharedPreferences preferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
 //        playing = preferences.getBoolean("playing", false);
+        SharedPreferences pref = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        userID = pref.getString(user_id, "");
 
         ll_options = findViewById(R.id.ll_options);
         musicbtn = findViewById(R.id.img_music);
@@ -72,9 +87,9 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_play = findViewById(R.id.player_play);
         player_timer = findViewById(R.id.player_timer);
         back_btn = findViewById(R.id.img_back_four);
-        ll_options_cl = findViewById(R.id.ll_options_cl);
         circularSeekBar = findViewById(R.id.seekbar);
         img_vol_bar = findViewById(R.id.player_vol);
+        nature_recycler = findViewById(R.id.player_nature_recyclerView);
         player_backward = findViewById(R.id.player_backward);
         player_forward = findViewById(R.id.player_forward);
         player_vol_low = findViewById(R.id.player_vol_low);
@@ -90,6 +105,11 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 //            song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
         }
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CreativityAffirmationActivityNew.this, LinearLayoutManager.HORIZONTAL, false);
+        nature_recycler.setLayoutManager(linearLayoutManager);
+
+        getNatureData(userID);
+
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +120,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_play.setImageResource(R.mipmap.pause);
         Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
         m_intent.putExtra("main_song", song);
-        m_intent.putStringArrayListExtra("playlist",playallList);
+        m_intent.putStringArrayListExtra("playlist", playallList);
         m_intent.putExtra("player", "Play");
         startService(m_intent);
         playing = true;
@@ -205,8 +225,8 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         musicbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ll_options_cl.getVisibility() == View.VISIBLE) {
-                    ll_options_cl.setVisibility(View.INVISIBLE);
+                if (ll_options.getVisibility() == View.VISIBLE) {
+                    ll_options.setVisibility(View.INVISIBLE);
                     if (img_vol_bar.getVisibility() == View.VISIBLE) {
                         img_vol_bar.setVisibility(View.INVISIBLE);
                     }
@@ -214,25 +234,25 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                         stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
                     }
                 } else {
-                    ll_options_cl.setVisibility(View.VISIBLE);
+                    ll_options.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        ll_options_cl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                img_vol_bar.setVisibility(View.VISIBLE);
-                if (isMyServiceRunning(NatureSoundService.class)) {
-                    stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
-                } else {
-                    Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
-                    n_intent.putExtra("nature_song", "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
-                    n_intent.putExtra("player", "Play");
-                    startService(n_intent);
-                }
-            }
-        });
+//        ll_options.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                img_vol_bar.setVisibility(View.VISIBLE);
+//                if (isMyServiceRunning(NatureSoundService.class)) {
+//                    stopService(new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class));
+//                } else {
+//                    Intent n_intent = new Intent(CreativityAffirmationActivityNew.this, NatureSoundService.class);
+//                    n_intent.putExtra("nature_song", "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
+//                    n_intent.putExtra("player", "Play");
+//                    startService(n_intent);
+//                }
+//            }
+//        });
 
         player_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -309,7 +329,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         return stringTotalTime;
     }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
+    public boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
@@ -402,4 +422,36 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
         }
     };
+
+    public void getNatureData(String user_Id) {
+        apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
+        Call<MusicPlayerResponse> call = apiInterface.getMusicResponse(user_Id);
+
+        call.enqueue(new Callback<MusicPlayerResponse>() {
+            @Override
+            public void onResponse(Call<MusicPlayerResponse> call, Response<MusicPlayerResponse> response) {
+                if (response.isSuccessful()){
+
+                    MusicPlayerResponse resource = response.body();
+                    if (resource.getSuccess()){
+                        PlayerNatureAdapter adapter = new PlayerNatureAdapter(CreativityAffirmationActivityNew.this,resource.getData().getNature());
+                        nature_recycler.setAdapter(adapter);
+
+                    }else {
+                        Toast.makeText(CreativityAffirmationActivityNew.this, ""+resource.getMessages(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Toast.makeText(CreativityAffirmationActivityNew.this, ""+response.message(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MusicPlayerResponse> call, Throwable t) {
+                Toast.makeText(CreativityAffirmationActivityNew.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
