@@ -17,12 +17,15 @@ import com.example.meditationapp.R;
 import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BackgroundSoundService extends Service {
 
     private static final String TAG = "BackgroundSoundService";
     MediaPlayer mediaPlayer;
     String song, time;
+    ArrayList<String> playlist;
+    int i = 1;
     //    int durationTimer;
     private boolean isPrepared;
 
@@ -45,6 +48,7 @@ public class BackgroundSoundService extends Service {
 
             if (intent.getStringExtra("player").equals("Play")) {
                 song = intent.getStringExtra("main_song");
+                playlist = intent.getStringArrayListExtra("playlist");
 //                durationTimer = intent.getIntExtra("duration", 0);
 //                time = milliSecondsToTimer(durationTimer);
                 if (song != null) {
@@ -69,7 +73,34 @@ public class BackgroundSoundService extends Service {
                     mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
-                            CreativityAffirmationActivityNew.pause();
+                            if (playlist != null) {
+                                if (playlist.size() >= i) {
+                                    Intent m_intent = new Intent(BackgroundSoundService.this,BackgroundSoundService.class);
+                                    m_intent.putExtra("main_song", song);
+                                    m_intent.putStringArrayListExtra("playlist", playlist);
+                                    m_intent.putExtra("player", "Play");
+                                    startService(m_intent);
+
+//                                    try {
+//                                        mediaPlayer.setDataSource(playlist.get(i + 1));
+//                                        mediaPlayer.prepareAsync();
+//                                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                                            @Override
+//                                            public void onPrepared(MediaPlayer mp) {
+//                                                mediaPlayer.start();
+//                                                sendInfoBroadcast();
+//                                            }
+//                                        });
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+                                    i++;
+                                } else {
+                                    CreativityAffirmationActivityNew.pause();
+                                }
+                            } else {
+                                CreativityAffirmationActivityNew.pause();
+                            }
                         }
                     });
 //                            }

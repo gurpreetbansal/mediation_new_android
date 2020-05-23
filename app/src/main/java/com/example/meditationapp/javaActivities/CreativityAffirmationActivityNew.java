@@ -32,6 +32,9 @@ import com.example.meditationapp.utilityClasses.NatureSoundService;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
@@ -50,6 +53,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
     AudioManager audioManager;
+    ArrayList<String> playallList;
     //    private GuiReceiver receiver;
 
     private Handler handler = new Handler();
@@ -76,9 +80,14 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_vol_low = findViewById(R.id.player_vol_low);
         player_vol_high = findViewById(R.id.player_vol_high);
 
+        playallList = getIntent().getStringArrayListExtra("playlist");
+
         song = getIntent().getStringExtra("song");
         if (song == null) {
-            song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
+            if (playallList.size() != 0) {
+                song = playallList.get(0);
+            }
+//            song = "https://clientstagingdev.com/meditation/public/voice/1586425636.mp3";
         }
 
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -88,10 +97,10 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
         });
 
-
         player_play.setImageResource(R.mipmap.pause);
         Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
         m_intent.putExtra("main_song", song);
+        m_intent.putStringArrayListExtra("playlist",playallList);
         m_intent.putExtra("player", "Play");
         startService(m_intent);
         playing = true;

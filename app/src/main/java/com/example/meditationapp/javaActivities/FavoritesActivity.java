@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ import com.example.meditationapp.ModelClasses.FavoriteModelClass.SubFavoritesMod
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.FavoriteAdapter.FavoritesCategoryAdapter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,9 +39,10 @@ public class FavoritesActivity extends AppCompatActivity {
     String mypreference = "mypref", user_id = "user_id";
     CustomBoldtextView favourite_playall;
     ApiInterface apiInterface;
-    List<FavoritesModelClass> favoritesModelClasses;
-    List<SubFavoritesModelClass> subFavoritesModelClasses;
+    List<String> playlist;
     ImageView img_tool_bar_three_back;
+
+    GetFavoritesModelClass resorce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
+        Log.e("aaaa",userID);
 
         img_tool_bar_three_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +69,7 @@ public class FavoritesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FavoritesActivity.this,CreativityAffirmationActivityNew.class);
 //                intent.putExtra("demo","https://clientstagingdev.com/meditation/public/voice/1586425636.mp3");
+                intent.putStringArrayListExtra("playlist", (ArrayList<String>) resorce.getData().getPlayall());
                 startActivity(intent);
             }
         });
@@ -85,16 +91,16 @@ public class FavoritesActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
 
-                    GetFavoritesModelClass resorce = response.body();
+                    resorce = response.body();
                     assert resorce != null;
                     if (resorce.getSuccess()) {
 
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(FavoritesActivity.this);
                         favListRV.setLayoutManager(linearLayoutManager);
-                        FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this, resorce.getData());
+                        FavoritesCategoryAdapter favoritesCategoryAdapter = new FavoritesCategoryAdapter(FavoritesActivity.this, resorce.getData().getCategories());
                         favListRV.setAdapter(favoritesCategoryAdapter);
 
-//                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FavoritesActivity.this, ""+resorce.getMessages(), Toast.LENGTH_SHORT).show();
 
                     } else {
                         Toast.makeText(FavoritesActivity.this, "" + resorce.getMessages(), Toast.LENGTH_SHORT).show();

@@ -40,6 +40,7 @@ public class SupportActivity_new extends AppCompatActivity {
         title = findViewById(R.id.ed_addtitle);
         description = findViewById(R.id.ed_add_des);
         submit = findViewById(R.id.txt_sumbit);
+        img_back_support = findViewById(R.id.img_back_support);
 
         SharedPreferences preferences = getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
