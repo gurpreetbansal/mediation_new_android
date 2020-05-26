@@ -16,29 +16,29 @@ class My_RecordingActivity : AppCompatActivity() {
         img_tool_bar_three_back.setOnClickListener(View.OnClickListener {
            finish()
         })
-        ll_weight_recording.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@My_RecordingActivity, WeightActivity::class.java)
-            startActivity(voice)
-        })
-        ll_professional_recording.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@My_RecordingActivity, ProfessionalActivity::class.java)
-            startActivity(voice)
-        })
-        ll_stress_recording.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@My_RecordingActivity, StressActivity::class.java)
-            startActivity(voice)
-        })
-        ll_relationship_recording.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@My_RecordingActivity, RelationshipActivity::class.java)
-            startActivity(voice)
-        })
-        ll_athletic_recording.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@My_RecordingActivity, AthleticActivity::class.java)
-            startActivity(voice)
-        })
-        ll_health_recording.setOnClickListener(View.OnClickListener {
-            val voice = Intent(this@My_RecordingActivity, HealthActivity::class.java)
-            startActivity(voice)
-        })
+//        ll_weight_recording.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@My_RecordingActivity, WeightActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_professional_recording.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@My_RecordingActivity, ProfessionalActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_stress_recording.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@My_RecordingActivity, StressActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_relationship_recording.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@My_RecordingActivity, RelationshipActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_athletic_recording.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@My_RecordingActivity, AthleticActivity::class.java)
+//            startActivity(voice)
+//        })
+//        ll_health_recording.setOnClickListener(View.OnClickListener {
+//            val voice = Intent(this@My_RecordingActivity, HealthActivity::class.java)
+//            startActivity(voice)
+//        })
     }
 }

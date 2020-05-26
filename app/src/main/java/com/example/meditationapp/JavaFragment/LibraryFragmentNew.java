@@ -54,11 +54,11 @@ import static com.example.meditationapp.javaActivities.HomeActivitynew.img_botto
 import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_record;
 import static com.example.meditationapp.javaActivities.HomeActivitynew.img_bottom_sound;
 
-public class LibraryFragmentNew extends Fragment  {
+public class LibraryFragmentNew extends Fragment {
 
-    CustomBoldtextView ll_weight_lib,txt_home_my_recording,txt_home_my_favourite;
+    CustomBoldtextView ll_weight_lib, txt_home_my_recording, txt_home_my_favourite;
     LinearLayout ll_weight_lib_two;
-    RecyclerView interestRecyclerView, natureRecyclerView,categoryRecyclerView;
+    RecyclerView interestRecyclerView, natureRecyclerView, categoryRecyclerView;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
     ApiInterface apiInterface;
@@ -101,9 +101,9 @@ public class LibraryFragmentNew extends Fragment  {
                 img_bottom_record.setVisibility(View.VISIBLE);
                 img_bottom_account.setVisibility(View.GONE);
 
-                RecordFragment recordFragment = new RecordFragment();
+                RecordFragmentNew recordFragment = new RecordFragmentNew();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container,recordFragment);
+                fragmentTransaction.replace(R.id.container, recordFragment);
                 fragmentTransaction.addToBackStack("");
                 fragmentTransaction.commit();
             }
@@ -113,7 +113,7 @@ public class LibraryFragmentNew extends Fragment  {
             @Override
             public void onClick(View view) {
 
-                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
+                Intent intent = new Intent(getActivity(), FavoritesActivity.class);
                 startActivity(intent);
             }
         });
@@ -151,13 +151,13 @@ public class LibraryFragmentNew extends Fragment  {
         return view;
     }
 
-    private void filter(String text){
+    private void filter(String text) {
 
         List<CategoryData> categoryData = new ArrayList<>();
 
-        for (CategoryData  data : categoryData ){
+        for (CategoryData data : categoryData) {
 
-            if (data.getName().toLowerCase().contains(text.toLowerCase())){
+            if (data.getName().toLowerCase().contains(text.toLowerCase())) {
                 categoryData.add(data);
             }
         }
@@ -177,21 +177,21 @@ public class LibraryFragmentNew extends Fragment  {
 
                         Picasso.get().load(resource.getData().getRandom().getImage()).into(bigMainImage);
 
-                        InterestAdapter interestAdapter = new InterestAdapter(getActivity(),resource.getData().getInterested());
+                        InterestAdapter interestAdapter = new InterestAdapter(getActivity(), resource.getData().getInterested());
                         interestRecyclerView.setAdapter(interestAdapter);
-                        Log.e("interest",String.valueOf(resource.getData().getInterested().size()));
+                        Log.e("interest", String.valueOf(resource.getData().getInterested().size()));
 
-                        NatureAdapter natureAdapter = new NatureAdapter(getActivity(),resource.getData().getNature());
+                        NatureAdapter natureAdapter = new NatureAdapter(getActivity(), resource.getData().getNature());
                         natureRecyclerView.setAdapter(natureAdapter);
-                        Log.e("nature",String.valueOf(resource.getData().getNature().size()));
+                        Log.e("nature", String.valueOf(resource.getData().getNature().size()));
 
-                        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(),resource.getData().getCategories());
+                        CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), resource.getData().getCategories());
                         categoryRecyclerView.setAdapter(categoryAdapter);
-                        Log.e("interest",String.valueOf(resource.getData().getCategories().size()));
+                        Log.e("interest", String.valueOf(resource.getData().getCategories().size()));
 
                         progressBar.setVisibility(View.GONE);
                     }
-                }else {
+                } else {
 
 
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();

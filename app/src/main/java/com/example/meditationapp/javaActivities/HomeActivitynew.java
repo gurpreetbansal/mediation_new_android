@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.app.myapplication.fragment.RecordFragment;
 import com.example.meditationapp.JavaFragment.AccountFragment;
 import com.example.meditationapp.JavaFragment.LibraryFragmentNew;
+import com.example.meditationapp.JavaFragment.RecordFragmentNew;
 import com.example.meditationapp.JavaFragment.SoundFragment;
 import com.example.meditationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -198,7 +199,7 @@ public class HomeActivitynew extends BaseActivity {
                 img_bottom_record.setVisibility(View.VISIBLE);
                 img_bottom_account.setVisibility(View.GONE);
 
-                RecordFragment recordFragment = new RecordFragment();
+                RecordFragmentNew recordFragment = new RecordFragmentNew();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, recordFragment, TAG_FRAGMENT);
                 fragmentTransaction.addToBackStack("");

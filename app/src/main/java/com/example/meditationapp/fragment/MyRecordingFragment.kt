@@ -26,30 +26,30 @@ class MyRecordingFragment : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        ll_weight_recording.setOnClickListener(View.OnClickListener {
-            val weightFragment = WeightFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        ll_professional_recording.setOnClickListener(View.OnClickListener {
-            val weightFragment = ProfessionalFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        ll_stress_recording.setOnClickListener(View.OnClickListener {
-            val weightFragment = StressFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        ll_relationship_recording.setOnClickListener(View.OnClickListener {
-            val weightFragment = RelationshipFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        ll_health_recording.setOnClickListener(View.OnClickListener {
-            val weightFragment = HealthFragment.newInstance()
-            openFragment(weightFragment)
-        })
-        ll_athletic_recording.setOnClickListener(View.OnClickListener {
-            val weightFragment = AthleticFragment.newInstance()
-            openFragment(weightFragment)
-        })
+//        ll_weight_recording.setOnClickListener(View.OnClickListener {
+//            val weightFragment = WeightFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
+//        ll_professional_recording.setOnClickListener(View.OnClickListener {
+//            val weightFragment = ProfessionalFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
+//        ll_stress_recording.setOnClickListener(View.OnClickListener {
+//            val weightFragment = StressFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
+//        ll_relationship_recording.setOnClickListener(View.OnClickListener {
+//            val weightFragment = RelationshipFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
+//        ll_health_recording.setOnClickListener(View.OnClickListener {
+//            val weightFragment = HealthFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
+//        ll_athletic_recording.setOnClickListener(View.OnClickListener {
+//            val weightFragment = AthleticFragment.newInstance()
+//            openFragment(weightFragment)
+//        })
 //        img_tool_bar_three_back.setOnClickListener(View.OnClickListener {
 //            val weightFragment = AthleticFragment.newInstance()
 //            openFragment(weightFragment)

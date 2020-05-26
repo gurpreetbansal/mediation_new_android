@@ -20,6 +20,7 @@ import com.example.meditationapp.ModelClasses.LoginSendData;
 import com.example.meditationapp.ModelClasses.LogoutModelClass;
 import com.example.meditationapp.ModelClasses.MusicPlayerResponse;
 import com.example.meditationapp.ModelClasses.PostAffirmation;
+import com.example.meditationapp.ModelClasses.RecordCategoryModelClass;
 import com.example.meditationapp.ModelClasses.SetCategoriesModelClass;
 import com.example.meditationapp.ModelClasses.SetCategoryResponse;
 import com.example.meditationapp.ModelClasses.SetVoiceModelClass;
@@ -129,11 +130,20 @@ public interface ApiInterface {
                                           @Part("cat_id") RequestBody categoryId, @Part("songs_id") RequestBody songId,
                                           @Part("favrite") RequestBody favourite, @Part MultipartBody.Part part);
 
+//    @Multipart
+//    @POST("collections/postMySongs")
+//    Call<PostAffirmation> postAffirmation(@Part("user_id") RequestBody userId, @Part("songs_title") RequestBody songTitle,
+//                                          @Part("cat_id") RequestBody categoryId, @Part("songs_id") RequestBody songId,
+//                                          @Part("favrite") RequestBody favourite, @Part MultipartBody.Part part);
+
     @POST("collections/myfavoritesongs")
     Call<GetFavoritesModelClass> getFavorites(@Query("user_id") String user_id);
 
     @POST("collections/musicPlayer")
     Call<MusicPlayerResponse> getMusicResponse(@Query("user_id") String user_id);
+
+    @POST("collections/myRecording ")
+    Call<RecordCategoryModelClass> getRecorCategory(@Query("user_id")String user_id);
 
 //    @POST("collections/postMySongs")
 //    Call<PostAffirmation> postAffirmation(@Query("user_id") String userId, @Query("songs_title") String songTitle,

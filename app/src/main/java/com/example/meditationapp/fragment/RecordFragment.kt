@@ -40,32 +40,32 @@ class RecordFragment : Fragment() {
             startActivity(intent)
         })
 
-        ll_weight_recording.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, WeightActivity::class.java)
-            startActivity(intent)
-        })
-        ll_professional_recording.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, ProfessionalActivity::class.java)
-            startActivity(intent)
-        })
-        ll_stress_recording.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, StressActivity::class.java)
-            startActivity(intent)
-        })
-        ll_relationship_recording.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, RelationshipActivity::class.java)
-            startActivity(intent)
-        })
-        ll_athletic_recording.setOnClickListener(View.OnClickListener {
-//            val weightFragment = Ath.newInstance()
-//            openFragment(weightFragment)
-            val intent = Intent(activity, AthleticActivity::class.java)
-            startActivity(intent)
-        })
-        ll_health_recording.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity, HealthActivity::class.java)
-            startActivity(intent)
-        })
+//        ll_weight_recording.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(activity, WeightActivity::class.java)
+//            startActivity(intent)
+//        })
+//        ll_professional_recording.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(activity, ProfessionalActivity::class.java)
+//            startActivity(intent)
+//        })
+//        ll_stress_recording.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(activity, StressActivity::class.java)
+//            startActivity(intent)
+//        })
+//        ll_relationship_recording.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(activity, RelationshipActivity::class.java)
+//            startActivity(intent)
+//        })
+//        ll_athletic_recording.setOnClickListener(View.OnClickListener {
+////            val weightFragment = Ath.newInstance()
+////            openFragment(weightFragment)
+//            val intent = Intent(activity, AthleticActivity::class.java)
+//            startActivity(intent)
+//        })
+//        ll_health_recording.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(activity, HealthActivity::class.java)
+//            startActivity(intent)
+//        })
         img_tool_bar_three_back.setOnClickListener(View.OnClickListener {
             // getActivity()!!.finish();
             if (getFragmentManager()!!.getBackStackEntryCount() != 0) {
