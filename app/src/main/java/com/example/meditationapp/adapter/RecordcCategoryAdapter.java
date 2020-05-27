@@ -55,6 +55,7 @@ public class RecordcCategoryAdapter extends RecyclerView.Adapter<RecordcCategory
 
                 Intent intent = new Intent(context, WeightActivityNew.class);
                 intent.putExtra("category_id", cat_id);
+                intent.putExtra("title",category.get(position).getName());
                 holder.itemView.getContext().startActivity(intent);
 
             }

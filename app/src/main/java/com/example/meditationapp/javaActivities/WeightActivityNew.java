@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldEditText;
+import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
 import com.example.meditationapp.ModelClasses.GetAffirmation;
 import com.example.meditationapp.ModelClasses.PostAffirmation;
 import com.example.meditationapp.R;
@@ -53,6 +54,7 @@ public class WeightActivityNew extends AppCompatActivity {
     GetAffirmation resource;
     String shared_userID;
     CustomBoldEditText edittext_affirmationtitle;
+    CustomBoldtextView recording_title;
     PostAffirmation postAffirmation;
     MultipartBody.Part parta;
     String cat_ID, titlea, songUrl;
@@ -74,9 +76,12 @@ public class WeightActivityNew extends AppCompatActivity {
         postrecyclerView = findViewById(R.id.postaffirmation_recyclerView);
         add_affirmation = findViewById(R.id.add_affirmation);
         edittext_affirmationtitle = findViewById(R.id.edittext_affirmationtitle);
+        recording_title = findViewById(R.id.recording_title);
 
         getrecyclerView.setVisibility(View.VISIBLE);
         postrecyclerView.setVisibility(View.GONE);
+
+        recording_title.setText(getIntent().getStringExtra("title"));
 
         try {
             file = createImageFile();

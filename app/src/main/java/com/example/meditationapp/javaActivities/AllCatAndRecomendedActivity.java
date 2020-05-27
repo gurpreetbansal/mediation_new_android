@@ -44,6 +44,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
     String cat_ID;
     ImageView img_back_two;
     String userID;
+    GetCategoryAndRecomendedModelClass resource;
     String mypreference = "mypref", user_id = "user_id";
 
     private LinearLayout titleLL,my_recordings_ll;
@@ -90,6 +91,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AllCatAndRecomendedActivity.this, WeightActivityNew.class);
                 intent.putExtra("category_id", cat_ID);
+                intent.putExtra("title",resource.getData().getAffirmation().get(0).getName());
                 startActivity(intent);
             }
         });
@@ -115,7 +117,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
 
            if (response.isSuccessful()){
 
-                    GetCategoryAndRecomendedModelClass resource = response.body();
+                    resource = response.body();
 
                     assert resource != null;
                     if (resource.getSuccess()) {
@@ -131,6 +133,7 @@ public class AllCatAndRecomendedActivity extends BaseActivity {
                         categoryDataModelClasses = resource.getData().getAffirmation();
                         recomandedModelClasses = resource.getData().getRecomended();
 
+                        weight_title.setText(resource.getData().getAffirmation().get(0).getName());
 
                         AllCategoryAdapter allCategoryAdapter = new AllCategoryAdapter(AllCatAndRecomendedActivity.this, resource.getData().getSession());
                         categoryRV.setAdapter(allCategoryAdapter);
