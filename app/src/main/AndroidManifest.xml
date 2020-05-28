@@ -27,11 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,LockedOrientationActivity">
-        <activity android:name=".javaActivities.FavoritesActivity"></activity>
+        <activity android:name=".javaActivities.PremiumActivity_new"></activity>
+        <activity android:name=".javaActivities.FavoritesActivity" />
         <activity android:name=".javaActivities.AllCatAndRecomendedActivity" />
-        <activity android:name=".javaActivities.WeightActivityNew"
-            android:windowSoftInputMode="stateHidden"
-            />
+        <activity
+            android:name=".javaActivities.WeightActivityNew"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".javaActivities.Test" />
 
         <service

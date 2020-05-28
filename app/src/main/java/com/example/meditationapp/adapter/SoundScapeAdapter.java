@@ -48,17 +48,14 @@ public class SoundScapeAdapter extends RecyclerView.Adapter<SoundScapeAdapter.My
 
         final SoundScapeModelClass soundScapeModelClass = soundScapeModelClasses.get(position);
 
-        Picasso.get().load(soundScapeModelClass.getNatureImage()).into(holder.backImageView);
-
+        Picasso.get().load(soundScapeModelClass.getImages()).into(holder.backImageView);
 
         holder.backImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
             }
         });
-
     }
 
     @Override
@@ -70,14 +67,10 @@ public class SoundScapeAdapter extends RecyclerView.Adapter<SoundScapeAdapter.My
 
         ImageView backImageView,lockImageView;
 
-
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             backImageView=itemView.findViewById(R.id.sound_scape_back_IV);
 //            lockImageView=itemView.findViewById(R.id.sound_scape_back_lock_IV);
-
-
         }
     }
 

@@ -15,6 +15,7 @@ import com.example.meditationapp.ModelClasses.SoundModel.MusicModelClass;
 import com.example.meditationapp.ModelClasses.SoundModel.SoundScapeModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.activities.GetMore_Activity;
+import com.example.meditationapp.javaActivities.PremiumActivity_new;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -41,16 +42,16 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 
         final MusicModelClass musicModelClass = musicModelClasses.get(position);
 
-        Picasso.get().load(musicModelClass.getNatureImage()).into(holder.backImageView);
+        Picasso.get().load(musicModelClass.getImages()).into(holder.backImageView);
 
-        holder.backImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(context, GetMore_Activity.class);
-                context.startActivity(intent);
-            }
-        });
+//        holder.backImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent(context, GetMore_Activity.class);
+//                context.startActivity(intent);
+//            }
+//        });
 
     }
 

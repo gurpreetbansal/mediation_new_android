@@ -14,6 +14,9 @@ public class MusicModelClass {
     @SerializedName("nature_image")
     @Expose
     private String natureImage;
+    @SerializedName("icon")
+    @Expose
+    private Object icon;
     @SerializedName("price")
     @Expose
     private Integer price;
@@ -35,15 +38,15 @@ public class MusicModelClass {
     @SerializedName("nature_status")
     @Expose
     private Integer natureStatus;
-//    @SerializedName("images")
-//    @Expose
-//    private String images;
-//    @SerializedName("lockUnlockStatus")
-//    @Expose
-//    private Integer lockUnlockStatus;
-//    @SerializedName("songs")
-//    @Expose
-//    private String songs;
+    @SerializedName("images")
+    @Expose
+    private String images;
+    @SerializedName("lockUnlockStatus")
+    @Expose
+    private Integer lockUnlockStatus;
+    @SerializedName("songs")
+    @Expose
+    private String songs;
 
     public Integer getNatureId() {
         return natureId;
@@ -67,6 +70,14 @@ public class MusicModelClass {
 
     public void setNatureImage(String natureImage) {
         this.natureImage = natureImage;
+    }
+
+    public Object getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Object icon) {
+        this.icon = icon;
     }
 
     public Integer getPrice() {
@@ -125,27 +136,27 @@ public class MusicModelClass {
         this.natureStatus = natureStatus;
     }
 
-//    public String getImages() {
-//        return images;
-//    }
-//
-//    public void setImages(String images) {
-//        this.images = images;
-//    }
-//
-//    public Integer getLockUnlockStatus() {
-//        return lockUnlockStatus;
-//    }
-//
-//    public void setLockUnlockStatus(Integer lockUnlockStatus) {
-//        this.lockUnlockStatus = lockUnlockStatus;
-//    }
-//
-//    public String getSongs() {
-//        return songs;
-//    }
-//
-//    public void setSongs(String songs) {
-//        this.songs = songs;
-//    }
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public Integer getLockUnlockStatus() {
+        return lockUnlockStatus;
+    }
+
+    public void setLockUnlockStatus(Integer lockUnlockStatus) {
+        this.lockUnlockStatus = lockUnlockStatus;
+    }
+
+    public String getSongs() {
+        return songs;
+    }
+
+    public void setSongs(String songs) {
+        this.songs = songs;
+    }
 }

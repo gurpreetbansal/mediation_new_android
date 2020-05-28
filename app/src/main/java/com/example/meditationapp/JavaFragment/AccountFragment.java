@@ -82,18 +82,18 @@ public class AccountFragment extends Fragment {
 
         progressLL.setVisibility(View.VISIBLE);
 
-        txt_upgrade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Fragment someFragment = new PromoFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, someFragment ); // give your fragment container id in first parameter
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-
-            }
-        });
+//        txt_upgrade.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Fragment someFragment = new PromoFragment();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.replace(R.id.container, someFragment ); // give your fragment container id in first parameter
+//                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+//                transaction.commit();
+//
+//            }
+//        });
 
         ll_setting.setOnClickListener(new View.OnClickListener() {
             @Override

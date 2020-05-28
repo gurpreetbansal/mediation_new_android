@@ -216,9 +216,7 @@ public class SoundFragment extends Fragment {
 //                                    startActivity(intent);
 //                                }
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-
                                 startActivity(intent);
-
 
                             }
 
@@ -227,10 +225,6 @@ public class SoundFragment extends Fragment {
 
                             }
                         }));
-
-
-
-
                     }
                     else {
                         Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();

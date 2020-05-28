@@ -35,10 +35,10 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
     private static final int MONTHLY_PAY_PAL_REQUEST_CODE = 121;
     private static final int YEARLY_PAY_PAL_REQUEST_CODE = 131;
-    private CustomBoldtextView txt_terms_get,txt_year,txt_month;
-   int monthly_package_type = 1;
-   int yearly_package_type = 2;
-    String song,song_id,song_name;
+    private CustomBoldtextView txt_terms_get, txt_year, txt_month;
+    int monthly_package_type = 1;
+    int yearly_package_type = 2;
+    String song, song_id, song_name;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
     private static final String PAYMENT_TYPE = "Paypal";
@@ -57,7 +57,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        stopService(new Intent(GetMorePaymentActivity.this,PayPalService.class));
+        stopService(new Intent(GetMorePaymentActivity.this, PayPalService.class));
         super.onDestroy();
     }
 
@@ -66,20 +66,20 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.getmore_activity);
 
-        txt_terms_get=findViewById(R.id.txt_terms_get);
-        txt_year=findViewById(R.id.txt_year);
-        txt_month=findViewById(R.id.txt_month);
+        txt_terms_get = findViewById(R.id.txt_terms_get);
+        txt_year = findViewById(R.id.txt_year);
+        txt_month = findViewById(R.id.txt_month);
 
         txt_terms_get.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               Intent intent=new Intent(GetMorePaymentActivity.this,TermsAndConditionActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(GetMorePaymentActivity.this, TermsAndConditionActivity.class);
+                startActivity(intent);
             }
         });
-        Intent intent = new Intent(GetMorePaymentActivity.this,PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration);
+        Intent intent = new Intent(GetMorePaymentActivity.this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
         startService(intent);
 
         song = getIntent().getStringExtra("song");
@@ -90,66 +90,74 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         userID = preferences.getString(user_id, "");
 
 
-      txt_year.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-
-              yearlyProcessPayment();
-          }
-      });
+        txt_year.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                txt_year.setBackgroundResource(R.drawable.curve_darkgray_fill);
+                yearlyProcessPayment();
+            }
+        });
 
         txt_month.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                txt_month.setBackgroundResource(R.drawable.curve_darkgray_fill);
                 monthlyProcessPayment();
             }
         });
-
-
     }
 
-    private void monthlyProcessPayment(){
-
-        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal("7.99"),"USD",
-                "Meditation",PayPalPayment.PAYMENT_INTENT_SALE);
-
+    private void monthlyProcessPayment() {
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal("7.99"), "USD",
+                "Meditation", PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(GetMorePaymentActivity.this, PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
-        intent.putExtra("value",1);
-        startActivityForResult(intent,MONTHLY_PAY_PAL_REQUEST_CODE);
-
-
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+        intent.putExtra("value", 1);
+        startActivityForResult(intent, MONTHLY_PAY_PAL_REQUEST_CODE);
+        txt_month.setBackgroundResource(R.drawable.curve_darkgray_fill);
+        txt_year.setBackgroundResource(R.drawable.curve_gray_fill);
+//        if (txt_year.getBackground().equals(R.drawable.curve_gray_fill)) {
+//            txt_month.setBackgroundResource(R.drawable.curve_darkgray_fill);
+//        }else {
+//            txt_month.setBackgroundResource(R.drawable.curve_gray_fill);
+//        }
     }
 
     private void yearlyProcessPayment() {
-
-        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal("150"),"USD",
-                "Meditation",PayPalPayment.PAYMENT_INTENT_SALE);
+        PayPalPayment payPalPayment = new PayPalPayment(new BigDecimal("150"), "USD",
+                "Meditation", PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(GetMorePaymentActivity.this, PaymentActivity.class);
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,configuration);
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
-        intent.putExtra("value",2);
-        startActivityForResult(intent,YEARLY_PAY_PAL_REQUEST_CODE);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, configuration);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
+        intent.putExtra("value", 2);
+        startActivityForResult(intent, YEARLY_PAY_PAL_REQUEST_CODE);
+        txt_year.setBackgroundResource(R.drawable.curve_darkgray_fill);
+        txt_month.setBackgroundResource(R.drawable.curve_gray_fill);
+//        if (txt_month.getBackground().equals(R.drawable.curve_gray_fill)) {
+//            txt_year.setBackgroundResource(R.drawable.curve_darkgray_fill);
+//        }else {
+//            txt_year.setBackgroundResource(R.drawable.curve_gray_fill);
+//        }
     }
 
     public void payPalLogin(final String userID, String payment_type, String payment_id, String payment_amount, String payment_date,
                             String payment_plan_id, String payment_plan_name, String currency_code, String short_desp,
-                            final String intent, Integer package_type){
+                            final String intent, Integer package_type) {
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
-        Call<GetUserPayModelClass> call = apiInterface.getUserPayData(userID,payment_type,payment_id,payment_amount,payment_date,
-                payment_plan_id,payment_plan_name,currency_code,short_desp,intent,package_type);
+        Call<GetUserPayModelClass> call = apiInterface.getUserPayData(userID, payment_type, payment_id, payment_amount, payment_date,
+                payment_plan_id, payment_plan_name, currency_code, short_desp, intent, package_type);
 
         call.enqueue(new Callback<GetUserPayModelClass>() {
             @Override
             public void onResponse(Call<GetUserPayModelClass> call, Response<GetUserPayModelClass> response) {
 
-                    GetUserPayModelClass resource = response.body();
-                    assert resource != null;
-                    if (resource.getSuccess()){
+                GetUserPayModelClass resource = response.body();
+                assert resource != null;
+                if (resource.getSuccess()) {
 
 //                     SoundFragment soundFragment = new SoundFragment();
 //                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -157,26 +165,25 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 //                     fragmentTransaction.addToBackStack("");
 //                     fragmentTransaction.commit();
 
-                        refreshActivity();
-                        SharedPreferences sharedPreferences = getSharedPreferences("myPref",0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                    refreshActivity();
+                    SharedPreferences sharedPreferences = getSharedPreferences("myPref", 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
 //                        editor.putString("pref","");
-                        editor.putBoolean("Payment",false);
-                        editor.apply();
+                    editor.putBoolean("Payment", false);
+                    editor.apply();
 
 //                     Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
 
-                    }
-                    else {
-                        Toast.makeText(GetMorePaymentActivity.this, "" +resource.getMessages(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(GetMorePaymentActivity.this, "" + resource.getMessages(), Toast.LENGTH_SHORT).show();
 
-                    }
                 }
+            }
 
 
             @Override
             public void onFailure(Call<GetUserPayModelClass> call, Throwable t) {
-                Toast.makeText(GetMorePaymentActivity.this, ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetMorePaymentActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -192,7 +199,6 @@ public class GetMorePaymentActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
 
                 String result = data.getStringExtra("response");
-
 
 
                 Log.e("RESULT  ", " " + result);
@@ -227,18 +233,17 @@ public class GetMorePaymentActivity extends AppCompatActivity {
                         Log.e("PAYMENT_SHORT_DESP", "" + short_desp);
                         Log.e("PAYMENT_CLIENT : ", "" + payment_client);
 
-                  Intent intent1 = getIntent();
-                 int type = intent1.getIntExtra("value",2);
+                        Intent intent1 = getIntent();
+                        int type = intent1.getIntExtra("value", 2);
 
-                if (type == 1)
-                {
-                    payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
+                        if (type == 1) {
+                            payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
 
-                }
-                if (type == 2){
-                    payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
+                        }
+                        if (type == 2) {
+                            payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
 
-                }
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();

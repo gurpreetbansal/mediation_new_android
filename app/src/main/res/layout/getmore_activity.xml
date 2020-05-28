@@ -51,6 +51,7 @@
             android:textAlignment="center"
             android:textColor="@color/dark_sky_blue"
             android:textSize="@dimen/_20sdp" />
+
         <LinearLayout
             android:id="@+id/ll_month"
             android:layout_width="match_parent"
@@ -59,15 +60,14 @@
             android:layout_marginLeft="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_40sdp"
-            android:background="@mipmap/gray_bg_two"
-            android:orientation="vertical"
-            android:backgroundTint="@color/screen_gray">
+            android:orientation="vertical">
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
                 android:id="@+id/txt_month"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:background="@drawable/curve_gray_fill"
                 android:gravity="center"
                 android:text="@string/monthly_value"
                 android:textColor="@color/white"
@@ -83,8 +83,6 @@
             android:layout_marginLeft="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_40sdp"
-            android:background="@drawable/curve_gray_fill"
-            android:backgroundTint="@color/dark_gray"
             android:orientation="horizontal">
 
             <com.example.meditationapp.Custom_Widgets.CustomBoldtextView
@@ -92,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:background="@drawable/curve_gray_fill"
                 android:gravity="center"
                 android:text="@string/yearly_value"
                 android:textColor="@color/white"
@@ -105,14 +104,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_yearly"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="center"
             android:text="@string/terms"
             android:textColor="@color/black"
-            android:textSize="@dimen/_10sdp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_20sdp"/>
+            android:textSize="@dimen/_10sdp" />
 
     </RelativeLayout>
 
 </LinearLayout>
+
+    <!--    android:background="@drawable/curve_gray_fill"-->
+    <!--    android:backgroundTint="@color/dark_gray"-->
