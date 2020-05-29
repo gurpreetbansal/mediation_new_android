@@ -9,6 +9,7 @@
     tools:context=".activities.PromoActivity">
 
     <RelativeLayout
+        android:id="@+id/payment_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -105,9 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_yearly"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="center"
+            android:paddingTop="@dimen/_20sdp"
             android:text="@string/terms"
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp" />
@@ -115,6 +115,3 @@
     </RelativeLayout>
 
 </LinearLayout>
-
-    <!--    android:background="@drawable/curve_gray_fill"-->
-    <!--    android:backgroundTint="@color/dark_gray"-->

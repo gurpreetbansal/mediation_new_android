@@ -216,6 +216,7 @@ public class SoundFragment extends Fragment {
 //                                    startActivity(intent);
 //                                }
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                                intent.putExtra("colorcode","0");
                                 startActivity(intent);
 
                             }

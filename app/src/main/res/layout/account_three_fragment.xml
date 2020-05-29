@@ -27,11 +27,11 @@
             android:src="@mipmap/self_pause" />
 
         <ImageView
+            android:id="@+id/payment_premium"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:padding="@dimen/_12sdp"
-
             android:src="@mipmap/primium" />
     </LinearLayout>
 
@@ -214,7 +214,6 @@
                 android:gravity="center"
                 android:text="@string/upgrade"
                 android:textColor="@color/white"
-                android:visibility="gone"
                 android:textSize="@dimen/_14sdp"
                 android:background="@mipmap/upgrade"
                 android:layout_marginLeft="@dimen/_40sdp"

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.meditationapp.Api.ApiInterface;
@@ -35,7 +36,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
     private static final int MONTHLY_PAY_PAL_REQUEST_CODE = 121;
     private static final int YEARLY_PAY_PAL_REQUEST_CODE = 131;
-    private CustomBoldtextView txt_terms_get, txt_year, txt_month;
+    private CustomBoldtextView txt_terms_get, txt_year, txt_month, txt_get_more, txt_get_full;
     int monthly_package_type = 1;
     int yearly_package_type = 2;
     String song, song_id, song_name;
@@ -43,6 +44,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
     String mypreference = "mypref", user_id = "user_id";
     private static final String PAYMENT_TYPE = "Paypal";
     ApiInterface apiInterface;
+    RelativeLayout payment_rl;
     GetUserPayModelClass getUserPayModelClass;
     List<UserPayModelClass> userPayModelClasses;
     String payment_status;
@@ -69,11 +71,25 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         txt_terms_get = findViewById(R.id.txt_terms_get);
         txt_year = findViewById(R.id.txt_year);
         txt_month = findViewById(R.id.txt_month);
+        payment_rl = findViewById(R.id.payment_rl);
+        txt_get_more = findViewById(R.id.txt_get_more);
+        txt_get_full = findViewById(R.id.txt_get_full);
+
+        if (getIntent().getStringExtra("colorcode").equals("1")){
+            payment_rl.getBackground().setTint(payment_rl.getResources().getColor(R.color.black));
+            txt_get_more.setText("Upgrade to Premium");
+            txt_get_more.setTextColor(getResources().getColor(R.color.white));
+            txt_terms_get.setTextColor(getResources().getColor(R.color.white));
+            txt_get_full.setVisibility(View.INVISIBLE);
+            txt_year.setBackgroundResource(R.drawable.curve_white_fill);
+            txt_month.setBackgroundResource(R.drawable.curve_white_fill);
+            txt_month.setTextColor(getResources().getColor(R.color.black));
+            txt_year.setTextColor(getResources().getColor(R.color.black));
+        }
 
         txt_terms_get.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(GetMorePaymentActivity.this, TermsAndConditionActivity.class);
                 startActivity(intent);
             }
@@ -116,13 +132,13 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
         intent.putExtra("value", 1);
         startActivityForResult(intent, MONTHLY_PAY_PAL_REQUEST_CODE);
-        txt_month.setBackgroundResource(R.drawable.curve_darkgray_fill);
-        txt_year.setBackgroundResource(R.drawable.curve_gray_fill);
-//        if (txt_year.getBackground().equals(R.drawable.curve_gray_fill)) {
-//            txt_month.setBackgroundResource(R.drawable.curve_darkgray_fill);
-//        }else {
-//            txt_month.setBackgroundResource(R.drawable.curve_gray_fill);
-//        }
+        if (getIntent().getStringExtra("colorcode").equals("1")){
+            txt_month.setBackgroundResource(R.drawable.curve_gray_fill);
+            txt_year.setBackgroundResource(R.drawable.curve_white_fill);
+        }else {
+            txt_month.setBackgroundResource(R.drawable.curve_darkgray_fill);
+            txt_year.setBackgroundResource(R.drawable.curve_gray_fill);
+        }
     }
 
     private void yearlyProcessPayment() {
@@ -134,13 +150,13 @@ public class GetMorePaymentActivity extends AppCompatActivity {
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payPalPayment);
         intent.putExtra("value", 2);
         startActivityForResult(intent, YEARLY_PAY_PAL_REQUEST_CODE);
-        txt_year.setBackgroundResource(R.drawable.curve_darkgray_fill);
-        txt_month.setBackgroundResource(R.drawable.curve_gray_fill);
-//        if (txt_month.getBackground().equals(R.drawable.curve_gray_fill)) {
-//            txt_year.setBackgroundResource(R.drawable.curve_darkgray_fill);
-//        }else {
-//            txt_year.setBackgroundResource(R.drawable.curve_gray_fill);
-//        }
+        if (getIntent().getStringExtra("colorcode").equals("1")){
+            txt_year.setBackgroundResource(R.drawable.curve_gray_fill);
+            txt_month.setBackgroundResource(R.drawable.curve_white_fill);
+        }else {
+            txt_year.setBackgroundResource(R.drawable.curve_darkgray_fill);
+            txt_month.setBackgroundResource(R.drawable.curve_gray_fill);
+        }
     }
 
     public void payPalLogin(final String userID, String payment_type, String payment_id, String payment_amount, String payment_date,
