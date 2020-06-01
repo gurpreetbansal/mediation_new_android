@@ -51,7 +51,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
     boolean check;
 
     private static PayPalConfiguration configuration = new PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
             .clientId(Config.CLIENT_ID);
 
 

@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,27 +11,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meditationapp.Api.ApiInterface;
 import com.example.meditationapp.Api.RetrofitClientInstance;
 import com.example.meditationapp.Custom_Widgets.CustomBoldtextView;
-import com.example.meditationapp.ModelClasses.GetHomeResponse;
 import com.example.meditationapp.ModelClasses.SoundModel.GetSoundAndScapeResponse;
 import com.example.meditationapp.ModelClasses.SoundModel.MusicModelClass;
 import com.example.meditationapp.ModelClasses.SoundModel.SoundScapeModelClass;
 import com.example.meditationapp.R;
-import com.example.meditationapp.activities.CreativtyAffirmationsActivity;
-import com.example.meditationapp.activities.GetMore_Activity;
-import com.example.meditationapp.activities.My_FavoritesActivity;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
-import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
-import com.imarkinfotech.slowme.utilityClasses.RetrofitClient;
 
 import java.util.List;
 
@@ -53,15 +45,15 @@ public class SoundFragment extends Fragment {
     String mypreference = "mypref", user_id = "user_id";
 
     private ProgressBar progressBar;
-    private RecyclerView soundScapeRV,musicRV;
+    private RecyclerView soundScapeRV, musicRV;
     private ApiInterface apiInterface;
     private GetSoundAndScapeResponse resource;
     private LinearLayout ll_sound_search;
-    private CustomBoldtextView soundScape_text,music_text;
+    private CustomBoldtextView soundScape_text, music_text;
     private List<SoundScapeModelClass> soundScapeModelClass;
     private List<MusicModelClass> musicModelClasses;
 
-    private ImageView img_back_tool,hurt_img;
+    private ImageView img_back_tool, hurt_img;
 
     public SoundFragment() {
         // Required empty public constructor
@@ -76,15 +68,15 @@ public class SoundFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
 
-        progressBar=view.findViewById(R.id.sound_progressBar);
-        soundScapeRV=view.findViewById(R.id.soundFragment_soundScapeRV);
-        musicRV=view.findViewById(R.id.soundFragment_musicRV);
-        ll_sound_search=view.findViewById(R.id.ll_sound_search);
-        soundScape_text=view.findViewById(R.id.soundScape_text);
-        music_text=view.findViewById(R.id.music_text);
+        progressBar = view.findViewById(R.id.sound_progressBar);
+        soundScapeRV = view.findViewById(R.id.soundFragment_soundScapeRV);
+        musicRV = view.findViewById(R.id.soundFragment_musicRV);
+        ll_sound_search = view.findViewById(R.id.ll_sound_search);
+        soundScape_text = view.findViewById(R.id.soundScape_text);
+        music_text = view.findViewById(R.id.music_text);
         hurt_img = view.findViewById(R.id.hurt_img);
         img_back_tool = view.findViewById(R.id.img_back_tool);
-       hurt_img.setVisibility(View.VISIBLE);
+        hurt_img.setVisibility(View.VISIBLE);
 
         img_back_tool.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +89,7 @@ public class SoundFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent =new Intent(getActivity(), FavoritesActivity.class);
+                Intent intent = new Intent(getActivity(), FavoritesActivity.class);
                 startActivity(intent);
             }
         });
@@ -110,7 +102,7 @@ public class SoundFragment extends Fragment {
         GridLayoutManager grid_sound = new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false);
         soundScapeRV.setLayoutManager(grid_sound);
 
-        GridLayoutManager grid_music = new GridLayoutManager(getActivity(),3,RecyclerView.VERTICAL,false);
+        GridLayoutManager grid_music = new GridLayoutManager(getActivity(), 3, RecyclerView.VERTICAL, false);
         musicRV.setLayoutManager(grid_music);
 
         getData(userID);
@@ -118,7 +110,7 @@ public class SoundFragment extends Fragment {
         return view;
     }
 
-    public void getData(String userID){
+    public void getData(String userID) {
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
 
@@ -128,11 +120,11 @@ public class SoundFragment extends Fragment {
             @Override
             public void onResponse(Call<GetSoundAndScapeResponse> call, final Response<GetSoundAndScapeResponse> response) {
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     resource = response.body();
 
                     assert resource != null;
-                    if (resource.getSuccess()){
+                    if (resource.getSuccess()) {
 
                         soundScapeModelClass = resource.getData().getSoundScopes();
                         musicModelClasses = resource.getData().getMusic();
@@ -142,23 +134,23 @@ public class SoundFragment extends Fragment {
                         soundScape_text.setVisibility(View.VISIBLE);
                         music_text.setVisibility(View.VISIBLE);
 
-                        SoundScapeAdapter soundScapeAdapter = new SoundScapeAdapter(getActivity(),resource.getData().getSoundScopes());
+                        SoundScapeAdapter soundScapeAdapter = new SoundScapeAdapter(getActivity(), resource.getData().getSoundScopes());
                         soundScapeRV.setAdapter(soundScapeAdapter);
 
-                        final MusicAdapter musicAdapter = new MusicAdapter(getActivity(),resource.getData().getMusic());
+                        final MusicAdapter musicAdapter = new MusicAdapter(getActivity(), resource.getData().getMusic());
                         musicRV.setAdapter(musicAdapter);
 
-                     soundScapeRV.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), soundScapeRV, new RecyclerTouchListener.ClickListener() {
-                         @Override
-                         public void onClick(View view, int position) {
+                        soundScapeRV.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), soundScapeRV, new RecyclerTouchListener.ClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
 
-                             String nature = soundScapeModelClass.get(position).getNatureSound();
-                             int id = soundScapeModelClass.get(position).getNatureId();
-                             String nature_id = String.valueOf(id);
-                             String nature_name = soundScapeModelClass.get(position).getNatureName();
-                             Log.e("SOUND_SCAPE_URL :  ", nature);
-                             Log.e("NATURE ID : ", nature_id);
-                             Log.e("NATURE NAME : ", nature_name);
+                                String nature = soundScapeModelClass.get(position).getNatureSound();
+                                int id = soundScapeModelClass.get(position).getNatureId();
+                                String nature_id = String.valueOf(id);
+                                String nature_name = soundScapeModelClass.get(position).getNatureName();
+                                Log.e("SOUND_SCAPE_URL :  ", nature);
+                                Log.e("NATURE ID : ", nature_id);
+                                Log.e("NATURE NAME : ", nature_name);
 
 
 //                 if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
@@ -178,13 +170,13 @@ public class SoundFragment extends Fragment {
 //                     startActivity(intent);
 //                 }
 
-                         }
+                            }
 
-                         @Override
-                         public void onLongClick(View view, int position) {
+                            @Override
+                            public void onLongClick(View view, int position) {
 
-                         }
-                     }));
+                            }
+                        }));
 
                         musicRV.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), musicRV, new RecyclerTouchListener.ClickListener() {
                             @Override
@@ -216,7 +208,10 @@ public class SoundFragment extends Fragment {
 //                                    startActivity(intent);
 //                                }
                                 Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                intent.putExtra("colorcode","0");
+                                intent.putExtra("colorcode", "0");
+                                intent.putExtra("song", natureMusic);
+                                intent.putExtra("nature_id", nature_id);
+                                intent.putExtra("nature_name", nature_name);
                                 startActivity(intent);
 
                             }
@@ -226,14 +221,12 @@ public class SoundFragment extends Fragment {
 
                             }
                         }));
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getActivity(), resource.getMessages(), Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
 
-                }
-                else {
+                } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
@@ -242,7 +235,7 @@ public class SoundFragment extends Fragment {
             @Override
             public void onFailure(Call<GetSoundAndScapeResponse> call, Throwable t) {
 
-                Toast.makeText(getActivity(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
