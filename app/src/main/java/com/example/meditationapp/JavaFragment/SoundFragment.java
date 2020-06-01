@@ -68,6 +68,8 @@ public class SoundFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
 
+        Log.e("id",userID);
+
         progressBar = view.findViewById(R.id.sound_progressBar);
         soundScapeRV = view.findViewById(R.id.soundFragment_soundScapeRV);
         musicRV = view.findViewById(R.id.soundFragment_musicRV);
@@ -170,6 +172,17 @@ public class SoundFragment extends Fragment {
 //                     startActivity(intent);
 //                 }
 
+                                if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)) {
+                                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                                    intent.putExtra("colorcode", "0");
+                                    intent.putExtra("song", nature);
+                                    intent.putExtra("nature_id", nature_id);
+                                    intent.putExtra("nature_name", nature_name);
+                                    startActivity(intent);
+                                } else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)) {
+                                    Toast.makeText(getActivity(), "unlocked", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
 
                             @Override
@@ -207,12 +220,17 @@ public class SoundFragment extends Fragment {
 //                                    intent.putExtra("nature_name", nature_name);
 //                                    startActivity(intent);
 //                                }
-                                Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                intent.putExtra("colorcode", "0");
-                                intent.putExtra("song", natureMusic);
-                                intent.putExtra("nature_id", nature_id);
-                                intent.putExtra("nature_name", nature_name);
-                                startActivity(intent);
+
+                                if (resource.getData().getMusic().get(position).getLockUnlockStatus().equals(0)) {
+                                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
+                                    intent.putExtra("colorcode", "0");
+                                    intent.putExtra("song", natureMusic);
+                                    intent.putExtra("nature_id", nature_id);
+                                    intent.putExtra("nature_name", nature_name);
+                                    startActivity(intent);
+                                } else if (resource.getData().getMusic().get(position).getLockUnlockStatus().equals(1)) {
+                                    Toast.makeText(getActivity(), "unlocked", Toast.LENGTH_SHORT).show();
+                                }
 
                             }
 

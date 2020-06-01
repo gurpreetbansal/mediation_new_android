@@ -59,6 +59,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@+id/txt_get_full"
             android:layout_marginLeft="@dimen/_40sdp"
+            android:visibility="invisible"
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginRight="@dimen/_40sdp"
             android:orientation="vertical">

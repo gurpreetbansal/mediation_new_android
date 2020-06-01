@@ -261,26 +261,32 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             @Override
             public void onResponse(Call<GetSocialLoginResponse> call, Response<GetSocialLoginResponse> response) {
 
-                GetSocialLoginResponse resource = response.body();
-                if (resource.getSuccess()) {
+                if (response.isSuccessful()) {
 
-                    SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("user_id", resource.getData().getUserId());
-                    Log.e("data",socialId+"---"+deviceToken);
-                    editor.putString("social_type", socialType);
-                    editor.apply();
+                    GetSocialLoginResponse resource = response.body();
+                    if (resource.getSuccess()) {
 
-                    if (resource.getData().getUserType().equals("0")) {
-                        startActivity(new Intent(LoginActivityNew.this, VoiceSelect_Activity.class));
-                    } else if (resource.getData().getUserType().equals("1")) {
-                        startActivity(new Intent(LoginActivityNew.this, HomeActivitynew.class));
+                        SharedPreferences pref = getApplicationContext().getSharedPreferences("mypref", 0); // 0 - for private mode
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("user_id", resource.getData().getUserId());
+                        Log.e("data", socialId + "---" + deviceToken);
+                        editor.putString("social_type", socialType);
+                        editor.apply();
+
+                        if (resource.getData().getUserType().equals("0")) {
+                            startActivity(new Intent(LoginActivityNew.this, VoiceSelect_Activity.class));
+                        } else if (resource.getData().getUserType().equals("1")) {
+                            startActivity(new Intent(LoginActivityNew.this, HomeActivitynew.class));
+                        }
+                        Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
+                        hideDialog();
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
+                        hideDialog();
                     }
-                    Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
-                    hideDialog();
-                    finish();
                 } else {
-                    Toast.makeText(LoginActivityNew.this, resource.getMessages(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivityNew.this, response.message(), Toast.LENGTH_SHORT).show();
                     hideDialog();
                 }
 
@@ -323,7 +329,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
     }
 
 
-    public void facebookLogin(final boolean loginButton){
+    public void facebookLogin(final boolean loginButton) {
 
         if (!loginButton) {
 
@@ -338,60 +344,59 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
     }
 
-    public void sucessFacebook(){
+    public void sucessFacebook() {
         loginManager.getInstance().registerCallback(callbackManager,
-    new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(final LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        AccessToken accessToken = loginResult.getAccessToken();
 
-            final GraphRequest request = GraphRequest.newMeRequest(accessToken,
-            new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object,GraphResponse response) {
+                        final GraphRequest request = GraphRequest.newMeRequest(accessToken,
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
 
 
-                JSONObject json =response.getJSONObject();
+                                        JSONObject json = response.getJSONObject();
 
-                try {
-                    if (json != null){
+                                        try {
+                                            if (json != null) {
 
-                        String name = object.getString("name");
-                        String emails = object.getString("email");
+                                                String name = object.getString("name");
+                                                String emails = object.getString("email");
 //                        String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?return_ssl_resources=1";
 //                        String imgURL = "https://graph.facebook.com/"+loginResult.getAccessToken().getUserId() + "/picture?type=large";
 
-                        int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
-                        Uri profilePictureUri= Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize , dimensionPixelSize);
-                        String imgURL = String.valueOf(profilePictureUri);
+                                                int dimensionPixelSize = getResources().getDimensionPixelSize(com.facebook.R.dimen.com_facebook_profilepictureview_preset_size_large);
+                                                Uri profilePictureUri = Profile.getCurrentProfile().getProfilePictureUri(dimensionPixelSize, dimensionPixelSize);
+                                                String imgURL = String.valueOf(profilePictureUri);
 
 //                        String idfb  = loginResult.getAccessToken().getUserId();
-                        String id = object.getString("id");
+                                                String id = object.getString("id");
 
-                        socialLoginRetrofit(id, FACEBOOK, emails, imgURL,
-                                name, device_type, UUID.randomUUID().toString());
+                                                socialLoginRetrofit(id, FACEBOOK, emails, imgURL,
+                                                        name, device_type, UUID.randomUUID().toString());
 
-                        Log.e("RESULT NAME",name);
-                        Log.e("RESULT EMAIL",emails);
-                        Log.e("ID",id);
-                        Log.e("RESULT PHOTO", imgURL);
+                                                Log.e("RESULT NAME", name);
+                                                Log.e("RESULT EMAIL", emails);
+                                                Log.e("ID", id);
+                                                Log.e("RESULT PHOTO", imgURL);
 
-                        loginManager.logOut();
+                                                loginManager.logOut();
 
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email");
+                        request.setParameters(parameters);
+                        request.executeAsync();
                     }
-                }
-                catch (JSONException e){
-                    e.printStackTrace();
-                }
-
-                }
-
-            });
-            Bundle parameters = new Bundle();
-            parameters.putString("fields", "id,name,email");
-            request.setParameters(parameters);
-            request.executeAsync();
-        }
 
                     @Override
                     public void onCancel() {
@@ -401,7 +406,7 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
 
                     @Override
                     public void onError(FacebookException exception) {
-//                        Toast.makeText(LoginActivityNew.this, "" + exception, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivityNew.this, "aaaaa", Toast.LENGTH_SHORT).show();
                         //error
                     }
                 });
@@ -444,7 +449,6 @@ public class LoginActivityNew extends BaseActivity implements GoogleApiClient.On
             hideDialog();
         }
     }
-
 
 
 }

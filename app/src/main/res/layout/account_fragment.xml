@@ -83,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_40sdp"
+                android:visibility="gone"
                 android:gravity="center|left"
                 android:text="@string/help_center"
                 android:textColor="@color/gray_eight"

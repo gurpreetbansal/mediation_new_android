@@ -49,7 +49,7 @@ import retrofit2.Response;
 public class WeightActivityNew extends AppCompatActivity {
 
     RecyclerView getrecyclerView, postrecyclerView;
-    ImageView add_affirmation;
+    ImageView add_affirmation, back;
     ApiInterface apiInterface;
     GetAffirmation resource;
     String shared_userID;
@@ -77,11 +77,19 @@ public class WeightActivityNew extends AppCompatActivity {
         add_affirmation = findViewById(R.id.add_affirmation);
         edittext_affirmationtitle = findViewById(R.id.edittext_affirmationtitle);
         recording_title = findViewById(R.id.recording_title);
+        back = findViewById(R.id.img_back_two);
 
         getrecyclerView.setVisibility(View.VISIBLE);
         postrecyclerView.setVisibility(View.GONE);
 
         recording_title.setText(getIntent().getStringExtra("title"));
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         try {
             file = createImageFile();

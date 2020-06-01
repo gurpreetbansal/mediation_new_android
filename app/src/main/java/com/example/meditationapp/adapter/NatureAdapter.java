@@ -42,10 +42,10 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
     @Override
     public void onBindViewHolder(@NonNull final itemHolder holder, final int position) {
         Picasso.get().load(nature.get(position).getImages()).into(holder.image);
+
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 //                if (nature.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)){
 //
 //                    Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
@@ -63,9 +63,19 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
 //                    startActivity(intent);
 //                }
 
-                Intent intent = new Intent(context, CreativityAffirmationActivityNew.class);
-                intent.putExtra("song", nature.get(position).getSongs());
-                holder.itemView.getContext().startActivity(intent);
+                if (nature.get(position).getLockUnlockStatus().equals(0)) {
+                    Intent intent = new Intent(context, GetMorePaymentActivity.class);
+                    intent.putExtra("colorcode", "0");
+                    intent.putExtra("song", nature.get(position).getSongs());
+                    intent.putExtra("nature_id", nature.get(position).getNatureId());
+                    intent.putExtra("nature_name", nature.get(position).getNatureName());
+                    holder.itemView.getContext().startActivity(intent);
+                } else if (nature.get(position).getLockUnlockStatus().equals(1)) {
+                    Intent intent = new Intent(context, CreativityAffirmationActivityNew.class);
+                    intent.putExtra("song", nature.get(position).getSongs());
+                    holder.itemView.getContext().startActivity(intent);
+                }
+
             }
         });
         Log.e("songs", nature.get(position).getSongs());
