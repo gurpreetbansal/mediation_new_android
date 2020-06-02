@@ -35,7 +35,7 @@
             android:layout_marginLeft="@dimen/_40sdp"
             android:layout_marginRight="@dimen/_40sdp"
             android:gravity="center"
-            android:text="@string/get_more"
+            android:text="@string/get_songs"
             android:textColor="@color/gray_eight"
             android:textSize="@dimen/_20sdp" />
 

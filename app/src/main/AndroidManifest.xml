@@ -28,8 +28,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,LockedOrientationActivity">
-
-
+        <activity android:name=".javaActivities.SubscriptionActivity"></activity>
         <activity android:name=".javaActivities.PremiumActivity_new" />
         <activity android:name=".javaActivities.FavoritesActivity" />
         <activity android:name=".javaActivities.AllCatAndRecomendedActivity" />

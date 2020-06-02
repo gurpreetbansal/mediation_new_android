@@ -25,6 +25,7 @@ public class BackgroundSoundService extends Service {
     MediaPlayer mediaPlayer;
     String song, time;
     ArrayList<String> playlist;
+    Boolean start=false;
     int i = 1;
     //    int durationTimer;
     private boolean isPrepared;
@@ -52,34 +53,45 @@ public class BackgroundSoundService extends Service {
 //                durationTimer = intent.getIntExtra("duration", 0);
 //                time = milliSecondsToTimer(durationTimer);
                 if (song != null) {
-//                    try {
-                    if (mediaPlayer != null) {
-                        mediaPlayer.release();
-                        mediaPlayer = null;
+                    try {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                        mediaPlayer = MediaPlayer.create(this, R.raw.a);
+//                        sendInfoBroadcast();
+//                        mediaPlayer.start();
+                        mediaPlayer.setDataSource(song);
+                        mediaPlayer.prepareAsync();
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                start = true;
+                                CreativityAffirmationActivityNew.start();
+                                mediaPlayer.start();
+                                Log.e("current", String.valueOf(mediaPlayer.getCurrentPosition()));
+                                sendInfoBroadcast();
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    mediaPlayer = new MediaPlayer();
-                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mediaPlayer = MediaPlayer.create(this, R.raw.a);
-                    sendInfoBroadcast();
-                    mediaPlayer.start();
-//                        mediaPlayer.setDataSource(song);
-//                        mediaPlayer.prepareAsync();
-//                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                            @Override
-//                            public void onPrepared(MediaPlayer mp) {
-//                                mediaPlayer.start();
-//                                Log.e("current", String.valueOf(mediaPlayer.getCurrentPosition()));
-//                                sendInfoBroadcast();
-                    mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mp) {
-                            if (playlist != null) {
-                                if (playlist.size() >= i) {
-                                    Intent m_intent = new Intent(BackgroundSoundService.this,BackgroundSoundService.class);
-                                    m_intent.putExtra("main_song", song);
-                                    m_intent.putStringArrayListExtra("playlist", playlist);
-                                    m_intent.putExtra("player", "Play");
-                                    startService(m_intent);
+                        mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                if (start) {
+                                    if (playlist != null) {
+                                        if (playlist.size() > i) {
+                                            CreativityAffirmationActivityNew.pause();
+                                            Intent m_intent = new Intent(BackgroundSoundService.this, BackgroundSoundService.class);
+                                            m_intent.putExtra("main_song", playlist.get(i));
+                                            Log.e(String.valueOf(i), playlist.get(i));
+                                            m_intent.putStringArrayListExtra("playlist", playlist);
+                                            m_intent.putExtra("player", "Play");
+                                            startService(m_intent);
+                                            start = false;
 
 //                                    try {
 //                                        mediaPlayer.setDataSource(playlist.get(i + 1));
@@ -94,20 +106,18 @@ public class BackgroundSoundService extends Service {
 //                                    } catch (IOException e) {
 //                                        e.printStackTrace();
 //                                    }
-                                    i++;
-                                } else {
-                                    CreativityAffirmationActivityNew.pause();
+                                            i++;
+                                        } else {
+                                            CreativityAffirmationActivityNew.pause();
+                                            start = false;
+                                        }
+                                    } else {
+                                        CreativityAffirmationActivityNew.pause();
+                                        start = false;
+                                    }
                                 }
-                            } else {
-                                CreativityAffirmationActivityNew.pause();
                             }
-                        }
-                    });
-//                            }
-//                        });
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+                        });
                 }
             }
 //

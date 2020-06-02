@@ -27,6 +27,7 @@ import com.example.meditationapp.ModelClasses.GetProfileResponse;
 import com.example.meditationapp.R;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.SettingActivity;
+import com.example.meditationapp.javaActivities.SubscriptionActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -89,8 +90,8 @@ public class AccountFragment extends Fragment {
         payment_premium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                intent.putExtra("colorcode", "1");
+                Intent intent = new Intent(getActivity(), SubscriptionActivity.class);
+//                intent.putExtra("colorcode", "1");
                 startActivity(intent);
             }
         });
@@ -104,8 +105,8 @@ public class AccountFragment extends Fragment {
 //                transaction.replace(R.id.container, someFragment ); // give your fragment container id in first parameter
 //                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
 //                transaction.commit();
-                Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                intent.putExtra("colorcode", "1");
+                Intent intent = new Intent(getActivity(), SubscriptionActivity.class);
+//                intent.putExtra("colorcode", "1");
                 startActivity(intent);
 
             }

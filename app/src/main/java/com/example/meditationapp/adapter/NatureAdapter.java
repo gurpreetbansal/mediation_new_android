@@ -65,7 +65,7 @@ public class NatureAdapter extends RecyclerView.Adapter<NatureAdapter.itemHolder
 
                 if (nature.get(position).getLockUnlockStatus().equals(0)) {
                     Intent intent = new Intent(context, GetMorePaymentActivity.class);
-                    intent.putExtra("colorcode", "0");
+                    intent.putExtra("price",nature.get(position).getPrice().toString());
                     intent.putExtra("song", nature.get(position).getSongs());
                     intent.putExtra("nature_id", nature.get(position).getNatureId());
                     intent.putExtra("nature_name", nature.get(position).getNatureName());

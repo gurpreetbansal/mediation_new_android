@@ -26,6 +26,7 @@ import com.example.meditationapp.ModelClasses.SoundModel.SoundScapeModelClass;
 import com.example.meditationapp.R;
 import com.example.meditationapp.adapter.MusicAdapter;
 import com.example.meditationapp.adapter.SoundScapeAdapter;
+import com.example.meditationapp.javaActivities.CreativityAffirmationActivityNew;
 import com.example.meditationapp.javaActivities.FavoritesActivity;
 import com.example.meditationapp.javaActivities.GetMorePaymentActivity;
 import com.example.meditationapp.javaActivities.RecyclerTouchListener;
@@ -68,7 +69,7 @@ public class SoundFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = preferences.getString(user_id, "");
 
-        Log.e("id",userID);
+        Log.e("id", userID);
 
         progressBar = view.findViewById(R.id.sound_progressBar);
         soundScapeRV = view.findViewById(R.id.soundFragment_soundScapeRV);
@@ -174,13 +175,15 @@ public class SoundFragment extends Fragment {
 
                                 if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(0)) {
                                     Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                    intent.putExtra("colorcode", "0");
+                                    intent.putExtra("price", resource.getData().getSoundScopes().get(position).getPrice().toString());
                                     intent.putExtra("song", nature);
                                     intent.putExtra("nature_id", nature_id);
                                     intent.putExtra("nature_name", nature_name);
                                     startActivity(intent);
                                 } else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)) {
-                                    Toast.makeText(getActivity(), "unlocked", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                    intent.putExtra("song", resource.getData().getSoundScopes().get(position).getSongs());
+                                    startActivity(intent);
                                 }
 
                             }
@@ -223,13 +226,15 @@ public class SoundFragment extends Fragment {
 
                                 if (resource.getData().getMusic().get(position).getLockUnlockStatus().equals(0)) {
                                     Intent intent = new Intent(getActivity(), GetMorePaymentActivity.class);
-                                    intent.putExtra("colorcode", "0");
+                                    intent.putExtra("price", resource.getData().getMusic().get(position).getPrice().toString());
                                     intent.putExtra("song", natureMusic);
                                     intent.putExtra("nature_id", nature_id);
                                     intent.putExtra("nature_name", nature_name);
                                     startActivity(intent);
                                 } else if (resource.getData().getMusic().get(position).getLockUnlockStatus().equals(1)) {
-                                    Toast.makeText(getActivity(), "unlocked", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);
+                                    intent.putExtra("song", resource.getData().getMusic().get(position).getSongs());
+                                    startActivity(intent);
                                 }
 
                             }

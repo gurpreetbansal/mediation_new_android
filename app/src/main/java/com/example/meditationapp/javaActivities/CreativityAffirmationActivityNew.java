@@ -58,7 +58,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
     CustomBoldtextView player_timer;
     String song,userID;
     int total_duration, current_time, volume, default_volume;
-    Boolean playing;
+    public Boolean playing;
     CircularSeekBar circularSeekBar;
     SeekBar player_vol_bar;
     private boolean blockGUIUpdate;
@@ -96,6 +96,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_vol_high = findViewById(R.id.player_vol_high);
 
         playallList = getIntent().getStringArrayListExtra("playlist");
+        Log.e("playlist",playallList.toString());
 
         song = getIntent().getStringExtra("song");
         if (song == null) {
@@ -117,7 +118,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
             }
         });
 
-        player_play.setImageResource(R.mipmap.pause);
+        player_play.setImageResource(R.mipmap.player_pause);
         Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
         m_intent.putExtra("main_song", song);
         m_intent.putStringArrayListExtra("playlist", playallList);
@@ -271,7 +272,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
                         playing = false;
                         Log.e("switch", "b");
                     } else {
-                        player_play.setImageResource(R.mipmap.pause);
+                        player_play.setImageResource(R.mipmap.player_pause);
                         Intent m_intent = new Intent(CreativityAffirmationActivityNew.this, BackgroundSoundService.class);
                         m_intent.putExtra("player", "Resume");
                         startService(m_intent);
@@ -387,6 +388,11 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
 
     public static void pause() {
         player_play.setImageResource(R.mipmap.player_sound_play);
+        Log.e("switch", "d");
+    }
+
+    public static void start() {
+        player_play.setImageResource(R.mipmap.player_pause);
         Log.e("switch", "d");
     }
     //
