@@ -39,7 +39,7 @@ public class GetMorePaymentActivity extends AppCompatActivity {
     private CustomBoldtextView txt_terms_get, txt_year, txt_month, txt_get_more, txt_get_full;
     int monthly_package_type = 1;
     int yearly_package_type = 2;
-    String song, song_id, song_name,price;
+    String song, song_id, song_name,price,screen_name;
     String userID;
     String mypreference = "mypref", user_id = "user_id";
     private static final String PAYMENT_TYPE = "Paypal";
@@ -89,6 +89,8 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
         song = getIntent().getStringExtra("song");
         song_id = getIntent().getStringExtra("nature_id");
+        screen_name = getIntent().getStringExtra("screen");
+        Log.e("song_id",song_id);
         song_name = getIntent().getStringExtra("nature_name");
         price = getIntent().getStringExtra("price");
 
@@ -168,11 +170,13 @@ public class GetMorePaymentActivity extends AppCompatActivity {
 
     public void payPalLogin(final String userID, String payment_type, String payment_id, String payment_amount, String payment_date,
                             String payment_plan_id, String payment_plan_name, String currency_code, String short_desp,
-                            final String intent, Integer package_type) {
+                            final String intent, Integer package_type,String screenName) {
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<GetUserPayModelClass> call = apiInterface.getUserPayData(userID, payment_type, payment_id, payment_amount, payment_date,
-                payment_plan_id, payment_plan_name, currency_code, short_desp, intent, package_type);
+                payment_plan_id, payment_plan_name, currency_code, short_desp, intent, package_type,screenName,"");
+
+        Log.e("song_id",payment_plan_id);
 
         call.enqueue(new Callback<GetUserPayModelClass>() {
             @Override
@@ -260,12 +264,12 @@ public class GetMorePaymentActivity extends AppCompatActivity {
                         int type = intent1.getIntExtra("value", 2);
 
                         if (type == 1) {
-                            payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
-
+                            payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type,screen_name);
+                            Log.e("song_id",song_id);
                         }
                         if (type == 2) {
-                            payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type);
-
+                            payPalLogin(userID, PAYMENT_TYPE, paymentId, amount, payment_date, song_id, song_name, currency_code, short_desp, intent, type,screen_name);
+                            Log.e("song_id",song_id);
                         }
 
                     } catch (Exception e) {

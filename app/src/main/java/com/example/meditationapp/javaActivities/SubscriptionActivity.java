@@ -168,7 +168,7 @@ public class SubscriptionActivity extends AppCompatActivity {
 
         apiInterface = RetrofitClientInstance.getRetrofitInstance().create(ApiInterface.class);
         Call<GetUserPayModelClass> call = apiInterface.getUserPayData(userID, payment_type, payment_id, payment_amount, payment_date,
-                payment_plan_id, payment_plan_name, currency_code, short_desp, intent, package_type);
+                payment_plan_id, payment_plan_name, currency_code, short_desp, intent, package_type,"","subscription");
 
         call.enqueue(new Callback<GetUserPayModelClass>() {
             @Override

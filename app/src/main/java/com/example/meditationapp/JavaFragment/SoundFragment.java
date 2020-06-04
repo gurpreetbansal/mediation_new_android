@@ -179,6 +179,7 @@ public class SoundFragment extends Fragment {
                                     intent.putExtra("song", nature);
                                     intent.putExtra("nature_id", nature_id);
                                     intent.putExtra("nature_name", nature_name);
+                                    intent.putExtra("screen","2");
                                     startActivity(intent);
                                 } else if (resource.getData().getSoundScopes().get(position).getLockUnlockStatus().equals(1)) {
                                     Intent intent = new Intent(getActivity(), CreativityAffirmationActivityNew.class);

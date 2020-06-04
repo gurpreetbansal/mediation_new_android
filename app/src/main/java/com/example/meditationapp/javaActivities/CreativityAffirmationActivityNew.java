@@ -96,7 +96,7 @@ public class CreativityAffirmationActivityNew extends AppCompatActivity {
         player_vol_high = findViewById(R.id.player_vol_high);
 
         playallList = getIntent().getStringArrayListExtra("playlist");
-        Log.e("playlist",playallList.toString());
+//        Log.e("playlist",playallList.toString());
 
         song = getIntent().getStringExtra("song");
         if (song == null) {
