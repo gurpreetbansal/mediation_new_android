@@ -46,7 +46,7 @@ import retrofit2.Response;
 public class AccountFragment extends Fragment {
 
     private CircleImageView userProfileIV;
-    private CustomBoldtextView userNameTV, txt_upgrade, txt_email;
+    private CustomBoldtextView userNameTV, txt_upgrade, txt_email, account_invitefriends;
     private LinearLayout ll_setting;
     CallbackManager callbackManager;
     LoginManager loginManager;
@@ -74,6 +74,7 @@ public class AccountFragment extends Fragment {
         ll_setting = view.findViewById(R.id.ll_setting);
         txt_email = view.findViewById(R.id.accountThree_txt_email);
         payment_premium = view.findViewById(R.id.payment_premium);
+        account_invitefriends = view.findViewById(R.id.account_invitefriends);
 
         SharedPreferences pref = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
         userID = pref.getString(user_id, "");
@@ -93,6 +94,13 @@ public class AccountFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), SubscriptionActivity.class);
 //                intent.putExtra("colorcode", "1");
                 startActivity(intent);
+            }
+        });
+
+        account_invitefriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareApp("14tusharsaini@gmail.com");
             }
         });
 
@@ -170,6 +178,24 @@ public class AccountFragment extends Fragment {
                 allInfoLL.setVisibility(View.VISIBLE);
             }
         });
+
+    }
+
+    public void shareApp(String email) {
+
+        String body = "Hi,\n \n Download Meditation App Now! This is my Email: " + email+ "."
+                + " \n \n its available on,"
+
+                + "\n\n For Android users: https://play.google.com/store/apps/details?id=com.example.meditation"
+
+                + "\n\n For i-phone users: https://itunes.apple.com/in/app/playstore/";
+
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, body);
+
+        startActivityForResult(Intent.createChooser(sharingIntent, "Share via"), 999);
 
     }
 

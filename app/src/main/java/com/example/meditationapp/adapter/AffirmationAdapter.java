@@ -58,13 +58,13 @@ public class AffirmationAdapter extends RecyclerView.Adapter<AffirmationAdapter.
                 .into(holder.ll_first);
         holder.affirmation_text.setText(data.get(position).getSongsTitle());
 
-        if (data.get(position).getFavriteStatus().equals(0)){
-            holder.grey_heart.setVisibility(View.VISIBLE);
-            holder.pink_heart.setVisibility(View.GONE);
-        }else {
-            holder.grey_heart.setVisibility(View.GONE);
-            holder.pink_heart.setVisibility(View.VISIBLE);
-        }
+//        if (data.get(position).getFavriteStatus().equals(0)){
+//            holder.grey_heart.setVisibility(View.VISIBLE);
+//            holder.pink_heart.setVisibility(View.GONE);
+//        }else {
+//            holder.grey_heart.setVisibility(View.GONE);
+//            holder.pink_heart.setVisibility(View.VISIBLE);
+//        }
     }
 
 
